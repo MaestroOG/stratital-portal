@@ -1,6 +1,7 @@
 import Sidebar from "@/components/dashboardComponents/Sidebar";
 import "../globals.css";
 import MainContent from "@/components/dashboardComponents/MainContent";
+import Header from "@/components/dashboardComponents/Header";
 
 export const metadata = {
   title: "Create Next App",
@@ -14,7 +15,10 @@ export default function RootLayout({ children }) {
         className={`antialiased bg-background-gray flex`}
       >
         <Sidebar />
-        <MainContent>{children}</MainContent>
+        <MainContent>
+          <Header />
+          {children}
+        </MainContent>
       </body>
     </html>
   );

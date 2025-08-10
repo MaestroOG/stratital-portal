@@ -3,6 +3,7 @@ import { ClipboardCheck, FolderCog, House, Settings, User, Users } from "lucide-
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import AddProjectButton from "../add-project-btn";
 
 const Sidebar = () => {
 
@@ -17,29 +18,26 @@ const Sidebar = () => {
         {
             icon: <FolderCog />,
             title: "Project",
-            href: '/project'
+            href: '/projects'
         },
         {
             icon: <ClipboardCheck />,
-            title: "Task",
-            href: '/tasks'
+            title: "Free Audit",
+            href: '/audits'
         },
     ]
     return (
         <aside className="max-w-3xs w-3xs h-screen bg-dark-blue fixed top-0 left-0 flex flex-col items-center p-5">
-            <div className="relative w-60 h-32 mb-8">
+            <Link href={'/'} className="relative w-60 h-32 mb-8">
                 <Image
                     src="/logo.png"
                     alt="Stratital"
                     fill
                     className="object-contain"
                 />
-            </div>
+            </Link>
 
-            <button className="bg-white flex items-center gap-2.5 p-2 rounded-full w-full cursor-pointer">
-                <Image src={'/addIcon.png'} width={34} height={34} alt="Add_Icon" />
-                <p className="font-medium text-sm">Create new project</p>
-            </button>
+            <AddProjectButton href={'/projects/new-project'} className={'w-full'} />
 
             <div className="sidebar-menu">
                 {links.map((link, i) => (

@@ -9,6 +9,12 @@ import TransactionCard from "@/components/dashboardComponents/TransactionCard"
 import ProjectFileCard from "@/components/dashboardComponents/ProjectFileCard"
 import TechTable from "@/components/dashboardComponents/TechTable"
 import EarningReportCard from "@/components/dashboardComponents/EarningReportCard"
+import AddProjectButton from "@/components/add-project-btn"
+import { Button } from "@/components/ui/button"
+import { yourProjects } from "@/constants"
+import { Badge } from "@/components/ui/badge"
+import IntroText from "@/components/IntroText"
+import Link from "next/link"
 
 export const metadata = {
   title: "Stratital Client Portal"
@@ -17,7 +23,11 @@ export const metadata = {
 const HomePage = () => {
   return (
     <>
-      <Header />
+
+      <IntroText />
+
+
+
       <Container className={'grid items-stretch grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4'}>
         <ProjectCard success={true} title="Total Projects" desc="All Projects This Month" number={404} />
         <ProjectCard yellow={true} title={"Running Project"} desc={"Delayed This Month"} number={128} />
@@ -27,27 +37,25 @@ const HomePage = () => {
 
       </Container>
 
-      <Container className={'flex items-stretch gap-6'}>
-        <ProjectTeamTable />
-        <BudgetCard />
-      </Container>
+      <Container className="bg-white p-4 rounded-lg">
+        <div className="flex items-center gap-4">
+          <h1 className="text-xl font-medium">Your Projects</h1>
+          <Link href={'/projects/new-project'}><Button className={'cursor-pointer'}>Add a Project</Button></Link>
+        </div>
 
-      <Container className={'flex items-start gap-6'}>
-        <TimeGraphCard title="Total Spent Hours" success={true} />
-        <TimeGraphCard title="Average Week Report" success={false} />
-        <DatePicker />
-      </Container>
+        <div className="grid grid-cols-2 md:grid-cols-4 mt-5 gap-4">
 
-      <Container className={'flex items-start gap-6'}>
-        <TransactionCard />
-        <ProjectFileCard />
-      </Container>
 
-      <Container className={'flex items-center'}>
-        <TechTable />
-      </Container>
-      <Container className={'flex items-center'}>
-        <EarningReportCard />
+          {yourProjects.map(project => (
+            <div key={project.id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+              <Badge variant={"secondary"} className={'mb-2'}>{project.name}</Badge>
+              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{project.projectTitle}</h5>
+              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{project.desc}</p>
+              <Button variant={"default"}>Project Details</Button>
+            </div>
+          ))}
+
+        </div>
       </Container>
     </>
   )

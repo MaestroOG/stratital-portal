@@ -16,7 +16,7 @@ export default function DatePicker() {
         defaultMonth={date}
         selected={date}
         onSelect={setDate}
-        className="rounded-lg"
+        className="rounded-lg bg-white"
         classNames={{
 
         }}

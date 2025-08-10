@@ -7,7 +7,7 @@ const ProjectCard = ({ title, desc, success, yellow, number }) => {
             <div className='flex flex-col space-y-2.5'>
                 <div className='flex items-center gap-2'>
                     <h3 className='font-semibold text-heading'>{title}</h3>
-                    <span className={`text-xs ${success ? 'text-success' : yellow ? 'text-yellow' : 'text-red'}`}>3.1%</span>
+                    {/* <span className={`text-xs ${success ? 'text-success' : yellow ? 'text-yellow' : 'text-red'}`}>3.1%</span> */}
                 </div>
                 <div className='flex items-center gap-2'>
                     <p className={`text-xl ${success ? 'text-success' : yellow ? 'text-yellow' : 'text-red'} font-semibold`}>{number}</p>

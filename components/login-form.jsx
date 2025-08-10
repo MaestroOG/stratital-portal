@@ -40,7 +40,7 @@ export function LoginForm({
           Login
         </Button>
       </div>
-      {message?.err && <div className="text-sm text-center text-red font-bold text-xl">{message?.err}</div>}
+      {message?.err && <div className="text-center text-red font-bold text-xl">{message?.err}</div>}
       <div className="text-center text-sm">
         Don&apos;t have an account?{" "}
         <Link href="#" className="underline underline-offset-4">

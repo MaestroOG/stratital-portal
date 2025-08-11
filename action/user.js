@@ -9,6 +9,19 @@ const userInfo = {
     password: "testpass123"
 }
 
+const userInfo2 = {
+    email: 'waqas@novaprotocols.com',
+    password: 'testpass123',
+}
+
+const userInfo2ToSet = {
+    email: "waqas@novaprotocols.com",
+    name: "Waqas",
+    agency: "Nova Protocols",
+    role: 'customer',
+    avatar: '/avatar.jpeg'
+}
+
 const userInfoToSet = {
     email: "chris@stratital.com",
     name: "Chris Bindley",
@@ -46,7 +59,27 @@ export const LoginUser = async (prevState, formData) => {
         });
 
         redirect('/')
-    } else {
+    } else if (email === userInfo2.email && password === userInfo2.password) {
+        const token = crypto.randomBytes(32).toString("hex");
+
+        (await cookies()).set({
+            name: "authToken",
+            value: token,
+            httpOnly: true,
+            path: "/",
+            secure: process.env.NODE_ENV || 'production',
+            maxAge: 60 * 60 * 24 * 7
+        });
+
+        (await cookies()).set("user", JSON.stringify(userInfo2ToSet), {
+            httpOnly: false,
+            secure: true,
+            path: '/'
+        });
+
+        redirect('/')
+    }
+    else {
         return {
             err: "Invalid Credentials"
         }

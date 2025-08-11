@@ -1,4 +1,5 @@
 import { LoginForm } from "@/components/login-form"
+import Image from "next/image";
 
 export const metadata = {
     title: "Login"
@@ -20,7 +21,7 @@ export default function LoginPage() {
                 </div>
             </div>
             <div className="bg-dark-blue relative hidden lg:flex items-center justify-center">
-                <img src="/logo.png" alt="" />
+                <Image src='/logo.png' alt="stratital logo" width={235} height={67} priority />
             </div>
         </div>)
     );

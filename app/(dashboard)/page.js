@@ -1,15 +1,5 @@
-import BudgetCard from "@/components/dashboardComponents/BudgetCard"
 import Container from "@/components/dashboardComponents/Container"
-import Header from "@/components/dashboardComponents/Header"
 import ProjectCard from "@/components/dashboardComponents/ProjectCard"
-import ProjectTeamTable from "@/components/dashboardComponents/ProjectTeamTable"
-import TimeGraphCard from "@/components/dashboardComponents/TimeGraphCard"
-import DatePicker from "@/components/dashboardComponents/DatePicker"
-import TransactionCard from "@/components/dashboardComponents/TransactionCard"
-import ProjectFileCard from "@/components/dashboardComponents/ProjectFileCard"
-import TechTable from "@/components/dashboardComponents/TechTable"
-import EarningReportCard from "@/components/dashboardComponents/EarningReportCard"
-import AddProjectButton from "@/components/add-project-btn"
 import { Button } from "@/components/ui/button"
 import { yourProjects } from "@/constants"
 import { Badge } from "@/components/ui/badge"
@@ -28,7 +18,7 @@ const HomePage = () => {
 
 
 
-      <Container className={'grid items-stretch grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-4'}>
+      <Container className={'grid items-stretch grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 gap-4'}>
         <ProjectCard success={true} title="Total Projects" desc="All Projects This Month" number={404} />
         <ProjectCard yellow={true} title={"Running Project"} desc={"Delayed This Month"} number={128} />
         <ProjectCard title={"Pending"} desc={"Pending This Month"} number={43} />
@@ -43,7 +33,7 @@ const HomePage = () => {
           <Link href={'/projects/new-project'}><Button className={'cursor-pointer'}>Add a Project</Button></Link>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 mt-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">
 
 
           {yourProjects.map(project => (

@@ -19,7 +19,7 @@ const ProjectsPage = () => {
                     <Link href={'/projects/new-project'}><Button className={'cursor-pointer'}>Add a Project</Button></Link>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 mt-5 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">
                     {yourProjects.map(project => (
                         <div key={project.id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{project.projectTitle}</h5>

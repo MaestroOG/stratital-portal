@@ -1,11 +1,13 @@
 import React from 'react'
 import Container from './dashboardComponents/Container'
+import { getUser } from '@/lib/user'
 
-const IntroText = () => {
+const IntroText = async () => {
+    const user = await getUser();
     return (
         <Container className={'bg-white p-4 rounded-lg'}>
             <div className="max-w-2xl">
-                <h1 className="font-bold text-4xl">Welcome to Stratital Client Portal</h1>
+                <h1 className="font-bold text-2xl md:text-4xl">Welcome to Stratital Client Portal, {user?.name} - {user?.agency}</h1>
                 <p className="mt-3">This is where you’ll find all the tailored resources, personable support, and proactive advice for your agency to help you confidently scale and fulfill on your opportunities.</p>
                 <p className="mt-2">
                     From within this portal you can:

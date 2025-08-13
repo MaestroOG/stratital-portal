@@ -19,7 +19,7 @@ const HomePage = () => {
       <div className="px-11 py-7 md:hidden max-sm:bg-white">
 
         <div className="bg-white w-full h-12 rounded-xl flex items-center">
-          <Input placeholder="Search..." className={'placeholder:text-placeholder h-full focus:ring-0 focus:border-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none'} />
+          <Input placeholder="Search..." className={'placeholder:text-placeholder h-full rounded-tr-none rounded-br-none focus:ring-0 focus:border-transparent focus-visible:ring-0 focus-visible:border-transparent outline-none'} />
           <Button className={'h-full px-4 py-3 rounded-tl-none rounded-bl-none'}><Search className="text-white" width={25} height={25} /></Button>
         </div>
 

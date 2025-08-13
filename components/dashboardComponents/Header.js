@@ -61,7 +61,7 @@ const Header = () => {
         }
     }, []);
     return (
-        <header className='bg-dark-blue w-full px-8 py-9 flex items-center justify-between gap-4'>
+        <header className='bg-dark-blue w-full px-8 py-9 flex items-center justify-between gap-4 sticky top-0 z-50'>
             {/* <div className='text-white items-center gap-2.5 hidden lg:flex'>
                 <House className='hidden lg:flex' />
                 <span className='text-xl font-medium'>Welcome To Stratital</span>

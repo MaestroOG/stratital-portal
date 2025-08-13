@@ -14,7 +14,7 @@ const ProjectCard = ({ title, desc, success, yellow, number }) => {
                     <span className='tex-sm text-detail whitespace-nowrap'>{desc}</span>
                 </div>
             </div>
-            <Image src={'/success-overlay.png'} width={55} height={55} alt='overlay' />
+            {/* <Image src={'/success-overlay.png'} width={55} height={55} alt='overlay' /> */}
         </div>
     )
 }

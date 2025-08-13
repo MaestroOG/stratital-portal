@@ -27,7 +27,7 @@ const Sidebar = () => {
         },
     ]
     return (
-        <aside className="w-[85px] md:w-3xs min-h-screen md:h-screen bg-dark-blue fixed inset-y-0 left-0 flex flex-col items-center p-5">
+        <aside className="hidden md:flex w-[85px] md:w-3xs min-h-screen md:h-screen bg-dark-blue fixed inset-y-0 left-0 flex-col items-center p-5">
             <Link href={'/'} className="relative w-60 h-32 mb-8 hidden md:flex">
                 <Image
                     src="/logo.png"

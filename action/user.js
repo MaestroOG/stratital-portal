@@ -26,7 +26,7 @@ const userInfoToSet = {
     email: "chris@stratital.com",
     name: "Chris Bindley",
     agency: "Straight Up Digital",
-    role: 'customer',
+    role: 'superadmin',
     avatar: '/avatar.jpeg'
 }
 

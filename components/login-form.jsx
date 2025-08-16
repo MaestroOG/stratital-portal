@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label"
 import Link from "next/link";
 import { LoginUser } from "@/action/user";
 import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
 
 export function LoginForm({
   className,
@@ -43,7 +42,7 @@ export function LoginForm({
       {message?.err && <div className="text-center text-red font-bold text-xl">{message?.err}</div>}
       <div className="text-center text-sm">
         Don&apos;t have an account?{" "}
-        <Link href="#" className="underline underline-offset-4">
+        <Link href="/signup" className="underline underline-offset-4">
           Sign up
         </Link>
       </div>

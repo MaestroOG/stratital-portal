@@ -1,4 +1,4 @@
-import '../../globals.css'
+import '../globals.css'
 
 // app/login/layout.js
 export default function LoginLayout({ children }) {

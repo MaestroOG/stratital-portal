@@ -87,6 +87,10 @@ export const LoginUser = async (prevState, formData) => {
 }
 
 
+export const SignUpUser = async (prevState, formData) => {
+
+}
+
 export const signOutUser = async (prevState, formData) => {
     (await cookies()).delete("authToken");
     (await cookies()).delete("user");

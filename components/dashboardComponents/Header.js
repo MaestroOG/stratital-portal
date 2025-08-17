@@ -1,5 +1,5 @@
 'use client';
-import { Bell, ClipboardCheck, FolderCog, House, Menu, Search, Settings, X } from 'lucide-react'
+import { Bell, ClipboardCheck, FolderCog, House, Menu, Search, Settings, Shield, Video, X } from 'lucide-react'
 import Image from 'next/image'
 import React, { useActionState, useEffect, useState } from 'react'
 import {
@@ -13,35 +13,16 @@ import {
     Drawer,
     DrawerClose,
     DrawerContent,
-    DrawerDescription,
     DrawerFooter,
     DrawerHeader,
-    DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer"
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import AddProjectButton from '../add-project-btn';
 
 const Header = () => {
     const pathname = usePathname();
-    const links = [
-        {
-            icon: <House />,
-            title: "Dashboard",
-            href: '/'
-        },
-        {
-            icon: <FolderCog />,
-            title: "Project",
-            href: '/projects'
-        },
-        {
-            icon: <ClipboardCheck />,
-            title: "Free Audit",
-            href: '/audits'
-        },
-    ]
+
     const [state, formAction, isPending] = useActionState(signOutUser, "")
     const [user, setUser] = useState(null);
     useEffect(() => {
@@ -60,6 +41,38 @@ const Header = () => {
             }
         }
     }, []);
+
+    const links = [
+        {
+            icon: <House />,
+            title: "Dashboard",
+            href: "/",
+        },
+        {
+            icon: <FolderCog />,
+            title: "Project",
+            href: "/projects",
+        },
+        {
+            icon: <ClipboardCheck />,
+            title: "Website Audit",
+            href: "/audits",
+        },
+        {
+            icon: <Video />,
+            title: "How-To Videos",
+            href: "/how-to",
+        },
+        ...(user?.role === "superadmin"
+            ? [
+                {
+                    icon: <Shield />,
+                    title: "Admin Panel",
+                    href: "/admin",
+                },
+            ]
+            : []),
+    ]
     return (
         <header className='bg-dark-blue w-full px-8 py-9 flex items-center justify-between gap-4 sticky top-0 z-50'>
             {/* <div className='text-white items-center gap-2.5 hidden lg:flex'>
@@ -111,7 +124,7 @@ const Header = () => {
             </div>
             <Link href={'/'} className='md:hidden'><Image src='/logo.png' alt="stratital logo" width={135} height={37} priority /></Link>
             <div className='flex items-center gap-4'>
-                <Image src={'/usa.png'} width={32} height={32} alt='country_flag' className='cursor-pointer hidden md:block' />
+                <Image src={'/australia.svg'} width={32} height={32} alt='country_flag' className='cursor-pointer hidden md:block' />
                 <Bell className='text-white cursor-pointer hidden md:block' />
                 <Popover>
                     <PopoverTrigger>

@@ -5,16 +5,33 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link";
 import { SignUpUser } from "@/action/user";
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { Textarea } from "./ui/textarea";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Checkbox } from "./ui/checkbox";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import Image from "next/image";
 
 export function SignUpForm({
     className,
     ...props
 }) {
 
-    const [message, formAction, isPending] = useActionState(SignUpUser, { err: "" })
+    const [message, formAction, isPending] = useActionState(SignUpUser, { err: "", success: false });
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        if (message?.success) {
+            setOpen(true)
+        }
+    }, [message])
     return (
         (<form action={formAction} className={cn("flex flex-col gap-6", className)} {...props}>
             <div className="flex flex-col items-center gap-2 text-center">
@@ -66,11 +83,6 @@ export function SignUpForm({
                 <div className="grid gap-3">
                     <Label htmlFor="companyName" className={'text-heading'}>Agency Name</Label>
                     <Input id="companyName" type="text" name="companyName" placeholder="e.g., Straight Up Digital" required className={'border border-gray-300'} />
-                </div>
-
-                <div className="grid gap-3">
-                    <Label htmlFor="abn" className={'text-heading'}>ABN (Austrailian Business Number)</Label>
-                    <Input id="abn" type="number" name="abn" placeholder="e.g., Straight Up Digital" required className={'border border-gray-300'} />
                 </div>
 
                 <div className="grid gap-3">
@@ -181,10 +193,26 @@ export function SignUpForm({
                     <Textarea id="challengeDetail" name="challengeDetail" placeholder="" required className={'border border-gray-300'} />
                 </div>
 
+                <div className="flex gap-3">
+                    <Checkbox id="master-service-agreement" name="master-service-agreement" />
+                    <Label htmlFor="master-service-agreement" className={'text-heading'}>I agree to the Stratital<Link href={'https://stratital.com/stratital-master-services-agreement/'} target="_blank" className="text-red underline">Master Services Agreement</Link></Label>
+                </div>
+
 
                 <Button disabled={isPending} type="submit" className="w-full bg-dark-blue cursor-pointer hover:bg-dark-blue">
                     Sign Up
                 </Button>
+
+                <Dialog open={open} onOpenChange={setOpen}>
+                    <DialogContent>
+                        <DialogHeader className={'flex items-center justify-center flex-col gap-3'}>
+                            <DialogTitle><Image width={100} height={100} src={'/check-circle.svg'} alt="check-circle" /></DialogTitle>
+                            <DialogDescription className={'text-lg'}>
+                                Thanks for signing up! Your request email has been sent to the admin team. You’ll be notified once it’s reviewed.
+                            </DialogDescription>
+                        </DialogHeader>
+                    </DialogContent>
+                </Dialog>
             </div>
             {message?.err && <div className="text-center text-red font-bold text-xl">{message?.err}</div>}
             <div className="text-center text-sm">

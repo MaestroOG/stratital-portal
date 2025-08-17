@@ -1,4 +1,3 @@
-// formConfig.js
 export const formConfig = {
     seo: [
         { label: "Business Name", name: "businessName", type: "text", required: true },

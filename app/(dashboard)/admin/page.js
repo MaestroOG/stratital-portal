@@ -1,5 +1,5 @@
 import Container from '@/components/dashboardComponents/Container'
-import PendingUserTable from '@/components/superadminComponents/pendingUserTable';
+import PendingUserTable from '@/components/superadminComponents/PendingUserTable';
 
 import { getAllPendingUsers } from '@/lib/admin'
 

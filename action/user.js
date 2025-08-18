@@ -11,12 +11,12 @@ import { generatePartnershipEmailTemplate } from "@/htmlemailtemplates/emailTemp
 import User from "@/models/User";
 
 const superAdminCredentials = {
-  email: "chris@straightupdigital.com.au",
-  password: "superadmin123",
-  name: "Chris Bindley",
-  agency: "Straight Up Digital",
-  role: 'superadmin',
-  avatar: '/avatar.jpeg'
+  email: String(process.env.SUPERADMIN_EMAIL) || "",
+  password: String(process.env.SUPERADMIN_PASSWORD) || "",
+  name: String(process.env.SUPERADMIN_NAME) || "",
+  agency: String(process.env.SUPERADMIN_AGENCY) || "",
+  role: String(process.env.SUPERADMIN_ROLE) || "superadmin",
+  avatar: String(process.env.SUPERADMIN_AVATAR) || "/avatar.jpeg"
 }
 
 export const LoginUser = async (prevState, formData) => {

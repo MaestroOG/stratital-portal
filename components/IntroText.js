@@ -7,7 +7,7 @@ const IntroText = async () => {
     return (
         <Container className={'bg-white p-4 rounded-lg max-sm:mt-0'}>
             <div className="max-w-2xl">
-                <h1 className="font-bold text-2xl md:text-4xl">Welcome to Stratital Client Portal, {user?.name} - {user?.agency}</h1>
+                <h1 className="font-bold text-2xl md:text-4xl">Welcome to Stratital Client Portal, {user?.name} - {user?.agency || user?.companyName}</h1>
                 <p className="mt-3">This is where you’ll find all the tailored resources, personable support, and proactive advice for your agency to help you confidently scale and fulfill on your opportunities.</p>
                 <p className="mt-2">
                     From within this portal you can:

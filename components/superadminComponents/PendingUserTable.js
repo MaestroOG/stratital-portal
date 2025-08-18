@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table"
 import Image from 'next/image'
 import { useActionState, useEffect, useState } from 'react';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 
 const PendingUserTable = ({ pendingUsers }) => {
     const [open, setOpen] = useState(false);

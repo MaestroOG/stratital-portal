@@ -14,6 +14,8 @@ export default function AddProjectSelect() {
     const router = useRouter();
     const searchParams = useSearchParams()
 
+    const service = searchParams.get("service") || "";
+
     const handleValueChange = (value) => {
         const params = new URLSearchParams(searchParams)
         params.set("service", value)
@@ -21,7 +23,7 @@ export default function AddProjectSelect() {
     }
 
     return (
-        <Select onValueChange={handleValueChange}>
+        <Select value={service} onValueChange={handleValueChange}>
             <SelectTrigger className="w-full border border-gray-200">
                 <SelectValue placeholder="Choose a service" />
             </SelectTrigger>

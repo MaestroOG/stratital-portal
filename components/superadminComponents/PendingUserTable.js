@@ -44,15 +44,15 @@ const PendingUserTable = ({ pendingUsers }) => {
                             <form action={addUserFormAction}>
                                 <input type="hidden" name='userId' value={user?._id} />
                                 <Button type='submit' disabled={isPending}>
-                                    {isPending && <img src='/loading.webp' alt='loading' />}
-                                    {!isPending && <Image src={'/tick.svg'} width={24} height={24} alt='tick' />}</Button>
+                                    <Image src={'/tick.svg'} width={24} height={24} alt='tick' />
+                                </Button>
                             </form>
                             <form action={rejectUserFormAction}>
 
                                 <input type="hidden" name='userId' value={user?._id} />
                                 <Button type='submit' disabled={isRejectPending} variant={'secondary'}>
-                                    {isPending && <img src='/loading.webp' alt='loading' />}
-                                    {!isPending && <Image src={'/cancel.svg'} width={24} height={24} alt='cancel' />}</Button>
+                                    <Image src={'/cancel.svg'} width={24} height={24} alt='cancel' />
+                                </Button>
                             </form>
                             <Button variant={'secondary'}><Image src={'/eye-open.svg'} width={24} height={24} alt='cancel' /></Button>
                         </TableCell>

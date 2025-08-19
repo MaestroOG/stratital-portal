@@ -1,5 +1,5 @@
 export const generatePartnershipEmailTemplate = (email, monthlyProjectVolume, name, position, phoneNum, contactEmail, companyName, abn, companyWebsite, businessAddress, yearsInBiz, numOfActiveClients, companyStructure, serviceModel, isUsingWhiteLabelProvider, primaryServices, industriesWorkWith, regionsServe, challengeDetail) => {
-    return `
+  return `
         <!doctype html>
 <html lang="en">
   <head>
@@ -186,7 +186,7 @@ export const generatePartnershipEmailTemplate = (email, monthlyProjectVolume, na
 }
 
 export const generateAcceptEmailTemplate = () => {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -245,7 +245,7 @@ export const generateAcceptEmailTemplate = () => {
 
 
 export const generateRejectEmailTemplate = () => {
-    return `
+  return `
     <!DOCTYPE html>
 <html lang="en" style="background:#f4f6fa;">
 <head>
@@ -322,4 +322,71 @@ export const generateRejectEmailTemplate = () => {
 </html>
 
     `;
+}
+
+
+export const generateProjectCreatedEmailTemplate = (companyName, projectTitle, service) => {
+  return `
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Project Created</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Arial, Helvetica, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f9fafb; padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+          <!-- Header -->
+          <tr>
+            <td align="center" style="padding:30px; background:#F33C38; border-top-left-radius:12px; border-top-right-radius:12px; color:#ffffff;">
+              <h1 style="margin:0; font-size:24px;">New Project Created</h1>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:30px; color:#111827;">
+              <p style="margin:0 0 20px; font-size:16px; line-height:1.6;">
+                A new project has been successfully created with the following details:
+              </p>
+
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px; font-size:15px;">
+                <tr>
+                  <td width="150" style="font-weight:bold; padding:8px 0;">Company Name:</td>
+                  <td style="padding:8px 0; color:#374151;">${companyName}</td>
+                </tr>
+                <tr>
+                  <td width="150" style="font-weight:bold; padding:8px 0;">Project Title:</td>
+                  <td style="padding:8px 0; color:#374151;">${projectTitle}</td>
+                </tr>
+                <tr>
+                  <td width="150" style="font-weight:bold; padding:8px 0;">Service:</td>
+                  <td style="padding:8px 0; color:#374151;">${service.replace(/([a-z])([A-Z][a-z])/g, "$1 $2").replace(/([a-z])([A-Z]+$)/g, "$1 $2").replace(/^./, (s) => s.toUpperCase()).trim()}</td>
+                </tr>
+              </table>
+
+              <p style="margin:0; font-size:14px; color:#6b7280;">
+                You can view and manage this project from your dashboard.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding:20px; background:#f3f4f6; border-bottom-left-radius:12px; border-bottom-right-radius:12px; font-size:13px; color:#6b7280;">
+              © 2025 Stratital. All rights reserved.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+
+  `;
 }

@@ -16,7 +16,8 @@ const superAdminCredentials = {
   name: String(process.env.SUPERADMIN_NAME) || "",
   agency: String(process.env.SUPERADMIN_AGENCY) || "",
   role: String(process.env.SUPERADMIN_ROLE) || "superadmin",
-  avatar: String(process.env.SUPERADMIN_AVATAR) || "/avatar.jpeg"
+  avatar: String(process.env.SUPERADMIN_AVATAR) || "/avatar.jpeg",
+  _id: '507f1f77bcf86cd799439011'
 }
 
 export const LoginUser = async (prevState, formData) => {
@@ -90,39 +91,34 @@ export const LoginUser = async (prevState, formData) => {
 }
 
 
-export const SignUpUser = async (prevState, formData) => {
-  const email = formData.get("email")?.toString().trim() || "";
-  const password = formData.get("password")?.toString().trim() || "";
-  const name = formData.get("name")?.toString().trim() || "";
-  const position = formData.get("position")?.toString().trim() || "";
-  const phoneNum = formData.get("phoneNum")?.toString().trim() || "";
-  const contactEmail = formData.get("contactEmail")?.toString().trim() || "";
-  const companyName = formData.get("companyName")?.toString().trim() || "";
-  const abn = formData.get("abn")?.toString().trim() || "";
-  const companyWebsite = formData.get("companyWebsite")?.toString().trim() || "";
-  const businessAddress = formData.get("businessAddress")?.toString().trim() || "";
-  const yearsInBiz = formData.get("yearsInBiz")?.toString().trim() || "";
-  const numOfActiveClients = formData.get("numOfActiveClients")?.toString().trim() || "";
-  const socialMediaLinks = formData.get("socialMediaLinks")?.toString().trim() || "";
-
-  // Radio groups (only one selected)
-  const companyStructure = formData.get("companyStructure")?.toString() || "";
-  const serviceModel = formData.get("serviceModel")?.toString() || "";
-  const isUsingWhiteLabelProvider = formData.get("isUsingWhiteLabelProvider")?.toString() || "";
-
-  const primaryServices = formData.get("primaryServices")?.toString().trim() || "";
-  const industriesWorkWith = formData.get("industriesWorkWith")?.toString().trim() || "";
-  const regionsServe = formData.get("regionsServe")?.toString().trim() || "";
-  const monthlyProjectVolume = formData.get("monthlyProjectVolume")?.toString().trim() || "";
-  const challengeDetail = formData.get("challengeDetail")?.toString().trim() || "";
-
-  // Checkbox (null if unchecked)
-  const masterServiceAgreement = formData.get("master-service-agreement") === "on";
+export const SignUpUser = async (formValues, prevState, formData) => {
+  const { email,
+    password,
+    name,
+    position,
+    phoneNum,
+    contactEmail,
+    companyName,
+    abn,
+    companyWebsite,
+    businessAddress,
+    yearsInBiz,
+    numOfActiveClients,
+    socialMediaLinks,
+    companyStructure,
+    primaryServices,
+    industriesWorkWith,
+    regionsServe,
+    serviceModel,
+    monthlyProjectVolume,
+    isUsingWhiteLabelProvider,
+    challengeDetail,
+    ['master-service-agreement']: masterServiceAgreement } = formValues;
 
 
   // Validations
 
-  if (!isValidEmail(email) || password.length < 8 || !name || !position || !phoneNum || !contactEmail || !companyName || !abn || !validateABN(abn) || !companyWebsite || !businessAddress || !yearsInBiz || !numOfActiveClients || !numOfActiveClients || !socialMediaLinks || !primaryServices || !industriesWorkWith || !regionsServe || !monthlyProjectVolume || !challengeDetail || !masterServiceAgreement || masterServiceAgreement === null) {
+  if (!isValidEmail(email) || password.length < 6 || !name) {
     return {
       err: "Please fill the form correctly."
     }
@@ -138,7 +134,7 @@ export const SignUpUser = async (prevState, formData) => {
 
   await connectDB();
 
-  const pendingUser = await PendingUser.create({
+  await PendingUser.create({
     email,
     password: hashedPassword,
     name,
@@ -177,8 +173,8 @@ export const SignUpUser = async (prevState, formData) => {
     const html = generatePartnershipEmailTemplate(email, monthlyProjectVolume, name, position, phoneNum, contactEmail, companyName, abn, companyWebsite, businessAddress, yearsInBiz, numOfActiveClients, companyStructure, serviceModel, isUsingWhiteLabelProvider, primaryServices, industriesWorkWith, regionsServe, challengeDetail);
 
     await transporter.sendMail({
-      from: `Client Portal - Stratital`,
-      to: ['muneeb@novaprotocols.com', "nabeel@novaprotocols.com"],
+      from: `portal@stratital.com`,
+      to: 'portal@stratital.com',
       subject: "New User Application – Review Required",
       html,
     })

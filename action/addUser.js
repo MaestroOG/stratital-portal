@@ -39,8 +39,8 @@ export async function addUser(prevState, formData) {
         const html = generateAcceptEmailTemplate();
 
         await transporter.sendMail({
-            from: `Client Portal - Stratital`,
-            to: ['muneeb@novaprotocols.com', "nabeel@novaprotocols.com", user?.email],
+            from: `portal@stratital.com`,
+            to: 'portal@stratital.com',
             subject: "Partnership Application Update – Accepted",
             html,
         })

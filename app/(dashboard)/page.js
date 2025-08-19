@@ -7,12 +7,20 @@ import IntroText from "@/components/IntroText"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Plus, Search } from "lucide-react"
+import { getUser } from "@/lib/user"
+import { getAllUserProjects } from "@/lib/projects"
+import { Suspense } from "react"
+import { camelToNormal } from "@/utils/formUtils"
 
 export const metadata = {
   title: "Stratital Client Portal"
 }
 
-const HomePage = () => {
+const HomePage = async () => {
+
+  const user = await getUser();
+  const projects = await getAllUserProjects(user?._id);
+  console.log("User Projects:", projects);
   return (
     <>
 
@@ -48,14 +56,21 @@ const HomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">
 
 
-          {yourProjects.map(project => (
-            <div key={project.id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-              <Badge variant={"secondary"} className={'mb-2'}>{project.name}</Badge>
-              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{project.projectTitle}</h5>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{project.desc}</p>
-              <Button variant={"default"}>Project Details</Button>
+          {projects?.length === 0 && (
+            <div className="p-6">
+              Add your first project to get started!
             </div>
-          ))}
+          )}
+          <Suspense fallback={<p>Loading...</p>}>
+            {projects?.map(project => (
+              <div key={project.id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                <Badge variant={"secondary"} className={'mb-2'}>{camelToNormal(project.service)}</Badge>
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{project.projectTitle}</h5>
+                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{project.desc || ""}</p>
+                <Link href={`/projects/${project?._id}`}><Button variant={"default"}>Project Details</Button></Link>
+              </div>
+            ))}
+          </Suspense>
 
         </div>
       </Container>

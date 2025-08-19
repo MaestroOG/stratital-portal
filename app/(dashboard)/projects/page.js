@@ -24,7 +24,7 @@ const ProjectsPage = () => {
                         <div key={project.id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{project.projectTitle}</h5>
                             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{project.desc}</p>
-                            <Link href={'/projects/new-project'}><Button variant={"default"}>Add Project</Button></Link>
+                            <Link href={`/projects/new-project?service=${project.projectTitle}`}><Button variant={"default"}>Add Project</Button></Link>
                         </div>
                     ))}
                 </div>

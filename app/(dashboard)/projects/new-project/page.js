@@ -1,9 +1,7 @@
+
 import AddProjectSelect from '@/components/dashboardComponents/AddProjectSelect'
 import Container from '@/components/dashboardComponents/Container'
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import NewProjectForm from '@/components/new-project-form';
 import { formConfig } from '@/utils/formConfig';
 
 export const metadata = {
@@ -18,7 +16,7 @@ const NewProjectPage = ({ searchParams }) => {
             return word.charAt(0).toUpperCase() + word.slice(1);
         })
         .join('') || "";
-    console.log(service)
+
     const fields = formConfig[service];
     return (
         <>
@@ -33,40 +31,7 @@ const NewProjectPage = ({ searchParams }) => {
                 <p className="text-red-500">No form found for this service.</p>
             </Container>}
 
-            {service && <>
-                <Container className={'bg-white rounded-lg p-4'}>
-                    <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {fields?.map((field) => (
-                            <>
-                                <div key={field.name} className="flex flex-col gap-2">
-                                    <label className="block font-medium">
-                                        {field.label}{" "}
-                                        {field.required && <span className="text-red-500">*</span>}
-                                    </label>
-
-                                    {field.type === "textarea" ? (
-                                        <Textarea
-                                            name={field.name}
-                                            required={field.required}
-                                            className="border border-gray-300"
-                                        />
-                                    ) : (
-                                        <Input
-                                            type={field.type}
-                                            name={field.name}
-                                            required={field.required}
-                                            className="border border-gray-300"
-                                        />
-                                    )}
-                                </div>
-                            </>
-                        ))}
-                        {service && <Button type="submit">Submit</Button>}
-
-                    </form>
-                </Container>
-            </>
-            }
+            <NewProjectForm service={service} fields={fields} />
         </>
     )
 }

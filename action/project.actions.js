@@ -1,0 +1,54 @@
+'use server';
+
+import { generateProjectCreatedEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
+import { getUser } from "@/lib/user";
+import Project from "@/models/Project";
+import { cleanFormEntries } from "@/utils/formUtils";
+import nodemailer from "nodemailer";
+
+export async function createProject(prevState, formData) {
+    const user = await getUser();
+    const service = formData.get("service");
+    const projectTitle = formData.get("projectTitle");
+    const entries = {};
+
+    // Turn formData into a plain object
+    formData.forEach((value, key) => {
+        if (key !== "service") {
+            entries[key] = value;
+        }
+    });
+
+
+    const cleanedEntries = cleanFormEntries(entries);
+
+    const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service);
+
+    await Project.create({
+        projectTitle,
+        service,
+        fields: cleanedEntries,
+        status: 'pending',
+        createdBy: user?._id,
+    })
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS,
+        },
+    })
+
+    await transporter.sendMail({
+        from: `portal@stratital.com`,
+        to: 'portal@stratital.com',
+        subject: "Project Created - Stratital",
+        html,
+    })
+
+    return {
+        success: true,
+        message: "Project created successfully",
+    }
+}

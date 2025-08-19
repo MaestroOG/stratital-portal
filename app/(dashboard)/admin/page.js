@@ -9,7 +9,7 @@ export const metadata = {
 
 const SuperAdminPage = async () => {
     const pendingUsers = await getAllPendingUsers();
-    console.log(pendingUsers);
+
     return (
         <main>
             <Container className={'bg-white px-4 py-3'}>

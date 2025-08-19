@@ -42,6 +42,7 @@ export function LoginForm({
       {message?.err && <div className="text-center text-red font-bold text-xl">{message?.err}</div>}
       <div className="text-center text-sm">
         Don&apos;t have an account?{" "}
+        <br />
         <Link href="/signup" className="underline underline-offset-4">
           Apply to become a partner
         </Link>

@@ -38,8 +38,8 @@ export async function rejectUser(prevState, formData) {
         const html = generateRejectEmailTemplate();
 
         await transporter.sendMail({
-            from: `Client Portal - Stratital`,
-            to: ['muneeb@novaprotocols.com', "nabeel@novaprotocols.com", user?.email],
+            from: `portal@stratital.com`,
+            to: 'portal@stratital.com',
             subject: "Partnership Application Update – Rejected",
             html,
         })

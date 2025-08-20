@@ -16,15 +16,6 @@ const ProjectDetailPage = async ({ params }) => {
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
 
-    console.log(projectNotes)
-
-    const adminNotesList = [
-        // Example admin notes, replace with actual data retrieval logic
-        { note: "Initial review completed", date: "2023-10-01" },
-        { note: "Client feedback received", date: "2023-10-05" },
-        { note: "Final adjustments made", date: "2023-10-10" }
-    ]
-
     return (
         <>
             <Container className={'bg-white p-4'}>

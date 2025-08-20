@@ -215,7 +215,7 @@ export const generateAcceptEmailTemplate = () => {
 
         <!-- Call to Action -->
         <div style="text-align:center; margin:30px 0;">
-          <a href="https://client.stratital.com/login" target="_blank" 
+          <a href="https://portal.stratital.com/login" target="_blank" 
              style="background-color:#F33C38; color:#ffffff; text-decoration:none; padding:14px 28px; border-radius:8px; font-size:16px; font-weight:600; display:inline-block;">
              Log In to Client Portal
           </a>

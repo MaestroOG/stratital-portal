@@ -1,10 +1,8 @@
 import Container from '@/components/dashboardComponents/Container'
-import { Button } from '@/components/ui/button'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { getProjectById } from '@/lib/projects'
+import NoteBox from '@/components/superadminComponents/NoteBox'
+import { getNotesByProjectId, getProjectById } from '@/lib/projects'
 import { getUser } from '@/lib/user'
-import { camelToNormal, capitalizeFirst } from '@/utils/formUtils'
+import { camelToNormal, capitalizeFirst, formatDateToYMD } from '@/utils/formUtils'
 
 export const metadata = {
     title: 'Project Details',
@@ -14,8 +12,11 @@ export const metadata = {
 const ProjectDetailPage = async ({ params }) => {
     const user = await getUser();
     const projectDetails = await getProjectById(params.id);
+    const projectNotes = await getNotesByProjectId(params.id);
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
+
+    console.log(projectNotes)
 
     const adminNotesList = [
         // Example admin notes, replace with actual data retrieval logic
@@ -54,22 +55,16 @@ const ProjectDetailPage = async ({ params }) => {
                 </div>
                 <div className='mt-6'>
                     <ul>
-                        {adminNotesList?.map((note, index) => (
+                        {projectNotes?.map((note, index) => (
                             <li key={index} className='mb-4'>
-                                <p className='text-sm text-gray-600'>{note.date}</p>
-                                <p className='text-lg font-medium'>{note.note}</p>
+                                <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)}</p>
+                                <p className='text-lg font-medium'>{note?.note}</p>
                             </li>
                         ))}
                     </ul>
 
-                    {user?.role === 'user' && (
-                        <>
-                            <form className='mt-6 grid gap-3'>
-                                <Label className='text-heading' htmlFor="note">Add a Note</Label>
-                                <Textarea name="note" id="note" placeholder="Enter a Note" />
-                                <Button type="submit">Submit</Button>
-                            </form>
-                        </>
+                    {user?.role === 'superadmin' && (
+                        <NoteBox id={params.id} />
                     )}
                 </div>
             </Container>

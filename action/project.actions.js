@@ -1,9 +1,12 @@
 'use server';
 
 import { generateProjectCreatedEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
+import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
+import Note from "@/models/Note";
 import Project from "@/models/Project";
 import { cleanFormEntries } from "@/utils/formUtils";
+import { revalidatePath } from "next/cache";
 import nodemailer from "nodemailer";
 
 export async function createProject(prevState, formData) {
@@ -50,5 +53,29 @@ export async function createProject(prevState, formData) {
     return {
         success: true,
         message: "Project created successfully",
+    }
+}
+
+
+export async function addNote(id, prevState, formData) {
+    const note = formData.get("note");
+
+    try {
+        await connectDB();
+        await Note.create({
+            note,
+            projectId: id,
+        })
+
+        revalidatePath('/', "layout")
+
+        return {
+            success: true,
+            message: "Note added successfully",
+        }
+    } catch (error) {
+        return {
+            message: "Failed to add note"
+        }
     }
 }

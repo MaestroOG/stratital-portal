@@ -3,6 +3,7 @@ import "../globals.css";
 import MainContent from "@/components/dashboardComponents/MainContent";
 import Header from "@/components/dashboardComponents/Header";
 import TawkToChat from "@/components/TawkToChat";
+import { getUser } from "@/lib/user";
 
 export const metadata = {
   title: "Stratital Client Portal",
@@ -11,6 +12,7 @@ export const metadata = {
 
 
 export default function RootLayout({ children }) {
+  const user = getUser();
   return (
     <html lang="en">
       <body
@@ -21,7 +23,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
         </MainContent>
-        <TawkToChat />
+        {user?.role !== 'superadmin' && <TawkToChat />}
       </body>
     </html>
   );

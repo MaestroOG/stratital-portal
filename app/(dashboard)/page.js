@@ -10,7 +10,7 @@ import { Plus, Search } from "lucide-react"
 import { getUser } from "@/lib/user"
 import { getAllUserProjects } from "@/lib/projects"
 import { Suspense } from "react"
-import { camelToNormal } from "@/utils/formUtils"
+import { camelToNormal, capitalizeFirst } from "@/utils/formUtils"
 
 export const metadata = {
   title: "Stratital Client Portal"
@@ -66,7 +66,7 @@ const HomePage = async () => {
               <div key={project.id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                 <Badge variant={"secondary"} className={'mb-2'}>{camelToNormal(project.service)}</Badge>
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{project.projectTitle}</h5>
-                <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{project.desc || ""}</p>
+                <p className="mb-3 font-medium text-red animate-pulse">• {capitalizeFirst(project?.status) || ""}</p>
                 <Link href={`/projects/${project?._id}`}><Button variant={"default"}>Project Details</Button></Link>
               </div>
             ))}

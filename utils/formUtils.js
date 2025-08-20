@@ -12,3 +12,8 @@ export function cleanFormEntries(entries) {
 export function camelToNormal(str) {
     return str.replace(/([a-z])([A-Z][a-z])/g, "$1 $2").replace(/([a-z])([A-Z]+$)/g, "$1 $2").replace(/^./, (s) => s.toUpperCase()).trim();
 }
+
+export function capitalizeFirst(str) {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}

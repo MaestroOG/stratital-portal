@@ -40,7 +40,7 @@ export async function addUser(prevState, formData) {
 
         await transporter.sendMail({
             from: `portal@stratital.com`,
-            to: 'portal@stratital.com',
+            to: ['portal@stratital.com', user?.email],
             subject: "Partnership Application Update – Accepted",
             html,
         })

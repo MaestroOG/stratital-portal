@@ -174,7 +174,7 @@ export const SignUpUser = async (formValues, prevState, formData) => {
 
     await transporter.sendMail({
       from: `portal@stratital.com`,
-      to: 'portal@stratital.com',
+      to: ['portal@stratital.com', email],
       subject: "New User Application – Review Required",
       html,
     })

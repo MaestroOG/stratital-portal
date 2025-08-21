@@ -325,7 +325,7 @@ export const generateRejectEmailTemplate = () => {
 }
 
 
-export const generateProjectCreatedEmailTemplate = (companyName, projectTitle, service) => {
+export const generateProjectCreatedEmailTemplate = (companyName, projectTitle, service, packageSelected) => {
   return `
   <!DOCTYPE html>
 <html lang="en">
@@ -365,6 +365,10 @@ export const generateProjectCreatedEmailTemplate = (companyName, projectTitle, s
                 <tr>
                   <td width="150" style="font-weight:bold; padding:8px 0;">Service:</td>
                   <td style="padding:8px 0; color:#374151;">${service.replace(/([a-z])([A-Z][a-z])/g, "$1 $2").replace(/([a-z])([A-Z]+$)/g, "$1 $2").replace(/^./, (s) => s.toUpperCase()).trim()}</td>
+                </tr>
+                <tr>
+                  <td width="150" style="font-weight:bold; padding:8px 0;">Package Selected:</td>
+                  <td style="padding:8px 0; color:#374151;">${packageSelected}</td>
                 </tr>
               </table>
 

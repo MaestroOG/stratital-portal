@@ -26,7 +26,7 @@ export async function createProject(prevState, formData) {
 
     const cleanedEntries = cleanFormEntries(entries);
 
-    const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service);
+    const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected);
 
     await Project.create({
         projectTitle,
@@ -47,7 +47,7 @@ export async function createProject(prevState, formData) {
 
     await transporter.sendMail({
         from: `portal@stratital.com`,
-        to: 'portal@stratital.com',
+        to: [user?.email, 'portal@stratital.com'],
         subject: "Project Created - Stratital",
         html,
     })

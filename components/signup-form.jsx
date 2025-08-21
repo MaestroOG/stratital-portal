@@ -170,7 +170,7 @@ export function SignUpForm({
 
                             <div className="grid gap-3">
                                 <Label htmlFor="socialMediaLinks" className={'text-heading'}>Social Media Links (if applicable)</Label>
-                                <Textarea id="socialMediaLinks" value={formValues.socialMediaLinks} onChange={handleChange} name="socialMediaLinks" required className={'border border-gray-300'} />
+                                <Textarea id="socialMediaLinks" value={formValues.socialMediaLinks} onChange={handleChange} name="socialMediaLinks" className={'border border-gray-300'} />
                             </div>
 
                             <div className="grid gap-3">
@@ -239,7 +239,7 @@ export function SignUpForm({
 
                             <div className="grid gap-3">
                                 <Label htmlFor="monthlyProjectVolume" className={'text-heading'}>Anticipated Monthly Project Volume for Stratital (Optional)</Label>
-                                <Input id="monthlyProjectVolume" value={formValues.monthlyProjectVolume} onChange={handleChange} type="text" name="monthlyProjectVolume" required className={'border border-gray-300'} />
+                                <Input id="monthlyProjectVolume" value={formValues.monthlyProjectVolume} onChange={handleChange} type="text" name="monthlyProjectVolume" className={'border border-gray-300'} />
                             </div>
 
                             <div className="grid gap-3">
@@ -261,7 +261,7 @@ export function SignUpForm({
 
                             <div className="grid gap-3">
                                 <Label htmlFor="challengeDetail" className={'text-heading'}>If yes, what challenges have you faced?</Label>
-                                <Textarea id="challengeDetail" value={formValues.challengeDetail} onChange={handleChange} name="challengeDetail" required className={'border border-gray-300'} />
+                                <Textarea id="challengeDetail" value={formValues.challengeDetail} onChange={handleChange} name="challengeDetail" required={formValues.isUsingWhiteLabelProvider === 'yes' ? true : false} className={'border border-gray-300'} />
                             </div>
 
                             <div className="flex gap-3">

@@ -13,6 +13,7 @@ import {
 import Image from 'next/image'
 import { useActionState, useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
+import Link from 'next/link';
 
 const PendingUserTable = ({ pendingUsers }) => {
     const [open, setOpen] = useState(false);
@@ -54,7 +55,7 @@ const PendingUserTable = ({ pendingUsers }) => {
                                     <Image src={'/cancel.svg'} width={24} height={24} alt='cancel' />
                                 </Button>
                             </form>
-                            <Button variant={'secondary'}><Image src={'/eye-open.svg'} width={24} height={24} alt='cancel' /></Button>
+                            <Link href={`/pending-users/${user?._id}`}><Button variant={'secondary'}><Image src={'/eye-open.svg'} width={24} height={24} alt='cancel' /></Button></Link>
                         </TableCell>
                     </TableRow>
                 ))}

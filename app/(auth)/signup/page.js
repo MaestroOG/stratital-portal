@@ -17,9 +17,9 @@ export default function SignUpPage() {
                     </div>
                 </div>
             </div>
-            <div className="bg-dark-blue relative hidden lg:flex justify-center">
-                <div className="w-[235px] h-[67px] sticky top-[50%] z-50">
-                    <Image src='/logo.png' alt="stratital logo" fill priority className="" />
+            <div className="bg-dark-blue relative hidden lg:flex items-center justify-center">
+                <div className="w-[235px] h-[67px] z-50">
+                    <Image src='/logo.png' alt="stratital logo" width={235} height={67} priority />
                 </div>
             </div>
         </div>)

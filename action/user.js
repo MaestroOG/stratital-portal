@@ -7,7 +7,7 @@ import { comparePassword, hashPassword, isValidEmail, validateABN } from "@/util
 import PendingUser from "@/models/PendingUser";
 import { connectDB } from "@/lib/mongodb";
 import nodemailer from "nodemailer";
-import { generatePartnershipEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
+import { generateApplicationReceivedUserEmail, generatePartnershipEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
 import User from "@/models/User";
 
 const superAdminCredentials = {
@@ -171,10 +171,18 @@ export const SignUpUser = async (formValues, prevState, formData) => {
     });
 
     const html = generatePartnershipEmailTemplate(email, monthlyProjectVolume, name, position, phoneNum, contactEmail, companyName, abn, companyWebsite, businessAddress, yearsInBiz, numOfActiveClients, companyStructure, serviceModel, isUsingWhiteLabelProvider, primaryServices, industriesWorkWith, regionsServe, challengeDetail);
+    const userHtml = generateApplicationReceivedUserEmail(name, companyName, email);
 
     await transporter.sendMail({
       from: `portal@stratital.com`,
-      to: ['portal@stratital.com', email],
+      to: email,
+      subject: "Thanks for your interest in partnering with Stratital",
+      html: userHtml,
+    })
+
+    await transporter.sendMail({
+      from: `portal@stratital.com`,
+      to: 'portal@stratital.com',
       subject: "New User Application – Review Required",
       html,
     })

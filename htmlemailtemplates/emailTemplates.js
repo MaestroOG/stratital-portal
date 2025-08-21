@@ -394,3 +394,114 @@ export const generateProjectCreatedEmailTemplate = (companyName, projectTitle, s
 
   `;
 }
+
+export const generateApplicationReceivedUserEmail = (name, companyName, email) => {
+  return `
+  <!DOCTYPE html>
+<html lang="en" style="margin:0;padding:0;">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thank you for your interest</title>
+  <style>
+    /* Prevent iOS auto-link styling */
+    a[x-apple-data-detectors] { color: inherit !important; text-decoration: none !important; }
+    /* Dark mode hints (some clients respect this) */
+    @media (prefers-color-scheme: dark) {
+      .bg { background: #0b0c10 !important; }
+      .card { background: #121317 !important; }
+      .text { color: #e8e8ea !important; }
+      .muted { color: #b8bac1 !important; }
+      .btn { background: #2563eb !important; color: #ffffff !important; }
+      .divider { border-color: #2a2d36 !important; }
+    }
+  </style>
+</head>
+<body class="bg" style="margin:0;padding:0;background:#f4f6fa;">
+  <!-- Wrapper -->
+  <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#f4f6fa;margin:0;padding:30px 0;">
+    <tr>
+      <td align="center" style="padding:0 16px;">
+        <!-- Card -->
+        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="max-width:640px;background:#ffffff;border-radius:12px;overflow:hidden;" class="card">
+          
+
+          <!-- Hero -->
+          <tr>
+            <td style="padding:32px 28px 8px 28px;">
+              <h1 class="text" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:24px;line-height:32px;color:#0f172a;font-weight:700;">
+                Thanks for your interest, ${name}!
+              </h1>
+            </td>
+          </tr>
+
+          <!-- Message -->
+          <tr>
+            <td style="padding:0 28px 8px 28px;">
+              <p class="text" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#1f2937;">
+                We’ve received your partner application for <strong>${companyName}</strong> and our team is now reviewing your information.
+              </p>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="padding:0 28px 16px 28px;">
+              <p class="muted" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:22px;color:#6b7280;">
+                You’ll hear from us shortly with the next steps. In the meantime, feel free to reply to this email if you have any questions.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td style="padding:8px 28px 0 28px;">
+              <hr class="divider" style="border:none;border-top:1px solid #e5e7eb;margin:0;">
+            </td>
+          </tr>
+
+          <!-- Summary (optional) -->
+          <tr>
+            <td style="padding:16px 28px 28px 28px;">
+              <p class="muted" style="margin:0 0 10px 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#9ca3af;">
+                Application Summary
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:22px;color:#374151;">
+                <tr>
+                  <td style="padding:6px 0;width:180px;color:#6b7280;">Applicant</td>
+                  <td style="padding:6px 0;font-weight:600;" class="text">${name}</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;color:#6b7280;">Company</td>
+                  <td style="padding:6px 0;font-weight:600;" class="text">${companyName}$</td>
+                </tr>
+                <tr>
+                  <td style="padding:6px 0;color:#6b7280;">Email</td>
+                  <td style="padding:6px 0;" class="text"><a href="mailto:${email}" style="color:#2563eb;text-decoration:none;">${email}</a></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding:22px;background:#f8fafc;">
+              <p class="muted" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7280;">
+                Stratital · Australia
+              </p>
+              <p class="muted" style="margin:8px 0 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:18px;color:#6b7280;">
+                Need help? <a href="mailto:support@stratital.com" style="color:#2563eb;text-decoration:none;">support@stratital.com</a>
+              </p>
+            </td>
+          </tr>
+        </table>
+        <!-- /Card -->
+      </td>
+    </tr>
+  </table>
+  <!-- /Wrapper -->
+</body>
+</html>
+
+  `;
+}

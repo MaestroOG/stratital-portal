@@ -46,7 +46,7 @@ export async function createProject(prevState, formData) {
     })
 
     await transporter.sendMail({
-        from: `portal@stratital.com`,
+        from: `stratital.portal@gmail.com`,
         to: [user?.email, 'portal@stratital.com'],
         subject: "Project Created - Stratital",
         html,

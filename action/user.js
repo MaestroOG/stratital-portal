@@ -174,14 +174,14 @@ export const SignUpUser = async (formValues, prevState, formData) => {
     const userHtml = generateApplicationReceivedUserEmail(name, companyName, email);
 
     await transporter.sendMail({
-      from: `portal@stratital.com`,
+      from: `stratital.portal@gmail.com`,
       to: email,
       subject: "Thanks for your interest in partnering with Stratital",
       html: userHtml,
     })
 
     await transporter.sendMail({
-      from: `portal@stratital.com`,
+      from: `stratital.portal@gmail.com`,
       to: 'portal@stratital.com',
       subject: "New User Application – Review Required",
       html,

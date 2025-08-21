@@ -38,7 +38,7 @@ export async function rejectUser(prevState, formData) {
         const html = generateRejectEmailTemplate();
 
         await transporter.sendMail({
-            from: `portal@stratital.com`,
+            from: `stratital.portal@gmail.com`,
             to: ['portal@stratital.com', user?.email],
             subject: "Partnership Application Update – Rejected",
             html,

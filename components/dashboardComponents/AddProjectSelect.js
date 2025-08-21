@@ -29,7 +29,7 @@ export default function AddProjectSelect() {
             </SelectTrigger>
             <SelectContent>
                 {yourProjects.map(project => (
-                    <SelectItem key={project.name} value={project.name}>{project.name}</SelectItem>
+                    <SelectItem key={project.projectTitle} value={project.projectTitle}>{project.projectTitle}</SelectItem>
                 ))}
             </SelectContent>
         </Select>

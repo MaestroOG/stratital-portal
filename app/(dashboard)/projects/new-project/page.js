@@ -2,14 +2,15 @@
 import AddProjectSelect from '@/components/dashboardComponents/AddProjectSelect'
 import Container from '@/components/dashboardComponents/Container'
 import NewProjectForm from '@/components/new-project-form';
-import { formConfig } from '@/utils/formConfig';
+import { formConfig, pricingConfig } from '@/utils/formConfig';
 
 export const metadata = {
     title: "Add a New Project"
 }
 
-const NewProjectPage = ({ searchParams }) => {
-    const service = searchParams.service?.toLowerCase()
+const NewProjectPage = async ({ searchParams }) => {
+    const { service } = await searchParams;
+    const formattedService = service?.toLowerCase()
         .split(' ')
         .map((word, index) => {
             if (index === 0) return word;
@@ -17,7 +18,9 @@ const NewProjectPage = ({ searchParams }) => {
         })
         .join('') || "";
 
-    const fields = formConfig[service];
+    const fields = formConfig[formattedService];
+    const pricing = pricingConfig[formattedService];
+
     return (
         <>
             <Container className={'bg-white p-4 rounded-lg'}>
@@ -27,11 +30,11 @@ const NewProjectPage = ({ searchParams }) => {
                 </div>
             </Container>
 
-            {!fields && service.length !== 0 && <Container className={'bg-white rounded-lg p-4'}>
+            {!fields && formattedService.length !== 0 && <Container className={'bg-white rounded-lg p-4'}>
                 <p className="text-red-500">No form found for this service.</p>
             </Container>}
 
-            <NewProjectForm service={service} fields={fields} />
+            <NewProjectForm service={formattedService} pricing={pricing?.pricing} fields={fields} />
         </>
     )
 }

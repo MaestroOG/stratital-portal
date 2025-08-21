@@ -13,6 +13,7 @@ export async function createProject(prevState, formData) {
     const user = await getUser();
     const service = formData.get("service");
     const projectTitle = formData.get("projectTitle");
+    const packageSelected = formData.get("selectedPackage")
     const entries = {};
 
     // Turn formData into a plain object
@@ -33,6 +34,7 @@ export async function createProject(prevState, formData) {
         fields: cleanedEntries,
         status: 'pending',
         createdBy: user?._id,
+        packageSelected
     })
 
     const transporter = nodemailer.createTransport({

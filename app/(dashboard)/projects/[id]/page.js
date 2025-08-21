@@ -10,9 +10,10 @@ export const metadata = {
 }
 
 const ProjectDetailPage = async ({ params }) => {
+    const { id } = await params;
     const user = await getUser();
-    const projectDetails = await getProjectById(params.id);
-    const projectNotes = await getNotesByProjectId(params.id);
+    const projectDetails = await getProjectById(id);
+    const projectNotes = await getNotesByProjectId(id);
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
 
@@ -46,6 +47,9 @@ const ProjectDetailPage = async ({ params }) => {
                 </div>
                 <div className='mt-6'>
                     <ul>
+                        {projectNotes?.length === 0 && (
+                            <p className='font-medium text-center p-6'>No Admin Notes For Now</p>
+                        )}
                         {projectNotes?.map((note, index) => (
                             <li key={index} className='mb-4'>
                                 <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)}</p>

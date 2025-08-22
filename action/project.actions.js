@@ -16,8 +16,6 @@ export async function createProject(prevState, formData) {
     const packageSelected = formData.get("selectedPackage")
     const entries = {};
 
-    console.log(packageSelected, "packageSelected")
-
     // Turn formData into a plain object
     formData.forEach((value, key) => {
         if (key !== "service") {
@@ -29,6 +27,8 @@ export async function createProject(prevState, formData) {
     const cleanedEntries = cleanFormEntries(entries);
 
     const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected);
+
+    await connectDB();
 
     await Project.create({
         projectTitle,

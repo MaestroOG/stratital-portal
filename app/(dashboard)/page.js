@@ -1,7 +1,6 @@
 import Container from "@/components/dashboardComponents/Container"
 import ProjectCard from "@/components/dashboardComponents/ProjectCard"
 import { Button } from "@/components/ui/button"
-import { yourProjects } from "@/constants"
 import { Badge } from "@/components/ui/badge"
 import IntroText from "@/components/IntroText"
 import Link from "next/link"

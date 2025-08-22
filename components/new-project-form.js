@@ -1,7 +1,7 @@
 'use client';
 
 import { createProject } from '@/action/project.actions';
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
 import { Textarea } from './ui/textarea';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -20,6 +20,8 @@ import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 const NewProjectForm = ({ service, fields, pricing }) => {
 
     const [state, formAction, isPending] = useActionState(createProject, {})
+
+    const [selectedPackage, setSelectedPackage] = useState("");
 
     return (
         <>
@@ -73,8 +75,10 @@ const NewProjectForm = ({ service, fields, pricing }) => {
                                 <Label className="block font-medium text-lg">
                                     Select Package <span className="text-red-500">*</span>
                                 </Label>
-                                <RadioGroup name="selectedPackage" required className="space-y-3">
+                                <RadioGroup value={selectedPackage}
+                                    onValueChange={(val) => setSelectedPackage(val)} name="selectedPackage" required className="space-y-3">
                                     {pricing?.map((priceOption) => (
+
                                         <div key={priceOption.id} className='border border-gray-200 rounded-lg hover:border-red transition-colors'>
                                             <div className="flex items-start space-x-3 p-4 ">
                                                 <RadioGroupItem
@@ -95,7 +99,7 @@ const NewProjectForm = ({ service, fields, pricing }) => {
                                                         </div>
                                                     </Label>
                                                     <span className="font-bold text-red text-lg">
-                                                        {priceOption.price}
+                                                        {priceOption.price}{" "}
                                                         <span className="text-sm font-normal text-gray-500">
                                                             {priceOption.period}
                                                         </span>
@@ -103,8 +107,23 @@ const NewProjectForm = ({ service, fields, pricing }) => {
                                                 </div>
                                             </div>
                                         </div>
+
                                     ))}
                                 </RadioGroup>
+                                {selectedPackage.startsWith("Custom") && (
+                                    <div className="flex flex-col gap-2">
+                                        <Label className="block font-medium">
+                                            Custom Price <span className="text-red-500">*</span>
+                                        </Label>
+                                        <Input
+                                            type="text"
+                                            name="customPrice"
+                                            required
+                                            placeholder="Enter your custom price"
+                                            className="border border-gray-300"
+                                        />
+                                    </div>
+                                )}
                             </div>
                         )}
                         {service && <Button key={service} disabled={isPending} type="submit">Submit</Button>}

@@ -114,11 +114,18 @@ export const pricingConfig = {
             },
             {
                 id: "local-seo-bundle",
-                label: "Local SEO - Bundle Discount",
+                label: "Local SEO",
                 price: "$350",
                 period: "/month",
                 description: "Discounted rate for 2+ services"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     },
 
@@ -133,11 +140,18 @@ export const pricingConfig = {
             },
             {
                 id: "national-seo-bundle",
-                label: "National SEO - Bundle Discount",
+                label: "National SEO",
                 price: "$450",
                 period: "/month",
                 description: "Discounted rate for 2+ services"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     },
 
@@ -152,11 +166,18 @@ export const pricingConfig = {
             },
             {
                 id: "link-building-bundle",
-                label: "Link Building - Bundle Discount",
+                label: "Link Building",
                 price: "$150",
                 period: "/month",
                 description: "Discounted rate for 2+ services"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     },
 
@@ -171,11 +192,18 @@ export const pricingConfig = {
             },
             {
                 id: "google-ads-bundle",
-                label: "Google Advertising - Bundle Discount",
+                label: "Google Advertising",
                 price: "$350",
                 period: "/month",
                 description: "Discounted rate for 2+ services"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     },
 
@@ -190,11 +218,18 @@ export const pricingConfig = {
             },
             {
                 id: "social-ads-bundle",
-                label: "Social Media Advertising - Bundle Discount",
+                label: "Social Media Advertising",
                 price: "$350",
                 period: "/month",
                 description: "Discounted rate for 2+ services"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     },
 
@@ -209,11 +244,18 @@ export const pricingConfig = {
             },
             {
                 id: "social-mgmt-bundle",
-                label: "Social Media Management - Bundle Discount",
+                label: "Social Media Management",
                 price: "$350",
                 period: "/month",
                 description: "Discounted rate for 2+ services"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     },
 
@@ -228,11 +270,18 @@ export const pricingConfig = {
             },
             {
                 id: "lead-gen-bundle",
-                label: "Lead Generation - Bundle Discount",
+                label: "Lead Generation",
                 price: "$350",
                 period: "/month",
                 description: "Discounted rate for 2+ services"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     },
 
@@ -247,7 +296,7 @@ export const pricingConfig = {
             },
             {
                 id: "web-dev-small-bundle",
-                label: "Up to 5 Pages - Bundle Discount",
+                label: "Up to 5 Pages",
                 price: "$550",
                 period: "one-time",
                 description: "Discounted rate for 2+ services"
@@ -261,7 +310,7 @@ export const pricingConfig = {
             },
             {
                 id: "web-dev-medium-bundle",
-                label: "6-10 Pages - Bundle Discount",
+                label: "6-10 Pages",
                 price: "$800",
                 period: "one-time",
                 description: "Discounted rate for 2+ services"
@@ -275,11 +324,18 @@ export const pricingConfig = {
             },
             {
                 id: "web-dev-large-bundle",
-                label: "11+ Pages - Bundle Discount",
+                label: "11+ Pages",
                 price: "$1100",
                 period: "one-time",
                 description: "Discounted rate for 2+ services"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     },
 
@@ -294,11 +350,18 @@ export const pricingConfig = {
             },
             {
                 id: "email-bundle",
-                label: "Email Marketing - Bundle Discount",
+                label: "Email Marketing",
                 price: "$350",
                 period: "/month",
                 description: "Discounted rate for 2+ services"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     },
 
@@ -345,7 +408,14 @@ export const pricingConfig = {
                 price: "$1500",
                 period: "/month",
                 description: "Discounted rate for 2+ resources"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     },
 
@@ -392,7 +462,14 @@ export const pricingConfig = {
                 price: "$1800",
                 period: "/month",
                 description: "Discounted rate for 2+ resources"
-            }
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Pricing",
+                price: "Custom",
+                period: "",
+                description: ""
+            },
         ]
     }
 }

@@ -61,7 +61,7 @@ const PendingUserTable = ({ pendingUsers }) => {
                 ))}
             </TableBody>
 
-            <Dialog open={open} onOpenChange={setOpen}>
+            <Dialog open={!!message.success} onOpenChange={setOpen}>
                 <DialogContent>
                     <DialogHeader className={'flex items-center justify-center flex-col gap-3'}>
                         <DialogTitle><Image width={100} height={100} src={'/check-circle.svg'} alt="check-circle" /></DialogTitle>

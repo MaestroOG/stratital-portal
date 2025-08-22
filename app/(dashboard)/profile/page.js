@@ -1,12 +1,11 @@
+import { getUser } from '@/lib/user'
 import Container from '@/components/dashboardComponents/Container';
-import { getPendingUserById } from '@/lib/admin';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Phone, Globe, Building2, MapPin, Link as LinkIcon } from "lucide-react";
 
-const PendingUserDetailsPage = async ({ params }) => {
-    const { id } = await params;
-    const userDetail = await getPendingUserById(id);
 
+const ProfilePage = async () => {
+    const userDetail = await getUser();
     return (
         <Container className={'bg-white p-4 flex items-center justify-center'}>
             <Card className="w-full max-w-3xl shadow-lg rounded-2xl">
@@ -73,4 +72,4 @@ const PendingUserDetailsPage = async ({ params }) => {
     )
 }
 
-export default PendingUserDetailsPage
+export default ProfilePage

@@ -45,7 +45,8 @@ export const LoginUser = async (prevState, formData) => {
     (await cookies()).set("user", JSON.stringify(superAdminCredentials), {
       httpOnly: false,
       secure: true,
-      path: '/'
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7
     });
 
     redirect('/')
@@ -82,7 +83,8 @@ export const LoginUser = async (prevState, formData) => {
     (await cookies()).set("user", JSON.stringify(user), {
       httpOnly: false,
       secure: true,
-      path: '/'
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7
     });
 
     redirect('/');

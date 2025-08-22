@@ -88,10 +88,12 @@ const Sidebar = () => {
                 })}
             </div>
 
-            <button className="max-w-3xs p-4 rounded-sm flex items-center gap-2 justify-center bg-red text-white fixed bottom-5 cursor-pointer">
+
+            <Link href={'/profile'} className="max-w-3xs p-4 rounded-sm flex items-center gap-2 justify-center bg-red text-white fixed bottom-5 cursor-pointer">
                 <Settings size={"32px"} />
                 <span className="text-white text-lg font-semibold hidden md:block">Profile Setting</span>
-            </button>
+            </Link>
+
         </aside>
     );
 };

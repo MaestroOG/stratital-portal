@@ -111,7 +111,7 @@ const Header = () => {
                     <DrawerFooter className={'w-full'}>
                         <button className="max-sm:w-full max-w-3xs p-4 rounded-sm flex items-center gap-2 justify-center bg-red text-white fixed bottom-5 cursor-pointer">
                             <Settings size={"32px"} />
-                            <span className="text-white text-lg font-semibold">Profile Setting</span>
+                            <Link href={'/profile'}><span className="text-white text-lg font-semibold">Profile Setting</span></Link>
                         </button>
                     </DrawerFooter>
                 </DrawerContent>

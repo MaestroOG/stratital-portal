@@ -16,6 +16,8 @@ export async function createProject(prevState, formData) {
     const packageSelected = formData.get("selectedPackage")
     const entries = {};
 
+    console.log(packageSelected, "packageSelected")
+
     // Turn formData into a plain object
     formData.forEach((value, key) => {
         if (key !== "service") {

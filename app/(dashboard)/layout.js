@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
         </MainContent>
-        {user?.role === 'user' && <TawkToChat />}
+        {user?.role !== 'superadmin' && <TawkToChat />}
       </body>
     </html>
   );

@@ -53,16 +53,6 @@ const Header = () => {
             title: "Project",
             href: "/projects",
         },
-        {
-            icon: <ClipboardCheck />,
-            title: "Website Audit",
-            href: "/audits",
-        },
-        {
-            icon: <Video />,
-            title: "How-To Videos",
-            href: "/how-to",
-        },
         ...(user?.role === "superadmin"
             ? [
                 {
@@ -74,7 +64,7 @@ const Header = () => {
             : []),
     ]
     return (
-        <header className='bg-dark-blue w-full px-8 py-9 flex items-center justify-between gap-4 sticky top-0 z-50'>
+        <header className='bg-dark-blue w-full px-8 py-2 md:py-9 flex items-center justify-between gap-4 sticky top-0 z-50'>
             {/* <div className='text-white items-center gap-2.5 hidden lg:flex'>
                 <House className='hidden lg:flex' />
                 <span className='text-xl font-medium'>Welcome To Stratital</span>
@@ -109,10 +99,16 @@ const Header = () => {
                         </div>
                     </DrawerHeader>
                     <DrawerFooter className={'w-full'}>
-                        <button className="max-sm:w-full max-w-3xs p-4 rounded-sm flex items-center gap-2 justify-center bg-red text-white fixed bottom-5 cursor-pointer">
-                            <Settings size={"32px"} />
-                            <Link href={'/profile'}><span className="text-white text-lg font-semibold">Profile Setting</span></Link>
-                        </button>
+                        <DrawerClose asChild>
+                            <Link href="/profile">
+                                <Button className="flex items-center gap-2 w-full">
+                                    <Settings size={32} />
+                                    <span className="text-white text-lg font-semibold">
+                                        Profile Setting
+                                    </span>
+                                </Button>
+                            </Link>
+                        </DrawerClose>
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
@@ -131,6 +127,7 @@ const Header = () => {
                         {user && <Image src={user?.avatar || 'placeholder-avatar.svg'} width={40} height={40} className='rounded-full cursor-pointer' priority alt='avatar' />}
                     </PopoverTrigger>
                     <PopoverContent>
+                        <Link href={'/profile'}><Button variant={'outline'} className={'mb-2 w-full'}>Profile</Button></Link>
                         <form action={formAction}>
                             <Button disabled={isPending} type="submit" className={'w-full'}>Sign Out</Button>
                         </form>

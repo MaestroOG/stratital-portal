@@ -1,5 +1,7 @@
 import Container from '@/components/dashboardComponents/Container'
+import ProjectStatusForms from '@/components/project-status-forms'
 import NoteBox from '@/components/superadminComponents/NoteBox'
+import { Button } from '@/components/ui/button'
 import { getNotesByProjectId, getProjectById } from '@/lib/projects'
 import { getUser } from '@/lib/user'
 import { camelToNormal, capitalizeFirst, formatDateToYMD } from '@/utils/formUtils'
@@ -11,21 +13,24 @@ export const metadata = {
 
 const ProjectDetailPage = async ({ params }) => {
     const { id } = await params;
-    const user = await getUser();
     const projectDetails = await getProjectById(id);
     const projectNotes = await getNotesByProjectId(id);
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
 
+
     return (
         <>
             <Container className={'bg-white p-4'}>
-                <div className='flex items-end justify-between'>
+                <div className='flex md:flex-row flex-col items-start md:items-end justify-between'>
                     <div>
-                        <h1 className='text-4xl font-bold'>{projectDetails?.projectTitle}</h1>
+                        <h1 className='text-2xl md:text-4xl font-bold whitespace-nowrap'>{projectDetails?.projectTitle}</h1>
                         <h3 className='mt-2'>{service}</h3>
                     </div>
-                    <p className='text-red font-medium animate-pulse'>• {status}</p>
+                    <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
+                        <p className='text-red font-medium animate-pulse'>• {status}</p>
+                        <ProjectStatusForms projectId={id} />
+                    </div>
                 </div>
                 <div className='grid grid-cols-2 gap-4 mt-6'>
                     <div className='flex flex-col gap-4'>
@@ -43,24 +48,21 @@ const ProjectDetailPage = async ({ params }) => {
 
             <Container className={'bg-white p-4 mt-6'}>
                 <div className='flex items-end justify-between'>
-                    <h1 className='text-4xl font-bold'>Admin Notes</h1>
+                    <h1 className='text-4xl font-bold'>Comments</h1>
                 </div>
                 <div className='mt-6'>
                     <ul>
                         {projectNotes?.length === 0 && (
-                            <p className='font-medium text-center p-6'>No Admin Notes For Now</p>
+                            <p className='font-medium text-center p-6'>No Comments For Now</p>
                         )}
                         {projectNotes?.map((note, index) => (
                             <li key={index} className='mb-4'>
-                                <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)}</p>
+                                <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)} by {note?.createdBy?.name}</p>
                                 <p className='text-lg font-medium'>{note?.note}</p>
                             </li>
                         ))}
                     </ul>
-
-                    {user?.role === 'superadmin' && (
-                        <NoteBox id={params.id} />
-                    )}
+                    <NoteBox id={params?.id} />
                 </div>
             </Container>
         </>

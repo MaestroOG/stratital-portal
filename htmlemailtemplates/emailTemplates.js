@@ -428,17 +428,19 @@ export const generateApplicationReceivedUserEmail = (name, companyName, email) =
           
 
           <!-- Hero -->
-          <tr>
-            <td style="padding:32px 28px 8px 28px;">
-              <h1 class="text" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:24px;line-height:32px;color:#0f172a;font-weight:700;">
-                Thanks for your interest, ${name}!
-              </h1>
-            </td>
-          </tr>
+          <!-- Hero -->
+<tr>
+  <td style="padding:24px 24px;background:#F33C38;">
+    <h1 style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:24px;line-height:32px;color:#ffffff;font-weight:700;">
+      Thanks for your interest, ${name}!
+    </h1>
+  </td>
+</tr>
+
 
           <!-- Message -->
           <tr>
-            <td style="padding:0 28px 8px 28px;">
+            <td style="padding:16px 28px 8px 28px;">
               <p class="text" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#1f2937;">
                 We’ve received your partner application for <strong>${companyName}</strong> and our team is now reviewing your information.
               </p>
@@ -502,6 +504,5 @@ export const generateApplicationReceivedUserEmail = (name, companyName, email) =
   <!-- /Wrapper -->
 </body>
 </html>
-
   `;
 }

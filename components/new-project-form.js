@@ -26,7 +26,7 @@ const NewProjectForm = ({ service, fields, pricing }) => {
     return (
         <>
             {service && <>
-                <Container className={'bg-white rounded-lg p-4'}>
+                <Container className={'bg-white rounded-lg p-3 md:p-4'}>
                     <form action={formAction} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input type="hidden" name="service" value={service} />
 
@@ -110,16 +110,16 @@ const NewProjectForm = ({ service, fields, pricing }) => {
 
                                     ))}
                                 </RadioGroup>
-                                {selectedPackage.startsWith("Custom") && (
+                                {selectedPackage.startsWith("custom") && (
                                     <div className="flex flex-col gap-2">
                                         <Label className="block font-medium">
-                                            Custom Price <span className="text-red-500">*</span>
+                                            Additional Details <span className="text-red-500">*</span>
                                         </Label>
                                         <Input
                                             type="text"
                                             name="customPrice"
                                             required
-                                            placeholder="Enter your custom price"
+                                            placeholder="Enter any additional details"
                                             className="border border-gray-300"
                                         />
                                     </div>

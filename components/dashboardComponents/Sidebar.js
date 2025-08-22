@@ -40,16 +40,6 @@ const Sidebar = () => {
             title: "Project",
             href: "/projects",
         },
-        {
-            icon: <ClipboardCheck />,
-            title: "Website Audit",
-            href: "/audits",
-        },
-        {
-            icon: <Video />,
-            title: "How-To Videos",
-            href: "/how-to",
-        },
         ...(user?.role === "superadmin"
             ? [
                 {

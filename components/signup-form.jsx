@@ -149,7 +149,7 @@ export function SignUpForm({
                             </div>
 
                             <div className="grid gap-3">
-                                <Label htmlFor="companyWebsite" className={'text-heading'}>Company Website</Label>
+                                <Label htmlFor="companyWebsite" className={'text-heading'}>Company Website (Add https:// in front of the URL)</Label>
                                 <Input id="companyWebsite" value={formValues.companyWebsite} onChange={handleChange} type="url" name="companyWebsite" required className={'border border-gray-300'} />
                             </div>
 

@@ -62,12 +62,14 @@ export async function createProject(prevState, formData) {
 
 
 export async function addNote(id, prevState, formData) {
+    const user = await getUser();
     const note = formData.get("note");
 
     try {
         await connectDB();
         await Note.create({
             note,
+            createdBy: user?._id,
             projectId: id,
         })
 
@@ -81,5 +83,28 @@ export async function addNote(id, prevState, formData) {
         return {
             message: "Failed to add note"
         }
+    }
+}
+
+
+export async function ApproveProject(projectId, prevState, formData) {
+    await connectDB();
+    await Project.findByIdAndUpdate(projectId, { status: 'in-progress' });
+    revalidatePath('/', "layout");
+
+    return {
+        success: true,
+        message: "Project approved successfully",
+    }
+}
+
+export async function RejectProject(projectId, prevState, formData) {
+    await connectDB();
+    await Project.findByIdAndUpdate(projectId, { status: 'rejected' });
+    revalidatePath('/', "layout");
+
+    return {
+        success: true,
+        message: "Project rejected successfully",
     }
 }

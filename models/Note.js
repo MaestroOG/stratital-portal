@@ -5,6 +5,11 @@ const noteSchema = new Schema({
         type: String,
         required: true,
     },
+    createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
     projectId: {
         type: Schema.Types.ObjectId,
         ref: "Project",

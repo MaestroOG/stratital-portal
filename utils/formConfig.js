@@ -1,7 +1,7 @@
 export const formConfig = {
     localSeo: [
         { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Website URL", name: "websiteUrl", type: "url", required: true },
+        { label: "Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url", required: true },
         { label: "Business Address", name: "businessAddress", type: "textarea", required: true },
         { label: "Service Area", name: "serviceArea", type: "text", required: true },
         { label: "Google Business Profile Link", name: "googleBusinessProfile", type: "url" }
@@ -9,7 +9,7 @@ export const formConfig = {
 
     nationalSeo: [
         { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Website URL", name: "websiteUrl", type: "url", required: true },
+        { label: "Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url", required: true },
         { label: "Target Keywords", name: "targetKeywords", type: "textarea", required: true },
         { label: "Target Locations (Cities/States)", name: "targetLocations", type: "textarea" },
         { label: "Competitor Websites", name: "competitorWebsites", type: "textarea" },
@@ -17,14 +17,14 @@ export const formConfig = {
     ],
 
     linkBuilding: [
-        { label: "Website URL", name: "websiteUrl", type: "url", required: true },
+        { label: "Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url", required: true },
         { label: "Target Pages", name: "targetPages", type: "textarea" },
         { label: "Preferred Industries for Backlinks", name: "preferredIndustries", type: "text" }
     ],
 
     googleAdvertising: [
         { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Website URL", name: "websiteUrl", type: "url", required: true },
+        { label: "Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url", required: true },
         { label: "Advertising Budget (Monthly)", name: "adBudget", type: "number", required: true },
         { label: "Target Audience (Demographics/Interests)", name: "targetAudience", type: "textarea", required: true },
         { label: "Campaign Goals (Leads, Sales, Traffic, etc.)", name: "campaignGoals", type: "textarea", required: true },
@@ -33,7 +33,7 @@ export const formConfig = {
 
     socialMediaAdvertising: [
         { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Website URL", name: "websiteUrl", type: "url", required: true },
+        { label: "Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url", required: true },
         { label: "Preferred Platforms (Facebook, Instagram, LinkedIn, etc.)", name: "preferredPlatforms", type: "text", required: true },
         { label: "Advertising Budget (Monthly)", name: "adBudget", type: "number", required: true },
         { label: "Target Audience (Demographics/Interests)", name: "targetAudience", type: "textarea", required: true },
@@ -56,7 +56,7 @@ export const formConfig = {
 
     'webDesignAndDevelopment': [
         { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Current Website URL (if any)", name: "currentWebsite", type: "url" },
+        { label: "Current Website URL (if any) (Add https:// in front of the URL)", name: "currentWebsite", type: "url" },
         { label: "Type of Website (Business, E-commerce, Portfolio, etc.)", name: "websiteType", type: "text", required: true },
         { label: "Number of Pages (Approximate)", name: "numberOfPages", type: "number" },
         { label: "Design Preferences (Colors, Style, Inspirations)", name: "designPreferences", type: "textarea" },
@@ -67,7 +67,7 @@ export const formConfig = {
 
     emailMarketing: [
         { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Business Website URL", name: "websiteUrl", type: "url" },
+        { label: "Business Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url" },
         { label: "Email Marketing Goal (e.g., Lead Nurturing, Promotions, Newsletters)", name: "marketingGoal", type: "text", required: true },
         { label: "Email List Size (Approximate)", name: "emailListSize", type: "number" },
         { label: "Preferred Email Platform (e.g., Mailchimp, Klaviyo, HubSpot)", name: "emailPlatform", type: "text" },
@@ -78,7 +78,7 @@ export const formConfig = {
 
     virtualAssistanceResources: [
         { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Business Website URL", name: "websiteUrl", type: "url" },
+        { label: "Business Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url" },
         { label: "Type of Assistance Needed (Admin, Digital Marketing, Back-End, Other)", name: "assistanceType", type: "text", required: true },
         { label: "Specific Tasks You Want Help With", name: "taskDetails", type: "textarea", required: true },
         { label: "Preferred Working Hours (Your Timezone)", name: "workingHours", type: "text" },
@@ -89,7 +89,7 @@ export const formConfig = {
 
     'leadGeneration-ColdCalling': [
         { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Business Website URL", name: "websiteUrl", type: "url" },
+        { label: "Business Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url" },
         { label: "Target Industry / Market", name: "targetIndustry", type: "text", required: true },
         { label: "Target Audience (e.g., CEOs, Marketing Managers, Small Businesses)", name: "targetAudience", type: "text", required: true },
         { label: "Geographic Location for Calls", name: "targetLocation", type: "text" },
@@ -121,8 +121,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },
@@ -147,8 +147,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },
@@ -173,8 +173,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },
@@ -199,8 +199,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },
@@ -225,8 +225,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },
@@ -251,8 +251,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },
@@ -277,8 +277,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },
@@ -331,8 +331,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },
@@ -357,8 +357,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },
@@ -411,8 +411,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },
@@ -465,8 +465,8 @@ export const pricingConfig = {
             },
             {
                 id: "custom-bundle",
-                label: "Custom Pricing",
-                price: "Custom",
+                label: "Custom Quote",
+                price: "custom",
                 period: "",
                 description: ""
             },

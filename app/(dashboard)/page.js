@@ -8,7 +8,7 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Plus, Search } from "lucide-react"
 import { getUser } from "@/lib/user"
-import { getAllUserProjects } from "@/lib/projects"
+import { getAllUserProjects, getCompletedProjectsThisMonth, getPendingProjectsThisMonth, getRunningProjectsThisMonth } from "@/lib/projects"
 import { Suspense } from "react"
 import { camelToNormal, capitalizeFirst } from "@/utils/formUtils"
 
@@ -20,7 +20,10 @@ const HomePage = async () => {
 
   const user = await getUser();
   const projects = await getAllUserProjects(user?._id);
-  console.log("User Projects:", projects);
+
+  const completedProjectsThisMonth = await getCompletedProjectsThisMonth();
+  const pendingProjectsThisMonth = await getPendingProjectsThisMonth();
+  const runningProjectsThisMonth = await getRunningProjectsThisMonth();
   return (
     <>
 
@@ -38,10 +41,10 @@ const HomePage = async () => {
 
 
       <Container className={'grid items-stretch place-items-center grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 gap-4 px-9 md:px-0 max-sm:bg-white max-sm:mt-0 max-sm:py-7'}>
-        <ProjectCard success={true} title="Total Projects" desc="All Projects This Month" number={404} />
-        <ProjectCard yellow={true} title={"Running Project"} desc={"Delayed This Month"} number={128} />
-        <ProjectCard title={"Pending"} desc={"Pending This Month"} number={43} />
-        <ProjectCard success={true} title={"Finished Projects"} desc={"Finished This Month"} number={161} />
+        <ProjectCard success={true} title="Total Projects" desc="All Projects This Month" number={projects?.length} />
+        <ProjectCard yellow={true} title={"Running Project"} desc={"In-Progress This Month"} number={runningProjectsThisMonth} />
+        <ProjectCard title={"Pending"} desc={"Pending This Month"} number={pendingProjectsThisMonth} />
+        <ProjectCard success={true} title={"Finished Projects"} desc={"Finished This Month"} number={completedProjectsThisMonth} />
 
 
       </Container>

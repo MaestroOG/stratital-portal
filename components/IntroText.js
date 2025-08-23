@@ -7,22 +7,18 @@ const IntroText = async () => {
     return (
         <Container className={'bg-white p-4 rounded-lg max-sm:mt-0'}>
             <div className="max-w-2xl">
-                <h1 className="font-bold text-2xl md:text-4xl">Welcome to Stratital Client Portal, {user?.name} - {user?.agency || user?.companyName}</h1>
-                <p className="mt-3">This is where you’ll find all the tailored resources, personable support, and proactive advice for your agency to help you confidently scale and fulfill on your opportunities.</p>
-                <p className="mt-2">
-                    From within this portal you can:
-                </p>
-                <ul className="ml-6 list-disc text-detail">
-                    <li>Load and get started on any new project</li>
-                    <li>Get information on any of our services</li>
-                    <li>Reach out to our awesome Customer Service team, 24 hours a day</li>
-                </ul>
-                <p className="mt-4">Once your new project is loaded, our Operations team will be in touch with you within 3 to 5 hours to guide you through the next steps.</p>
+                <h1 className="font-bold text-2xl md:text-4xl">Welcome to the Stratital Portal, {user?.name} - {user?.agency || user?.companyName}</h1>
+                <p className="mt-3">This isn’t just a portal. It’s your direct line to projects, performance, and priority support, all built to keep your agency moving forward without friction.</p>
+                <h3 className='mt-3 text-2xl font-medium'>🚀 Launch Projects Instantly</h3>
+                <p className="mt-1">Submit client campaigns in minutes. Our team picks it up and gets you moving within hours.</p>
+                <h3 className='mt-3 text-2xl font-medium'>📊 Explore Services</h3>
+                <p className="mt-1">From SEO and Google Ads to web development, dive into clear service breakdowns designed to scale your agency.</p>
+                <h3 className='mt-3 text-2xl font-medium'>💬 Support on Demand</h3>
+                <p className="mt-1">Our live chat means no waiting around. Get answers, updates, and next steps whenever you need them.</p>
+                <h3 className='mt-3 text-2xl font-medium'>⏱ Fast-Tracked Delivery</h3>
+                <p className="mt-1">Every new project is picked up by Operations fast. No lag, no downtime, just momentum.</p>
 
-                <p className="mt-4">
-                    If you have any questions or need any assistance, please start an immediate live chat with our Customer Service team in the bottom right-hand corner of this window.</p>
-
-                <p className="mt-4">We look forward to supporting your agency!</p>
+                <p className="mt-4">We can’t wait to support your agency and it’s success.</p>
             </div>
         </Container>
     )

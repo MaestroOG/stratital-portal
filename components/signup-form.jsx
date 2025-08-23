@@ -84,9 +84,9 @@ export function SignUpForm({
         <>
             <form action={formAction} className={cn("flex flex-col gap-6", className)} {...props}>
                 <div className="flex flex-col items-center gap-2 text-center">
-                    <h1 className="text-2xl font-bold">Create your account</h1>
+                    <h1 className="text-2xl font-bold">Become A Partner</h1>
                     <p className="text-muted-foreground text-sm text-balance">
-                        Enter your information below to create your account
+                        Enter your information below to become a partner
                     </p>
                 </div>
 

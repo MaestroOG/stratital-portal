@@ -124,7 +124,7 @@ const Header = () => {
                 <Bell className='text-white cursor-pointer hidden md:block' />
                 <Popover>
                     <PopoverTrigger>
-                        {user && <Image src={user?.avatar || 'placeholder-avatar.svg'} width={40} height={40} className='rounded-full cursor-pointer' priority alt='avatar' />}
+                        {user && <Image src={user?.avatar || '/placeholder-avatar.svg'} width={40} height={40} className='rounded-full cursor-pointer' priority alt='avatar' />}
                     </PopoverTrigger>
                     <PopoverContent>
                         <Link href={'/profile'}><Button variant={'outline'} className={'mb-2 w-full'}>Profile</Button></Link>

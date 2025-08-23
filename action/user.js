@@ -57,7 +57,7 @@ export const LoginUser = async (prevState, formData) => {
 
     if (!user) {
       return {
-        err: "User not found"
+        err: "Username or password incorrect"
       }
     }
 

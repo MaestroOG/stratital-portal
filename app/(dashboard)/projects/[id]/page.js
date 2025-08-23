@@ -12,12 +12,12 @@ export const metadata = {
 }
 
 const ProjectDetailPage = async ({ params }) => {
+    const user = await getUser();
     const { id } = await params;
     const projectDetails = await getProjectById(id);
     const projectNotes = await getNotesByProjectId(id);
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
-
 
     return (
         <>
@@ -29,7 +29,7 @@ const ProjectDetailPage = async ({ params }) => {
                     </div>
                     <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
                         <p className='text-red font-medium animate-pulse'>• {status}</p>
-                        <ProjectStatusForms projectId={id} />
+                        {user?.role === 'superadmin' && <ProjectStatusForms projectId={id} />}
                     </div>
                 </div>
                 <div className='grid grid-cols-2 gap-4 mt-6'>

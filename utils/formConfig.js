@@ -113,13 +113,6 @@ export const pricingConfig = {
                 description: "Standard local SEO optimization"
             },
             {
-                id: "local-seo-bundle",
-                label: "Local SEO",
-                price: "$350",
-                period: "/month",
-                description: "Discounted rate for 2+ services"
-            },
-            {
                 id: "custom-bundle",
                 label: "Custom Quote",
                 price: "custom",
@@ -137,13 +130,6 @@ export const pricingConfig = {
                 price: "$550",
                 period: "/month",
                 description: "Nationwide SEO optimization"
-            },
-            {
-                id: "national-seo-bundle",
-                label: "National SEO",
-                price: "$450",
-                period: "/month",
-                description: "Discounted rate for 2+ services"
             },
             {
                 id: "custom-bundle",
@@ -165,13 +151,6 @@ export const pricingConfig = {
                 description: "High-quality backlink acquisition"
             },
             {
-                id: "link-building-bundle",
-                label: "Link Building",
-                price: "$150",
-                period: "/month",
-                description: "Discounted rate for 2+ services"
-            },
-            {
                 id: "custom-bundle",
                 label: "Custom Quote",
                 price: "custom",
@@ -189,13 +168,6 @@ export const pricingConfig = {
                 price: "$450",
                 period: "/month",
                 description: "Complete Google Ads management"
-            },
-            {
-                id: "google-ads-bundle",
-                label: "Google Advertising",
-                price: "$350",
-                period: "/month",
-                description: "Discounted rate for 2+ services"
             },
             {
                 id: "custom-bundle",
@@ -217,13 +189,6 @@ export const pricingConfig = {
                 description: "Targeted social media campaigns"
             },
             {
-                id: "social-ads-bundle",
-                label: "Social Media Advertising",
-                price: "$350",
-                period: "/month",
-                description: "Discounted rate for 2+ services"
-            },
-            {
                 id: "custom-bundle",
                 label: "Custom Quote",
                 price: "custom",
@@ -241,13 +206,6 @@ export const pricingConfig = {
                 price: "$450",
                 period: "/month",
                 description: "Complete social media management"
-            },
-            {
-                id: "social-mgmt-bundle",
-                label: "Social Media Management",
-                price: "$350",
-                period: "/month",
-                description: "Discounted rate for 2+ services"
             },
             {
                 id: "custom-bundle",
@@ -269,13 +227,6 @@ export const pricingConfig = {
                 description: "Comprehensive lead generation"
             },
             {
-                id: "lead-gen-bundle",
-                label: "Lead Generation",
-                price: "$350",
-                period: "/month",
-                description: "Discounted rate for 2+ services"
-            },
-            {
                 id: "custom-bundle",
                 label: "Custom Quote",
                 price: "custom",
@@ -295,13 +246,6 @@ export const pricingConfig = {
                 description: "Small website development"
             },
             {
-                id: "web-dev-small-bundle",
-                label: "Up to 5 Pages",
-                price: "$550",
-                period: "one-time",
-                description: "Discounted rate for 2+ services"
-            },
-            {
                 id: "web-dev-medium",
                 label: "6-10 Pages - Single Service",
                 price: "$850",
@@ -309,25 +253,11 @@ export const pricingConfig = {
                 description: "Medium website development"
             },
             {
-                id: "web-dev-medium-bundle",
-                label: "6-10 Pages",
-                price: "$800",
-                period: "one-time",
-                description: "Discounted rate for 2+ services"
-            },
-            {
                 id: "web-dev-large",
                 label: "11+ Pages - Single Service",
                 price: "$1200",
                 period: "one-time",
                 description: "Large website development"
-            },
-            {
-                id: "web-dev-large-bundle",
-                label: "11+ Pages",
-                price: "$1100",
-                period: "one-time",
-                description: "Discounted rate for 2+ services"
             },
             {
                 id: "custom-bundle",
@@ -349,13 +279,6 @@ export const pricingConfig = {
                 description: "Complete email marketing campaigns"
             },
             {
-                id: "email-bundle",
-                label: "Email Marketing",
-                price: "$350",
-                period: "/month",
-                description: "Discounted rate for 2+ services"
-            },
-            {
                 id: "custom-bundle",
                 label: "Custom Quote",
                 price: "custom",
@@ -375,13 +298,6 @@ export const pricingConfig = {
                 description: "Part-time virtual assistance"
             },
             {
-                id: "va-20h-bundle",
-                label: "20 Hours/Month - Multiple Resources",
-                price: "$450",
-                period: "/month",
-                description: "Discounted rate for 2+ resources"
-            },
-            {
                 id: "va-40h-single",
                 label: "40 Hours/Month - Single Resource",
                 price: "$900",
@@ -389,25 +305,11 @@ export const pricingConfig = {
                 description: "Full-time virtual assistance"
             },
             {
-                id: "va-40h-bundle",
-                label: "40 Hours/Month - Multiple Resources",
-                price: "$800",
-                period: "/month",
-                description: "Discounted rate for 2+ resources"
-            },
-            {
                 id: "va-80h-single",
                 label: "80 Hours/Month - Single Resource",
                 price: "$1600",
                 period: "/month",
                 description: "Extended virtual assistance"
-            },
-            {
-                id: "va-80h-bundle",
-                label: "80 Hours/Month - Multiple Resources",
-                price: "$1500",
-                period: "/month",
-                description: "Discounted rate for 2+ resources"
             },
             {
                 id: "custom-bundle",
@@ -429,13 +331,6 @@ export const pricingConfig = {
                 description: "Part-time cold calling service"
             },
             {
-                id: "cold-call-20h-bundle",
-                label: "20 Hours/Month - Multiple Resources",
-                price: "$550",
-                period: "/month",
-                description: "Discounted rate for 2+ resources"
-            },
-            {
                 id: "cold-call-40h-single",
                 label: "40 Hours/Month - Single Resource",
                 price: "$1100",
@@ -443,25 +338,11 @@ export const pricingConfig = {
                 description: "Full-time cold calling service"
             },
             {
-                id: "cold-call-40h-bundle",
-                label: "40 Hours/Month - Multiple Resources",
-                price: "$1000",
-                period: "/month",
-                description: "Discounted rate for 2+ resources"
-            },
-            {
                 id: "cold-call-80h-single",
                 label: "80 Hours/Month - Single Resource",
                 price: "$1950",
                 period: "/month",
                 description: "Extended cold calling service"
-            },
-            {
-                id: "cold-call-80h-bundle",
-                label: "80 Hours/Month - Multiple Resources",
-                price: "$1800",
-                period: "/month",
-                description: "Discounted rate for 2+ resources"
             },
             {
                 id: "custom-bundle",

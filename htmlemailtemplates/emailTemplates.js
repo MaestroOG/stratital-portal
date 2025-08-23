@@ -159,7 +159,7 @@ export const generatePartnershipEmailTemplate = (email, monthlyProjectVolume, na
                 </table>
 
                       <p style="margin:14px 0 0; font-size:12px; color:#6b7280;">
-                        Manage this request in the <a href="http://stratital-portal.vercel.app/login" style="color:#2563eb;">Portal</a>.
+                        Manage this request in the <a href="https://portal.stratital.com" style="color:#2563eb;">Portal</a>.
                       </p>
                     </td>
                   </tr>

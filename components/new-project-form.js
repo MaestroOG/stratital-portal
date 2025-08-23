@@ -32,7 +32,7 @@ const NewProjectForm = ({ service, fields, pricing }) => {
 
                         <div className="flex flex-col gap-2">
                             <Label className="block font-medium">
-                                Project Title <span className="text-red-500">*</span>
+                                Project Title <span className="text-red-500">*</span> (Your Reference ID For This Project)
                             </Label>
                             <Input
                                 type="text"

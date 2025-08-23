@@ -1,11 +1,12 @@
 'use server';
 
-import { generateProjectCreatedEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
+import { generateNoteCreatedEmailUserTemplate, generateProjectCreatedEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
 import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
 import Note from "@/models/Note";
 import Project from "@/models/Project";
 import { cleanFormEntries } from "@/utils/formUtils";
+import { createTransporter } from "@/utils/transporterFns";
 import { revalidatePath } from "next/cache";
 import nodemailer from "nodemailer";
 
@@ -74,6 +75,17 @@ export async function addNote(id, prevState, formData) {
         })
 
         revalidatePath('/', "layout")
+
+        const transporter = await createTransporter();
+
+        const html = generateNoteCreatedEmailUserTemplate('https://portal.stratital.com', user?.name);
+
+        await transporter.sendMail({
+            from: `stratital.portal@gmail.com`,
+            to: user?.email,
+            subject: "Note Created - Stratital",
+            html,
+        })
 
         return {
             success: true,

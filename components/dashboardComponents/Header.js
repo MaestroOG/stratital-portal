@@ -64,7 +64,7 @@ const Header = () => {
             : []),
     ]
     return (
-        <header className='bg-dark-blue w-full px-8 py-2 md:py-9 flex items-center justify-between gap-4 sticky top-0 z-50'>
+        <header className='bg-dark-blue w-full px-8 py-2 md:py-9 flex items-center justify-end gap-4 sticky top-0 z-50'>
             {/* <div className='text-white items-center gap-2.5 hidden lg:flex'>
                 <House className='hidden lg:flex' />
                 <span className='text-xl font-medium'>Welcome To Stratital</span>
@@ -112,12 +112,12 @@ const Header = () => {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
-            <div className='max-w-[645px] w-full bg-white hidden md:flex items-center rounded-sm'>
+            {/* <div className='max-w-[645px] w-full bg-white hidden md:flex items-center rounded-sm'>
                 <input type="text" placeholder='Search...' className='w-full border-none outline-none rounded-sm placeholder:text-sm placeholder:text-placeholder bg-white py-3 px-5' />
                 <button className='w-14 h-full bg-red text-white flex items-center justify-center py-3 cursor-pointer rounded-tr-sm rounded-br-sm'>
                     <Search />
                 </button>
-            </div>
+            </div> */}
             <Link href={'/'} className='md:hidden'><Image src='/logo.png' alt="stratital logo" width={135} height={37} priority /></Link>
             <div className='flex items-center gap-4'>
                 <Image src={'/australia.svg'} width={32} height={32} alt='country_flag' className='cursor-pointer hidden md:block' />

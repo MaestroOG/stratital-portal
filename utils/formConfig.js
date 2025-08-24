@@ -241,21 +241,21 @@ export const pricingConfig = {
             {
                 id: "web-dev-small",
                 label: "Up to 5 Pages - Single Service",
-                price: "$650",
+                price: "$850",
                 period: "one-time",
                 description: "Small website development"
             },
             {
                 id: "web-dev-medium",
                 label: "6-10 Pages - Single Service",
-                price: "$850",
+                price: "$950",
                 period: "one-time",
                 description: "Medium website development"
             },
             {
                 id: "web-dev-large",
-                label: "11+ Pages - Single Service",
-                price: "$1200",
+                label: "11-15 Pages - Single Service",
+                price: "$1400",
                 period: "one-time",
                 description: "Large website development"
             },
@@ -326,23 +326,16 @@ export const pricingConfig = {
             {
                 id: "cold-call-20h-single",
                 label: "20 Hours/Month - Single Resource",
-                price: "$600",
+                price: "$800",
                 period: "/month",
                 description: "Part-time cold calling service"
             },
             {
                 id: "cold-call-40h-single",
                 label: "40 Hours/Month - Single Resource",
-                price: "$1100",
+                price: "$1400",
                 period: "/month",
                 description: "Full-time cold calling service"
-            },
-            {
-                id: "cold-call-80h-single",
-                label: "80 Hours/Month - Single Resource",
-                price: "$1950",
-                period: "/month",
-                description: "Extended cold calling service"
             },
             {
                 id: "custom-bundle",

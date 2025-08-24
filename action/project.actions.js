@@ -1,6 +1,7 @@
 'use server';
 
 import { generateNoteCreatedEmailUserTemplate, generateProjectCreatedEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
+import { generateProjectStatusUpdateEmail } from "@/htmlemailtemplates/projectStatusTemplates";
 import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
 import Note from "@/models/Note";
@@ -82,7 +83,7 @@ export async function addNote(id, prevState, formData) {
 
         await transporter.sendMail({
             from: `stratital.portal@gmail.com`,
-            to: user?.email,
+            to: [user?.email, 'stratital.portal@gmail.com'],
             subject: "Note Created - Stratital",
             html,
         })
@@ -100,9 +101,24 @@ export async function addNote(id, prevState, formData) {
 
 
 export async function ApproveProject(projectId, prevState, formData) {
+    const user = await getUser();
     await connectDB();
     await Project.findByIdAndUpdate(projectId, { status: 'in-progress' });
     revalidatePath('/', "layout");
+
+    const project = await Project.findById(projectId);
+
+
+    const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'in-progress', user?.name, project?.updatedAt);
+
+    const transporter = await createTransporter();
+
+    await transporter.sendMail({
+        from: `stratital.portal@gmail.com`,
+        to: [user?.email, 'stratital.portal@gmail.com'],
+        subject: "Project Status Update - Stratital",
+        html,
+    })
 
     return {
         success: true,
@@ -111,9 +127,24 @@ export async function ApproveProject(projectId, prevState, formData) {
 }
 
 export async function RejectProject(projectId, prevState, formData) {
+    const user = await getUser();
     await connectDB();
     await Project.findByIdAndUpdate(projectId, { status: 'rejected' });
     revalidatePath('/', "layout");
+
+    const project = await Project.findById(projectId);
+
+
+    const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'cancelled', user?.name, project?.updatedAt);
+
+    const transporter = await createTransporter();
+
+    await transporter.sendMail({
+        from: `stratital.portal@gmail.com`,
+        to: [user?.email, 'stratital.portal@gmail.com'],
+        subject: "Project Status Update - Stratital",
+        html,
+    })
 
     return {
         success: true,

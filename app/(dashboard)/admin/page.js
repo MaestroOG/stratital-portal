@@ -1,8 +1,10 @@
 import Container from '@/components/dashboardComponents/Container'
 import PendingUserTable from '@/components/superadminComponents/PendingUserTable';
 import UserTable from '@/components/superadminComponents/UserTable';
+import { Button } from '@/components/ui/button';
 
 import { getAllPendingUsers, getAllUsers } from '@/lib/admin'
+import Link from 'next/link';
 
 export const metadata = {
     title: "SuperAdmin Panel - Stratital Client Portal"
@@ -14,6 +16,9 @@ const SuperAdminPage = async () => {
 
     return (
         <main>
+            <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3'}>
+                <Link href={'/admin/projects'}><Button variant={'link'}>See All Projects</Button></Link>
+            </Container>
             <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3'}>
                 <h1 className="font-bold text-2xl md:text-4xl">Pending User Requests</h1>
                 <div className='mt-6'>

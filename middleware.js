@@ -4,7 +4,7 @@ export function middleware(request) {
     const authToken = request.cookies.get("authToken")?.value;
     const { pathname } = request.nextUrl;
 
-    if (pathname.startsWith("/login") || pathname.startsWith("/signup")) {
+    if (pathname.startsWith("/login") || pathname.startsWith("/signup") || pathname.startsWith("/forgot-password") || pathname.startsWith('/reset-password')) {
         return NextResponse.next();
     }
 

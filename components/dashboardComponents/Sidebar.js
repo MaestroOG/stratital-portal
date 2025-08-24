@@ -40,6 +40,11 @@ const Sidebar = () => {
             title: "Project",
             href: "/projects",
         },
+        {
+            icon: <Video />,
+            title: "How-To",
+            href: '/how-to'
+        },
         ...(user?.role === "superadmin"
             ? [
                 {

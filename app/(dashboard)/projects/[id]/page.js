@@ -4,7 +4,7 @@ import NoteBox from '@/components/superadminComponents/NoteBox'
 import { Button } from '@/components/ui/button'
 import { getNotesByProjectId, getProjectById } from '@/lib/projects'
 import { getUser } from '@/lib/user'
-import { camelToNormal, capitalizeFirst, formatDateToYMD } from '@/utils/formUtils'
+import { camelToNormal, capitalizeFirst, formatDateToYMD, timeAgo } from '@/utils/formUtils'
 
 export const metadata = {
     title: 'Project Details',
@@ -18,6 +18,7 @@ const ProjectDetailPage = async ({ params }) => {
     const projectNotes = await getNotesByProjectId(id);
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
+
 
     return (
         <>
@@ -57,7 +58,7 @@ const ProjectDetailPage = async ({ params }) => {
                         )}
                         {projectNotes?.map((note, index) => (
                             <li key={index} className='mb-4'>
-                                <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)} by {note?.createdBy?.name}</p>
+                                <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)} by {note?.createdBy === null ? 'Stratital Team' : note?.createdBy?.name} - {timeAgo(note?.createdAt)}</p>
                                 <p className='text-lg font-medium'>{note?.note}</p>
                             </li>
                         ))}

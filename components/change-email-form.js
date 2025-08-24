@@ -19,9 +19,9 @@ const ChangeEmailForm = ({ email }) => {
     return (
         <>
             <form action={formAction} className="grid gap-2">
-                <Input type="email" name='email' value={email} />
-                <Input type={'email'} name='newEmail' placeholder="Enter new email" />
-                <Button type='submit' disabled={isPending}>Change email</Button>
+                <Input type="email" className={'max-w-2xl'} name='email' value={email} />
+                <Input type={'email'} className={'max-w-2xl'} name='newEmail' placeholder="Enter new email" />
+                <Button type='submit' className={'max-w-2xl'} disabled={isPending}>Change email</Button>
             </form>
             <Dialog open={!!state.message} onOpenChange={() => window.location.reload()} className='bg-white'>
                 <DialogContent>

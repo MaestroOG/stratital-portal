@@ -30,3 +30,31 @@ export function formatDateToYMD(isoDateString) {
 
     return `${year}-${month}-${day}`;
 }
+
+
+export function timeAgo(isoDateString) {
+    const inputDate = new Date(isoDateString);
+    const now = new Date();
+
+    // Difference in seconds
+    const diffInSeconds = Math.floor((now - inputDate) / 1000);
+
+    if (diffInSeconds < 60) return "just now";
+
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes} minute${diffInMinutes > 1 ? "s" : ""} ago`;
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours} hour${diffInHours > 1 ? "s" : ""} ago`;
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays === 1) return "a day ago";
+    if (diffInDays < 7) return `${diffInDays} days ago`;
+
+    const diffInWeeks = Math.floor(diffInDays / 7);
+    if (diffInWeeks === 1) return "a week ago";
+    if (diffInWeeks < 5) return `${diffInWeeks} weeks ago`;
+
+    // fallback -> show exact date using your function
+    return formatDateToYMD(isoDateString);
+}

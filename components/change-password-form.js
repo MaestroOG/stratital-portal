@@ -18,9 +18,9 @@ const ChangePasswordForm = () => {
     return (
         <>
             <form action={formAction} className="grid gap-2">
-                <Input type="password" name='oldPassword' placeholder="Enter old password" />
-                <Input type={'password'} name='newPassword' placeholder="Enter new password" />
-                <Button type='submit' disabled={isPending}>Change password</Button>
+                <Input type="password" className={'max-w-2xl'} name='oldPassword' placeholder="Enter old password" />
+                <Input type={'password'} className={'max-w-2xl'} name='newPassword' placeholder="Enter new password" />
+                <Button type='submit' className={'max-w-2xl'} disabled={isPending}>Change password</Button>
             </form>
             <Dialog open={!!state.message} onOpenChange={() => window.location.reload()} className='bg-white'>
                 <DialogContent>

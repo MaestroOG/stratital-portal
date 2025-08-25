@@ -2,9 +2,10 @@ export const formConfig = {
     localSeo: [
         { label: "Business Name", name: "businessName", type: "text", required: true },
         { label: "Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url", required: true },
-        { label: "Business Address", name: "businessAddress", type: "textarea", required: true },
-        { label: "Service Area", name: "serviceArea", type: "text", required: true },
-        { label: "Google Business Profile Link", name: "googleBusinessProfile", type: "url" }
+        { label: "Target Keywords", name: "targetKeywords", type: "textarea", required: true },
+        { label: "Target Locations (Cities/States)", name: "targetLocations", type: "textarea" },
+        { label: "Competitor Websites", name: "competitorWebsites", type: "textarea" },
+        { label: "Google Business Profile Link (Add https:// in front of the URL)", name: "googleBusinessProfile", type: "url" },
     ],
 
     nationalSeo: [
@@ -13,7 +14,7 @@ export const formConfig = {
         { label: "Target Keywords", name: "targetKeywords", type: "textarea", required: true },
         { label: "Target Locations (Cities/States)", name: "targetLocations", type: "textarea" },
         { label: "Competitor Websites", name: "competitorWebsites", type: "textarea" },
-        { label: "Monthly SEO Goals", name: "seoGoals", type: "textarea" }
+        { label: "Google Business Profile Link (Add https:// in front of the URL)", name: "googleBusinessProfile", type: "url" },
     ],
 
     linkBuilding: [
@@ -28,6 +29,7 @@ export const formConfig = {
         { label: "Advertising Budget (Monthly)", name: "adBudget", type: "number", required: true },
         { label: "Target Audience (Demographics/Interests)", name: "targetAudience", type: "textarea", required: true },
         { label: "Campaign Goals (Leads, Sales, Traffic, etc.)", name: "campaignGoals", type: "textarea", required: true },
+        { label: "Campaign Type", name: "campaignType", type: "text", required: true },
         { label: "Competitor Ads or References", name: "competitorAds", type: "textarea" }
     ],
 
@@ -43,7 +45,7 @@ export const formConfig = {
 
     socialMediaManagement: [
         { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Current Social Links", name: "currentSocialLinks", type: "textarea", required: true },
+        { label: "Existing Social Media Handles", name: "currentSocialLinks", type: "textarea", required: true },
         { label: "Target Audience", name: "targetAudience", type: "textarea", required: true },
         { label: "Posting Frequency", name: "postingFrequency", type: "text" }
     ],
@@ -62,7 +64,8 @@ export const formConfig = {
         { label: "Design Preferences (Colors, Style, Inspirations)", name: "designPreferences", type: "textarea" },
         { label: "Core Features Needed (e.g., Contact Form, Blog, Payment Gateway)", name: "coreFeatures", type: "textarea", required: true },
         { label: "Budget Range", name: "budgetRange", type: "text", required: true },
-        { label: "Deadline / Timeframe", name: "deadline", type: "text" }
+        { label: "Deadline / Timeframe", name: "deadline", type: "text" },
+        { label: "Competitor Websites", name: "competitorWebsites", type: "textarea" },
     ],
 
     emailMarketing: [
@@ -94,7 +97,6 @@ export const formConfig = {
         { label: "Target Audience (e.g., CEOs, Marketing Managers, Small Businesses)", name: "targetAudience", type: "text", required: true },
         { label: "Geographic Location for Calls", name: "targetLocation", type: "text" },
         { label: "Call Script (Provide if available)", name: "callScript", type: "textarea" },
-        { label: "Expected Number of Calls per Week", name: "callVolume", type: "number" },
         { label: "Goal of Calls (e.g., Appointments, Sales, Market Research)", name: "callGoal", type: "text", required: true },
         { label: "CRM or Tools Used (if any)", name: "crmTools", type: "text" }
     ],
@@ -325,17 +327,10 @@ export const pricingConfig = {
         pricing: [
             {
                 id: "cold-call-20h-single",
-                label: "20 Hours/Month - Single Resource",
-                price: "$800",
+                label: "Single Resource",
+                price: "$1500",
                 period: "/month",
                 description: "Part-time cold calling service"
-            },
-            {
-                id: "cold-call-40h-single",
-                label: "40 Hours/Month - Single Resource",
-                price: "$1400",
-                period: "/month",
-                description: "Full-time cold calling service"
             },
             {
                 id: "custom-bundle",

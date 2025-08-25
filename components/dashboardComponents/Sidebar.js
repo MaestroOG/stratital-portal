@@ -1,5 +1,5 @@
 "use client";
-import { ClipboardCheck, FolderCog, House, Settings, Shield, User, Users, Video } from "lucide-react";
+import { Settings, CircleDollarSign, FolderCog, House, Shield, Video } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -45,6 +45,11 @@ const Sidebar = () => {
             title: "How-To",
             href: '/how-to'
         },
+        {
+            icon: <CircleDollarSign />,
+            title: "Pricing",
+            href: "/pricing"
+        },
         ...(user?.role === "superadmin"
             ? [
                 {
@@ -55,6 +60,8 @@ const Sidebar = () => {
             ]
             : []),
     ]
+
+
     return (
         <aside className="hidden md:flex w-[85px] md:w-3xs min-h-screen md:h-screen bg-dark-blue fixed inset-y-0 left-0 flex-col items-center p-5">
             <Link href={'/'} className="relative w-60 h-32 mb-8 hidden md:flex">

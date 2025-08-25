@@ -1,5 +1,5 @@
 'use client';
-import { Bell, ClipboardCheck, FolderCog, House, Menu, Search, Settings, Shield, Video, X } from 'lucide-react'
+import { Bell, CircleDollarSign, FolderCog, House, Menu, Settings, Shield, Video, X } from 'lucide-react'
 import Image from 'next/image'
 import React, { useActionState, useEffect, useState } from 'react'
 import {
@@ -53,6 +53,16 @@ const Header = () => {
             title: "Project",
             href: "/projects",
         },
+        {
+            icon: <Video />,
+            title: "How-To",
+            href: '/how-to'
+        },
+        {
+            icon: <CircleDollarSign />,
+            title: "Pricing",
+            href: "/pricing"
+        },
         ...(user?.role === "superadmin"
             ? [
                 {
@@ -64,7 +74,7 @@ const Header = () => {
             : []),
     ]
     return (
-        <header className='bg-dark-blue w-full px-8 py-2 md:py-9 flex items-center justify-end gap-4 sticky top-0 z-50'>
+        <header className='bg-dark-blue w-full px-8 py-2 md:py-9 flex items-center justify-between md:justify-end gap-4 sticky top-0 z-50'>
             {/* <div className='text-white items-center gap-2.5 hidden lg:flex'>
                 <House className='hidden lg:flex' />
                 <span className='text-xl font-medium'>Welcome To Stratital</span>

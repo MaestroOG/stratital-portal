@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { getNotesByProjectId, getProjectById } from '@/lib/projects'
 import { getUser } from '@/lib/user'
 import { camelToNormal, capitalizeFirst, formatDateToYMD, timeAgo } from '@/utils/formUtils'
+import Linkify from 'linkify-react'
 
 export const metadata = {
     title: 'Project Details',
@@ -30,7 +31,7 @@ const ProjectDetailPage = async ({ params }) => {
                     </div>
                     <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
                         <p className='text-red font-medium animate-pulse'>• {status}</p>
-                        {user?.role === 'superadmin' && <ProjectStatusForms projectId={id} />}
+                        {user?.role === 'superadmin' && <ProjectStatusForms status={status} projectId={id} />}
                     </div>
                 </div>
                 <div className='grid grid-cols-2 gap-4 mt-6'>
@@ -59,7 +60,7 @@ const ProjectDetailPage = async ({ params }) => {
                         {projectNotes?.map((note, index) => (
                             <li key={index} className='mb-4'>
                                 <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)} by {note?.createdBy === null ? 'Stratital Team' : note?.createdBy?.name} - {timeAgo(note?.createdAt)}</p>
-                                <p className='text-lg font-medium'>{note?.note}</p>
+                                <p className='text-lg font-medium'><Linkify options={{ target: '_blank', className: 'text-blue-500 underline' }}>{note?.note}</Linkify></p>
                             </li>
                         ))}
                     </ul>

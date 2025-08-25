@@ -12,16 +12,18 @@ import {
     DialogFooter,
 } from "@/components/ui/dialog"
 
-const ProjectStatusForms = ({ projectId }) => {
+const ProjectStatusForms = ({ projectId, status }) => {
 
     const [approveState, approveFormAction, approveIsPending] = useActionState(ApproveProject.bind(null, projectId), {})
     const [rejectState, rejectFormAction, rejectIsPending] = useActionState(RejectProject.bind(null, projectId), {})
 
     return (
         <>
-            <form action={approveFormAction}>
+
+            {status === 'Pending' && <form action={approveFormAction}>
                 <Button type='submit' disabled={approveIsPending}>Approve</Button>
-            </form>
+            </form>}
+
             <form action={rejectFormAction}>
                 <Button type='submit' disabled={rejectIsPending} variant={'outline'}>Reject</Button>
             </form>

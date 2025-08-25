@@ -22,6 +22,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "jsonwebtoken": "^9.0.2",
+    "linkify-react": "^4.3.2",
     "lucide-react": "^0.539.0",
     "mongoose": "^8.17.1",
     "next": "15.4.6",

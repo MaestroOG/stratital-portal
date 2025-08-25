@@ -1,12 +1,12 @@
 'use server';
 
-import { generateNoteCreatedEmailUserTemplate, generateProjectCreatedEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
+import { generateAdminToUserEmailNoteTemplate, generateNoteCreatedEmailUserTemplate, generateProjectCreatedEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
 import { generateProjectStatusUpdateEmail } from "@/htmlemailtemplates/projectStatusTemplates";
 import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
 import Note from "@/models/Note";
 import Project from "@/models/Project";
-import { cleanFormEntries } from "@/utils/formUtils";
+import { cleanFormEntries, formatDateToYMD } from "@/utils/formUtils";
 import { createTransporter } from "@/utils/transporterFns";
 import { revalidatePath } from "next/cache";
 import nodemailer from "nodemailer";
@@ -67,6 +67,8 @@ export async function addNote(id, prevState, formData) {
     const user = await getUser();
     const note = formData.get("note");
 
+    const project = await Project.findById(id).populate("createdBy");
+
     try {
         await connectDB();
         await Note.create({
@@ -81,12 +83,25 @@ export async function addNote(id, prevState, formData) {
 
         const html = generateNoteCreatedEmailUserTemplate('https://portal.stratital.com', user?.name);
 
-        await transporter.sendMail({
-            from: `stratital.portal@gmail.com`,
-            to: [user?.email, 'stratital.portal@gmail.com'],
-            subject: "Note Created - Stratital",
-            html,
-        })
+        if (user?.role === 'user') {
+            await transporter.sendMail({
+                from: `stratital.portal@gmail.com`,
+                to: 'stratital.portal@gmail.com',
+                subject: "Note Created - Stratital",
+                html,
+            })
+        }
+
+        if (user?.role === 'superadmin') {
+            const date = formatDateToYMD(project?.createdAt)
+            const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date);
+            await transporter.sendMail({
+                from: `stratital.portal@gmail.com`,
+                to: project?.createdBy.email,
+                subject: "Note Created - Stratital",
+                html: adminToUserHtml,
+            })
+        }
 
         return {
             success: true,

@@ -29,7 +29,20 @@ body {
   }
 
   .sidebar-link {
-    @apply block w-full p-2 rounded-sm;
+    @apply relative block w-full p-2 rounded-sm transition-all duration-200;
+  }
+
+  .sidebar-link::after {
+    content: '';
+    @apply absolute left-0 bottom-0 h-[2px] bg-red;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar-link:hover::after {
+    transform: scaleX(1);
   }
 
   h1,

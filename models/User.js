@@ -94,6 +94,10 @@ const UserSchema = new Schema({
     role: {
         type: String,
         enum: ["user", "admin", "superadmin"]
+    },
+    profilePictureUrl: {
+        type: String,
+        default: "/placeholder-avatar.svg",
     }
 }, { timestamps: true })
 

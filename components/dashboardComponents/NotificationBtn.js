@@ -10,7 +10,7 @@ const NotificationBtn = () => {
         <div className="relative cursor-pointer">
             <Avatar>
                 <AvatarImage src="/bell.svg" alt="Notification Bell Icon" />
-                <AvatarFallback>KK</AvatarFallback>
+                <AvatarFallback>3</AvatarFallback>
             </Avatar>
             <Badge className="border-background absolute -top-1.5 left-full min-w-5 -translate-x-3.5 px-1">
                 6

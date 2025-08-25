@@ -3,14 +3,18 @@ import Container from '@/components/dashboardComponents/Container';
 import { Mail, Phone, Globe, MapPin, Link as LinkIcon, Pencil } from "lucide-react";
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import ProfilePicture from '@/components/dashboardComponents/ProfilePicture';
 
 
 const ProfilePage = async () => {
     const userDetail = await getUserFromDB();
 
+    console.log(userDetail)
+
     return (
         <Container className="bg-white p-6 max-w-4xl mx-auto space-y-10">
             {/* Header */}
+            <ProfilePicture />
             <header className="border-b pb-6">
                 <h1 className="text-3xl font-bold">
                     {userDetail?.name}{" "}

@@ -121,7 +121,7 @@ export async function ApproveProject(projectId, prevState, formData) {
     await Project.findByIdAndUpdate(projectId, { status: 'in-progress' });
     revalidatePath('/', "layout");
 
-    const project = await Project.findById(projectId);
+    const project = await Project.findById(projectId).populate('createdBy');
 
 
     const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'in-progress', user?.name, project?.updatedAt);
@@ -130,7 +130,7 @@ export async function ApproveProject(projectId, prevState, formData) {
 
     await transporter.sendMail({
         from: `stratital.portal@gmail.com`,
-        to: [user?.email, 'stratital.portal@gmail.com'],
+        to: project?.createdBy.email,
         subject: "Project Status Update - Stratital",
         html,
     })

@@ -1,5 +1,5 @@
 'use client';
-import { Bell, CircleDollarSign, FolderCog, House, Menu, Settings, Shield, Video, X } from 'lucide-react'
+import { Bell, CircleCheck, CircleDollarSign, FolderCog, House, Menu, Settings, Shield, Video, X } from 'lucide-react'
 import Image from 'next/image'
 import React, { useActionState, useEffect, useState } from 'react'
 import {
@@ -19,6 +19,8 @@ import {
 } from "@/components/ui/drawer"
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import NotificationBtn from './NotificationBtn';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 const Header = () => {
     const pathname = usePathname();
@@ -131,7 +133,30 @@ const Header = () => {
             <Link href={'/'} className='md:hidden'><Image src='/logo.png' alt="stratital logo" width={135} height={37} priority /></Link>
             <div className='flex items-center gap-4'>
                 <Image src={'/australia.svg'} width={32} height={32} alt='country_flag' className='cursor-pointer hidden md:block' />
-                <Bell className='text-white cursor-pointer hidden md:block' />
+                {/* <Bell className='text-white cursor-pointer hidden md:block' /> */}
+                <Popover>
+                    <PopoverTrigger> <NotificationBtn /></PopoverTrigger>
+                    <PopoverContent className={'w-[400px]'}>
+                        <div className='flex items-center justify-between'>
+                            <h4 className='font-semibold'>Notifications</h4>
+                            <div className='flex items-center gap-2'>
+                                <button className='cursor-pointer'>
+                                    <CircleCheck />
+                                </button>
+                            </div>
+                        </div>
+                        <div className='mt-2'>
+                            <Alert variant="default">
+                                <AlertTitle>Heads up!</AlertTitle>
+                                <AlertDescription>
+                                    Test Notification Description
+                                </AlertDescription>
+                            </Alert>
+                        </div>
+
+                    </PopoverContent>
+                </Popover>
+
                 <Popover>
                     <PopoverTrigger>
                         {user && <Image src={user?.avatar || '/placeholder-avatar.svg'} width={40} height={40} className='rounded-full cursor-pointer' priority alt='avatar' />}

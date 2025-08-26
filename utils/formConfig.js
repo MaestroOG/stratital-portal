@@ -224,7 +224,7 @@ export const pricingConfig = {
             {
                 id: "lead-gen-single",
                 label: "Lead Generation - Single Service",
-                price: "$450",
+                price: "$1500",
                 period: "/month",
                 description: "Comprehensive lead generation"
             },
@@ -243,21 +243,21 @@ export const pricingConfig = {
             {
                 id: "web-dev-small",
                 label: "Up to 5 Pages - Single Service",
-                price: "$850",
+                price: "$1000",
                 period: "one-time",
                 description: "Small website development"
             },
             {
                 id: "web-dev-medium",
                 label: "6-10 Pages - Single Service",
-                price: "$950",
+                price: "$1200",
                 period: "one-time",
                 description: "Medium website development"
             },
             {
                 id: "web-dev-large",
                 label: "11-15 Pages - Single Service",
-                price: "$1400",
+                price: "$1500",
                 period: "one-time",
                 description: "Large website development"
             },

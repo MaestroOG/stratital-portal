@@ -165,7 +165,9 @@ const Header = () => {
 
                 <Popover>
                     <PopoverTrigger>
-                        {user && <Image src={user?.avatar || '/placeholder-avatar.svg'} width={40} height={40} className='rounded-full cursor-pointer' priority alt='avatar' />}
+                        <div className='relative w-10 h-10'>
+                            {user && <Image src={user?.profilePictureUrl || '/placeholder-avatar.svg'} fill className='rounded-full cursor-pointer object-cover' priority alt='avatar' />}
+                        </div>
                     </PopoverTrigger>
                     <PopoverContent>
                         <Link href={'/profile'}><Button variant={'outline'} className={'mb-2 w-full'}>Profile</Button></Link>

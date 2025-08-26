@@ -1,47 +1,81 @@
 import Container from '@/components/dashboardComponents/Container';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { getAllUserProjects } from '@/lib/projects';
-import { camelToNormal, capitalizeFirst } from '@/utils/formUtils';
+import { getUserById } from '@/lib/admin';
+
+import { Mail, Phone, Globe, MapPin, Link as LinkIcon } from "lucide-react";
 import Link from 'next/link';
 
 const AgencyDetailsPage = async ({ params }) => {
     const { userId } = await params;
-    const projects = await getAllUserProjects(userId);
+    const userDetail = await getUserById(userId);
 
     return (
         <>
-            <Container className={'bg-white px-4 py-3'}>
-                <h1 className="font-bold text-2xl md:text-4xl">Agency Projects</h1>
-
-                <div className='grid grid-cols-1 md:grid-cols-4 gap-4 mt-6'>
-                    {projects?.map(project => (
-                        <div key={project?._id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                            <Badge variant={"secondary"} className={'mb-2'}>{camelToNormal(project?.service)}</Badge>
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{project?.projectTitle}</h5>
-                            <p className="mb-3 font-medium text-red animate-pulse">• {capitalizeFirst(project?.status) || ""}</p>
-                            <Link href={`/projects/${project?._id}`}><Button variant={"default"}>Project Details</Button></Link>
-                        </div>
-                    ))}
-                </div>
-
+            <Container className={'bg-white p-2 md:p-4'}>
+                <Link href={`/admin/user/projects?agencyId=${userId}`}><Button variant={'link'}>See All Projects</Button></Link>
             </Container>
+            <Container className="bg-white p-6 max-w-4xl mx-auto space-y-10">
+                {/* Header */}
+                <header className="border-b pb-6">
+                    <h1 className="text-3xl font-bold">
+                        {userDetail?.name}{" "}
+                        <span className="text-lg font-light text-gray-600">
+                            ({userDetail?.position})
+                        </span>
+                    </h1>
+                    <p className="text-gray-500">{userDetail?.companyName}</p>
+                </header>
+
+                {/* Contact Info */}
+                <section className="space-y-2">
+                    <h2 className="text-xl font-semibold border-b pb-1">Contact Information</h2>
+                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <li className="flex items-center gap-2"><Mail size={16} /> {userDetail.email}</li>
+                        <li className="flex items-center gap-2"><Phone size={16} /> {userDetail.phoneNum}</li>
+                        <li className="flex items-center gap-2"><Mail size={16} /> {userDetail.contactEmail}</li>
+                        <li className="flex items-center gap-2"><Globe size={16} /> <a href={userDetail.companyWebsite} target="_blank" className="text-blue-600 underline">Website</a></li>
+                        <li className="flex items-center gap-2"><MapPin size={16} /> {userDetail.businessAddress}</li>
+                    </ul>
+                </section>
+
+                {/* Company Details */}
+                <section>
+                    <h2 className="text-xl font-semibold border-b pb-1">Company Details</h2>
+                    <dl className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                        <div><dt className="font-semibold">ABN</dt><dd>{userDetail.abn}</dd></div>
+                        <div><dt className="font-semibold">Years in Business</dt><dd>{userDetail.yearsInBiz}</dd></div>
+                        <div><dt className="font-semibold">Active Clients</dt><dd>{userDetail.numOfActiveClients}</dd></div>
+                        <div><dt className="font-semibold">Structure</dt><dd>{userDetail.companyStructure}</dd></div>
+                        <div><dt className="font-semibold">Primary Services</dt><dd>{userDetail.primaryServices}</dd></div>
+                        <div><dt className="font-semibold">Industries</dt><dd>{userDetail.industriesWorkWith}</dd></div>
+                        <div><dt className="font-semibold">Regions</dt><dd>{userDetail.regionsServe}</dd></div>
+                        <div><dt className="font-semibold">Service Model</dt><dd>{userDetail.serviceModel}</dd></div>
+                        <div><dt className="font-semibold">Monthly Projects</dt><dd>{userDetail.monthlyProjectVolume}</dd></div>
+                        <div><dt className="font-semibold">Using White Label Provider</dt><dd>{userDetail.isUsingWhiteLabelProvider}</dd></div>
+                    </dl>
+                </section>
+
+                {/* Business Challenge */}
+                <section>
+                    <h2 className="text-xl font-semibold border-b pb-1">Business Challenge</h2>
+                    <p className="text-gray-700 mt-2">{userDetail.challengeDetail}</p>
+                </section>
+
+                {/* Social Media */}
+                <section>
+                    <h2 className="text-xl font-semibold border-b pb-1">Social Media</h2>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        {userDetail.socialMediaLinks.map((link, i) => (
+                            <a key={i} href={link} target="_blank" className="px-3 py-1 bg-blue-100 rounded-full hover:bg-blue-200 flex items-center gap-1 text-sm">
+                                <LinkIcon size={14} /> {link.split("//")[1]}
+                            </a>
+                        ))}
+                    </div>
+                </section>
+            </Container>
+
         </>
     )
 }
 
 export default AgencyDetailsPage;
-
-
-{/* <div className='grid grid-cols-2 gap-4 mt-6'>
-                    <div className='flex flex-col gap-4'>
-                        {Object.keys(projectDetails?.fields).map(key => (
-                            <p key={key}>{camelToNormal(key)}</p>
-                        ))}
-                    </div>
-                    <div className='flex flex-col gap-4'>
-                        {Object.values(projectDetails?.fields).map(value => (
-                            <p key={value} className='font-bold text-heading'>{camelToNormal(value)}</p>
-                        ))}
-                    </div>
-                </div> */}

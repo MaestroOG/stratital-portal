@@ -2,6 +2,7 @@
 
 import { connectDB } from "@/lib/mongodb";
 import Notification from "@/models/Notification";
+import { revalidatePath } from "next/cache";
 
 export async function createNotification(prevState, formData) {
     const title = formData.get("title")?.trim();
@@ -13,6 +14,8 @@ export async function createNotification(prevState, formData) {
             title,
             description
         })
+
+        revalidatePath('/', "layout")
 
         return {
             success: true,

@@ -1,5 +1,5 @@
 'use client';
-import { Bell, CircleCheck, CircleDollarSign, FolderCog, House, Menu, Settings, Shield, Video, X } from 'lucide-react'
+import { CircleCheck, CircleDollarSign, FolderCog, House, Menu, Settings, Shield, Video, X } from 'lucide-react'
 import Image from 'next/image'
 import React, { useActionState, useEffect, useState } from 'react'
 import {
@@ -27,6 +27,15 @@ const Header = () => {
 
     const [state, formAction, isPending] = useActionState(signOutUser, "")
     const [user, setUser] = useState(null);
+    const [notifications, setNotifications] = useState(null);
+
+    const getNotifications = async () => {
+        const res = await fetch("/api/get-notifications");
+        const data = await res.json();
+        setNotifications(data);
+    }
+
+
     useEffect(() => {
         // Get "user" cookie value
         const cookieValue = document.cookie
@@ -43,6 +52,10 @@ const Header = () => {
             }
         }
     }, []);
+
+    useEffect(() => {
+        getNotifications();
+    }, [])
 
     const links = [
         {
@@ -77,10 +90,6 @@ const Header = () => {
     ]
     return (
         <header className='bg-dark-blue w-full px-8 py-2 md:py-9 flex items-center justify-between md:justify-end gap-4 sticky top-0 z-50'>
-            {/* <div className='text-white items-center gap-2.5 hidden lg:flex'>
-                <House className='hidden lg:flex' />
-                <span className='text-xl font-medium'>Welcome To Stratital</span>
-            </div> */}
             <Drawer direction="left" >
                 <DrawerTrigger className='md:hidden'><Menu className='text-white' size={23}></Menu></DrawerTrigger>
                 <DrawerContent className={'bg-dark-blue'}>
@@ -124,18 +133,12 @@ const Header = () => {
                     </DrawerFooter>
                 </DrawerContent>
             </Drawer>
-            {/* <div className='max-w-[645px] w-full bg-white hidden md:flex items-center rounded-sm'>
-                <input type="text" placeholder='Search...' className='w-full border-none outline-none rounded-sm placeholder:text-sm placeholder:text-placeholder bg-white py-3 px-5' />
-                <button className='w-14 h-full bg-red text-white flex items-center justify-center py-3 cursor-pointer rounded-tr-sm rounded-br-sm'>
-                    <Search />
-                </button>
-            </div> */}
             <Link href={'/'} className='md:hidden'><Image src='/logo.png' alt="stratital logo" width={135} height={37} priority /></Link>
             <div className='flex items-center gap-4'>
                 <Image src={'/australia.svg'} width={32} height={32} alt='country_flag' className='cursor-pointer hidden md:block' />
-                {/* <Bell className='text-white cursor-pointer hidden md:block' /> */}
+
                 <Popover>
-                    <PopoverTrigger> <NotificationBtn /></PopoverTrigger>
+                    <PopoverTrigger> <NotificationBtn length={notifications?.length} /></PopoverTrigger>
                     <PopoverContent className={'w-[400px]'}>
                         <div className='flex items-center justify-between'>
                             <h4 className='font-semibold'>Notifications</h4>
@@ -146,12 +149,15 @@ const Header = () => {
                             </div>
                         </div>
                         <div className='mt-2'>
-                            <Alert variant="default">
-                                <AlertTitle>Heads up!</AlertTitle>
-                                <AlertDescription>
-                                    Test Notification Description
-                                </AlertDescription>
-                            </Alert>
+                            {notifications?.length === 0 && <div className='p-4 text-center'>No Notifications For Now.</div>}
+                            {notifications?.length > 0 && notifications?.map(notification => (
+                                <Alert variant="default" key={notification?._id}>
+                                    <AlertTitle>{notification?.title}</AlertTitle>
+                                    <AlertDescription>
+                                        {notification?.description}
+                                    </AlertDescription>
+                                </Alert>
+                            ))}
                         </div>
 
                     </PopoverContent>
@@ -171,7 +177,7 @@ const Header = () => {
                 </Popover>
 
             </div>
-        </header >
+        </header>
     )
 }
 

@@ -16,8 +16,9 @@ const SuperAdminPage = async () => {
 
     return (
         <main>
-            <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3'}>
+            <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3 flex items-center gap-2'}>
                 <Link href={'/admin/projects'}><Button variant={'link'}>See All Projects</Button></Link>
+                <Link href={'/admin/create-notification'}><Button variant={'link'}>Create a global notification</Button></Link>
             </Container>
             <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3'}>
                 <h1 className="font-bold text-2xl md:text-4xl">Pending User Requests</h1>

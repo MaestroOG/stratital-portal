@@ -10,6 +10,9 @@ import { getUser } from "@/lib/user"
 import { getAllUserProjects, getCompletedProjectsThisMonth, getPendingProjectsThisMonth, getRunningProjectsThisMonth } from "@/lib/projects"
 import { Suspense } from "react"
 import { camelToNormal, capitalizeFirst } from "@/utils/formUtils"
+import HomePageDialog from "@/components/dashboardComponents/HomePageDialog"
+import { getLatestUnreadNotification } from "@/lib/notifications"
+
 
 export const metadata = {
   title: "Stratital Client Portal"
@@ -20,9 +23,13 @@ const HomePage = async () => {
   const user = await getUser();
   const projects = await getAllUserProjects(user?._id);
 
+  const latestNotification = await getLatestUnreadNotification();
+
   const completedProjectsThisMonth = await getCompletedProjectsThisMonth();
   const pendingProjectsThisMonth = await getPendingProjectsThisMonth();
   const runningProjectsThisMonth = await getRunningProjectsThisMonth();
+
+
   return (
     <>
 
@@ -76,6 +83,8 @@ const HomePage = async () => {
 
         </div>
       </Container>
+
+      {latestNotification && <HomePageDialog title={latestNotification?.title} description={latestNotification?.description} />}
     </>
   )
 }

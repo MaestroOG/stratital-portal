@@ -21,20 +21,29 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import NotificationBtn from './NotificationBtn';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { countUnreadNotifications } from '@/utils/notificationUtils';
 
 const Header = () => {
     const pathname = usePathname();
+    const [notifications, setNotifications] = useState(null);
+
 
     const [state, formAction, isPending] = useActionState(signOutUser, "")
     const [user, setUser] = useState(null);
-    const [notifications, setNotifications] = useState(null);
 
+    const [count, setCount] = useState(0)
     const getNotifications = async () => {
         const res = await fetch("/api/get-notifications");
         const data = await res.json();
         setNotifications(data);
     }
 
+    const handleOpen = async () => {
+        if (count > 0) {
+            await fetch('/api/notifications/mark-read', { method: 'POST' });
+            setCount(0)
+        }
+    }
 
     useEffect(() => {
         // Get "user" cookie value
@@ -54,8 +63,24 @@ const Header = () => {
     }, []);
 
     useEffect(() => {
+        const fetchUnread = async () => {
+            const res = await fetch("/api/notifications/unread");
+            const data = await res.json();
+            console.log(data)
+            const unreadNotifs = countUnreadNotifications(data.notifications, user?._id);
+            setCount(unreadNotifs);
+        };
+        fetchUnread();
+    }, []);
+
+
+
+
+    useEffect(() => {
         getNotifications();
-    }, [])
+    }, []);
+
+    console.log(count)
 
     const links = [
         {
@@ -65,7 +90,7 @@ const Header = () => {
         },
         {
             icon: <FolderCog />,
-            title: "Project",
+            title: "Projects",
             href: "/projects",
         },
         {
@@ -137,26 +162,23 @@ const Header = () => {
             <div className='flex items-center gap-4'>
                 <Image src={'/australia.svg'} width={32} height={32} alt='country_flag' className='cursor-pointer hidden md:block' />
 
-                <Popover>
-                    <PopoverTrigger> <NotificationBtn length={notifications?.length} /></PopoverTrigger>
-                    <PopoverContent className={'w-[400px]'}>
+                <Popover onOpenChange={handleOpen}>
+                    <PopoverTrigger> <NotificationBtn length={count} /></PopoverTrigger>
+                    <PopoverContent className={'w-[400px] h-96 overflow-y-auto'}>
                         <div className='flex items-center justify-between'>
                             <h4 className='font-semibold'>Notifications</h4>
-                            <div className='flex items-center gap-2'>
-                                <button className='cursor-pointer'>
-                                    <CircleCheck />
-                                </button>
-                            </div>
                         </div>
                         <div className='mt-2'>
                             {notifications?.length === 0 && <div className='p-4 text-center'>No Notifications For Now.</div>}
                             {notifications?.length > 0 && notifications?.map(notification => (
-                                <Alert variant="default" key={notification?._id}>
-                                    <AlertTitle>{notification?.title}</AlertTitle>
-                                    <AlertDescription>
-                                        {notification?.description}
-                                    </AlertDescription>
-                                </Alert>
+                                <div key={notification?._id} className='mt-2'>
+                                    <Alert variant="default" key={notification?._id}>
+                                        <AlertTitle>{notification?.title}</AlertTitle>
+                                        <AlertDescription>
+                                            {notification?.description}
+                                        </AlertDescription>
+                                    </Alert>
+                                </div>
                             ))}
                         </div>
 

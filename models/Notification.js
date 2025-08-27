@@ -8,7 +8,14 @@ const notificationSchema = new Schema({
     description: {
         type: String,
         required: true
-    }
+    },
+    readBy: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: [],
+        },
+    ],
 }, { timestamps: true });
 
 

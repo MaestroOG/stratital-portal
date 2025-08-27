@@ -37,7 +37,7 @@ const Sidebar = () => {
         },
         {
             icon: <FolderCog />,
-            title: "Project",
+            title: "Projects",
             href: "/projects",
         },
         {

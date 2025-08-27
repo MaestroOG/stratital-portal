@@ -9,6 +9,7 @@ import {
 import { Button } from "../ui/button"
 import Image from "next/image"
 import Link from "next/link"
+import { Eye, FolderCog } from "lucide-react"
 
 const UserTable = ({ users }) => {
     return (
@@ -28,14 +29,19 @@ const UserTable = ({ users }) => {
                             <TableCell className="font-medium">{user?.companyName}</TableCell>
                             <TableCell className={'max-sm:hidden'}>{user?.name}</TableCell>
                             <TableCell className={'max-sm:hidden'}>{user?.email}</TableCell>
-                            <TableCell className="max-md:text-right flex items-center justify-end gap-4">
+                            <TableCell className="max-md:text-right flex items-center justify-end gap-2">
                                 <Link href={`/admin/user/${user?._id}`}>
                                     <Button variant="secondary">
-                                        <Image
-                                            src="/eye-open.svg"
-                                            width={24}
-                                            height={24}
+                                        <Eye
+                                            size={24}
                                             alt="view"
+                                        />
+                                    </Button>
+                                </Link>
+                                <Link href={`/admin/user/projects?agencyId=${user?._id}`}>
+                                    <Button variant="secondary">
+                                        <FolderCog
+                                            size={24}
                                         />
                                     </Button>
                                 </Link>

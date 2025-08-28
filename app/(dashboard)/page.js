@@ -6,12 +6,14 @@ import IntroText from "@/components/IntroText"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Plus, Search } from "lucide-react"
-import { getUser } from "@/lib/user"
+import { getUser, isFirstLogin } from "@/lib/user"
 import { getAllUserProjects, getCompletedProjectsThisMonth, getPendingProjectsThisMonth, getRunningProjectsThisMonth } from "@/lib/projects"
 import { Suspense } from "react"
 import { camelToNormal, capitalizeFirst } from "@/utils/formUtils"
 import HomePageDialog from "@/components/dashboardComponents/HomePageDialog"
 import { getLatestUnreadNotification } from "@/lib/notifications"
+import NewLoginDialog from "@/components/dashboardComponents/NewLoginDialog"
+
 
 
 export const metadata = {
@@ -28,6 +30,8 @@ const HomePage = async () => {
   const completedProjectsThisMonth = await getCompletedProjectsThisMonth();
   const pendingProjectsThisMonth = await getPendingProjectsThisMonth();
   const runningProjectsThisMonth = await getRunningProjectsThisMonth();
+
+  const firstLogin = await isFirstLogin();
 
 
   return (
@@ -85,6 +89,8 @@ const HomePage = async () => {
       </Container>
 
       {latestNotification && <HomePageDialog title={latestNotification?.title} description={latestNotification?.description} />}
+
+      {firstLogin && <NewLoginDialog userId={user?._id} firstLogin={firstLogin} />}
     </>
   )
 }

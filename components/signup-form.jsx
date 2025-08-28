@@ -191,6 +191,10 @@ export function SignUpForm({
                                         <RadioGroupItem value="pty-ltd" id="pty-ltd" />
                                         <Label className={'font-normal'} htmlFor="pty-ltd">Pty Ltd.</Label>
                                     </div>
+                                    <div className="flex items-center space-x-2">
+                                        <RadioGroupItem value="other" id="other" />
+                                        <Label className={'font-normal'} htmlFor="other">Other</Label>
+                                    </div>
                                 </RadioGroup>
                             </div>
                         </>

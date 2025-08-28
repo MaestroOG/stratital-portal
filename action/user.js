@@ -206,3 +206,12 @@ export const signOutUser = async (prevState, formData) => {
   (await cookies()).delete("user");
   redirect("/login");
 }
+
+
+export const changeFirstLogin = async (userId, prevState, formData) => {
+  await connectDB();
+
+  await User.findByIdAndUpdate(userId, { firstLogIn: true });
+
+  redirect('/how-to')
+}

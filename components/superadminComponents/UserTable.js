@@ -9,7 +9,8 @@ import {
 import { Button } from "../ui/button"
 import Image from "next/image"
 import Link from "next/link"
-import { Eye, FolderCog } from "lucide-react"
+import { Eye, FolderCog, Trash } from "lucide-react"
+import DeletePartnerForm from "../delete-partner-form"
 
 const UserTable = ({ users }) => {
     return (
@@ -30,6 +31,7 @@ const UserTable = ({ users }) => {
                             <TableCell className={'max-sm:hidden'}>{user?.name}</TableCell>
                             <TableCell className={'max-sm:hidden'}>{user?.email}</TableCell>
                             <TableCell className="max-md:text-right flex items-center justify-end gap-2">
+                                <DeletePartnerForm userId={user?._id} />
                                 <Link href={`/admin/user/${user?._id}`}>
                                     <Button variant="secondary">
                                         <Eye

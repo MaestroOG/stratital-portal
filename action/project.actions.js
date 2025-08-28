@@ -166,3 +166,31 @@ export async function RejectProject(projectId, prevState, formData) {
         message: "Project rejected successfully",
     }
 }
+
+
+export async function changeProjectStatus(projectId, prevState, formData) {
+    const status = formData.get("status")?.trim();
+    const user = await getUser();
+    await connectDB();
+
+    await Project.findByIdAndUpdate(projectId, { status: status });
+    revalidatePath('/', "layout");
+
+    const project = await Project.findById(projectId);
+
+    const html = generateProjectStatusUpdateEmail(project?.projectTitle, status, user?.name, project?.updatedAt);
+
+    const transporter = await createTransporter();
+
+    await transporter.sendMail({
+        from: `stratital.portal@gmail.com`,
+        to: user?.email,
+        subject: "Project Status Update - Stratital",
+        html,
+    })
+
+    return {
+        success: true,
+        message: "Project status updated successfully",
+    }
+}

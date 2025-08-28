@@ -98,6 +98,10 @@ const UserSchema = new Schema({
     profilePictureUrl: {
         type: String,
         default: "/placeholder-avatar.svg",
+    },
+    firstLogIn: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true })
 

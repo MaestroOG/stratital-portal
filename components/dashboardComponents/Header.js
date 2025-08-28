@@ -1,5 +1,5 @@
 'use client';
-import { CircleCheck, CircleDollarSign, FolderCog, House, Menu, Settings, Shield, Video, X } from 'lucide-react'
+import { CircleCheck, CircleDollarSign, FolderCog, House, Menu, MessageCircle, Settings, Shield, Video, X } from 'lucide-react'
 import Image from 'next/image'
 import React, { useActionState, useEffect, useState } from 'react'
 import {
@@ -103,6 +103,11 @@ const Header = () => {
             icon: <CircleDollarSign />,
             title: "Pricing",
             href: "/pricing"
+        },
+        {
+            icon: <MessageCircle />,
+            title: "Comments",
+            href: "/comments"
         },
         ...(user?.role === "superadmin"
             ? [

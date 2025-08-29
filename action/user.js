@@ -21,7 +21,8 @@ const superAdminCredentials = {
   agency: String(process.env.SUPERADMIN_AGENCY) || "",
   role: String(process.env.SUPERADMIN_ROLE) || "superadmin",
   avatar: String(process.env.SUPERADMIN_AVATAR) || "/avatar.jpeg",
-  _id: '507f1f77bcf86cd799439011'
+  _id: '507f1f77bcf86cd799439011',
+  firstLogIn: true,
 }
 
 export const LoginUser = async (prevState, formData) => {

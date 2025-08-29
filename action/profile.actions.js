@@ -75,3 +75,10 @@ export async function changePassword(prevState, formData) {
         message: 'Password updated successfully',
     };
 }
+
+
+export async function changeTwoFactor(userId, value) {
+    await connectDB();
+    await User.findByIdAndUpdate(userId, { useTwoFactor: value });
+    revalidatePath('/', 'layout');
+}

@@ -78,6 +78,7 @@ const ProfilePage = async () => {
                 <div className="flex flex-col md:flex-row flex-wrap gap-2 mt-4">
                     <Link href="/change-email"><Button>Change Email</Button></Link>
                     <Link href="/change-password"><Button>Change Password</Button></Link>
+                    <Link href="/enable-two-factor"><Button>Enable Two-Factor Authentication</Button></Link>
                 </div>
             </section>
         </Container>

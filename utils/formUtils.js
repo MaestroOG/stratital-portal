@@ -1,3 +1,5 @@
+import crypto from 'crypto'
+
 export function cleanFormEntries(entries) {
     const forbiddenKeys = ["$ACTION_REF_", "$ACTION_KEY", "$ACTION_"];
 
@@ -67,4 +69,10 @@ export function getTodayDate() {
     const year = today.getFullYear();
 
     return `${day}-${month}-${year}`;
+}
+
+
+export function createOTP() {
+    const buffer = crypto.randomInt(100000, 1000000);
+    return buffer.toString();
 }

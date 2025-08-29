@@ -102,6 +102,10 @@ const UserSchema = new Schema({
     firstLogIn: {
         type: Boolean,
         default: false
+    },
+    useTwoFactor: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true })
 

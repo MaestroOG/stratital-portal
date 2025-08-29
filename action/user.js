@@ -9,6 +9,10 @@ import { connectDB } from "@/lib/mongodb";
 import nodemailer from "nodemailer";
 import { generateApplicationReceivedUserEmail, generatePartnershipEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
 import User from "@/models/User";
+import { createOTP } from "@/utils/formUtils";
+import OTP from "@/models/OTP";
+import { generateOTPEmail } from "@/htmlemailtemplates/otpEmailTemplate";
+import { getOTPUSerInfo } from "@/lib/two-fa";
 
 const superAdminCredentials = {
   email: String(process.env.SUPERADMIN_EMAIL) || "",
@@ -67,6 +71,41 @@ export const LoginUser = async (prevState, formData) => {
       return {
         err: "Invalid Credentials"
       }
+    }
+
+    if (user?.useTwoFactor) {
+
+      const otp = createOTP();
+      await OTP.create({
+        otp,
+        for: user?._id
+      })
+
+      const html = generateOTPEmail(otp, user?.name)
+
+      const transporter = await nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.SMTP_USER, // e.g. "stratital.portal@gmail.com"
+          pass: process.env.SMTP_PASS, // Gmail app password, not your account password
+        },
+      });
+
+      await transporter.sendMail({
+        from: `stratital.portal@gmail.com`,
+        to: user?.email,
+        subject: "Verify your OTP",
+        html,
+      });
+
+
+      (await cookies()).set('pendingUser', JSON.stringify(user), {
+        httpOnly: true,
+        secure: true,
+        path: '/',
+        maxAge: 60 * 60
+      })
+      redirect('/verify-otp')
     }
 
     const token = crypto.randomBytes(32).toString("hex");
@@ -214,4 +253,43 @@ export const changeFirstLogin = async (userId, prevState, formData) => {
   await User.findByIdAndUpdate(userId, { firstLogIn: true });
 
   redirect('/how-to')
+}
+
+export const verifyOtpAndLogin = async (prevState, formData) => {
+  const value = formData.get('otp');
+  await connectDB();
+
+  const validOtp = await OTP.findOne({ otp: value });
+
+  if (!validOtp) {
+    return {
+      success: false,
+      message: "Invalid OTP."
+    }
+  }
+  const user = await User.findOne({ _id: validOtp.for });
+
+
+
+  const token = crypto.randomBytes(32).toString("hex");
+
+  (await cookies()).set({
+    name: "authToken",
+    value: token,
+    httpOnly: true,
+    path: "/",
+    secure: process.env.NODE_ENV || 'production',
+    maxAge: 60 * 60 * 24 * 7
+  });
+
+  (await cookies()).set("user", JSON.stringify(user), {
+    httpOnly: false,
+    secure: true,
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7
+  });
+
+  await OTP.deleteOne({ otp: value });
+  redirect('/');
+
 }

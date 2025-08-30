@@ -23,6 +23,7 @@ import NotificationBtn from './NotificationBtn';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { countUnreadNotifications } from '@/utils/notificationUtils';
 import Linkify from 'linkify-react';
+import Loader from '../Loader';
 
 const Header = () => {
     const pathname = usePathname();
@@ -167,7 +168,10 @@ const Header = () => {
                         <PopoverContent>
                             <Link href={'/profile'}><Button variant={'outline'} className={'mb-2 w-full'}>Profile</Button></Link>
                             <form action={formAction}>
-                                <Button disabled={isPending} type="submit" className={'w-full'}>Sign Out</Button>
+                                <Button disabled={isPending} type="submit" className={'w-full flex items-center justify-center gap-2'}>
+                                    {isPending && <Loader size='h-4 w-4' />}
+                                    <span>Sign Out</span>
+                                </Button>
                             </form>
                             {state && <span>{state}</span>}
                         </PopoverContent>

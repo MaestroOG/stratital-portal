@@ -14,6 +14,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog"
+import Loader from "./Loader";
 
 export function LoginForm({
   className,
@@ -44,8 +45,9 @@ export function LoginForm({
             </div>
             <Input id="password" name="password" type="password" required className={'border border-gray-300'} />
           </div>
-          <Button disabled={isPending} type="submit" className="w-full bg-dark-blue cursor-pointer hover:bg-dark-blue">
-            Login
+          <Button disabled={isPending} type="submit" className="flex items-center justify-center gap-2 w-full bg-dark-blue cursor-pointer hover:bg-dark-blue">
+            {isPending && <Loader size="h-4 w-4" />}
+            <span>Login</span>
           </Button>
         </div>
         {message?.err && <div className="text-center text-red font-bold text-xl">{message?.err}</div>}

@@ -12,7 +12,6 @@ import User from "@/models/User";
 import { createOTP } from "@/utils/formUtils";
 import OTP from "@/models/OTP";
 import { generateOTPEmail } from "@/htmlemailtemplates/otpEmailTemplate";
-import { getOTPUSerInfo } from "@/lib/two-fa";
 
 const superAdminCredentials = {
   email: String(process.env.SUPERADMIN_EMAIL) || "",
@@ -34,102 +33,78 @@ export const LoginUser = async (prevState, formData) => {
       err: "Invalid Credentials"
     }
   }
+  await connectDB();
 
-  if (email === superAdminCredentials.email && password === superAdminCredentials.password) {
-    const token = crypto.randomBytes(32).toString("hex");
+  const user = await User.findOne({ email });
 
-    (await cookies()).set({
-      name: "authToken",
-      value: token,
-      httpOnly: true,
-      path: "/",
-      secure: process.env.NODE_ENV || 'production',
-      maxAge: 60 * 60 * 24 * 7
-    });
-
-    (await cookies()).set("user", JSON.stringify(superAdminCredentials), {
-      httpOnly: false,
-      secure: true,
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7
-    });
-
-    redirect('/')
-  } else {
-    await connectDB();
-
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return {
-        err: "Username or password incorrect"
-      }
+  if (!user) {
+    return {
+      err: "Username or password incorrect"
     }
-
-    const isPasswordValid = await comparePassword(password, user?.password);
-
-    if (!isPasswordValid) {
-      return {
-        err: "Invalid Credentials"
-      }
-    }
-
-    if (user?.useTwoFactor) {
-
-      const otp = createOTP();
-      await OTP.create({
-        otp,
-        for: user?._id
-      })
-
-      const html = generateOTPEmail(otp, user?.name)
-
-      const transporter = await nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: process.env.SMTP_USER, // e.g. "stratital.portal@gmail.com"
-          pass: process.env.SMTP_PASS, // Gmail app password, not your account password
-        },
-      });
-
-      await transporter.sendMail({
-        from: `stratital.portal@gmail.com`,
-        to: user?.email,
-        subject: "Verify your OTP",
-        html,
-      });
-
-
-      (await cookies()).set('pendingUser', JSON.stringify(user), {
-        httpOnly: true,
-        secure: true,
-        path: '/',
-        maxAge: 60 * 60
-      })
-      redirect('/verify-otp')
-    }
-
-    const token = crypto.randomBytes(32).toString("hex");
-
-    (await cookies()).set({
-      name: "authToken",
-      value: token,
-      httpOnly: true,
-      path: "/",
-      secure: process.env.NODE_ENV || 'production',
-      maxAge: 60 * 60 * 24 * 7
-    });
-
-    (await cookies()).set("user", JSON.stringify(user), {
-      httpOnly: false,
-      secure: true,
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7
-    });
-
-    redirect('/');
-
   }
+
+  const isPasswordValid = await comparePassword(password, user?.password);
+
+  if (!isPasswordValid) {
+    return {
+      err: "Invalid Credentials"
+    }
+  }
+
+  if (user?.useTwoFactor) {
+
+    const otp = createOTP();
+    await OTP.create({
+      otp,
+      for: user?._id
+    })
+
+    const html = generateOTPEmail(otp, user?.name)
+
+    const transporter = await nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.SMTP_USER, // e.g. "stratital.portal@gmail.com"
+        pass: process.env.SMTP_PASS, // Gmail app password, not your account password
+      },
+    });
+
+    await transporter.sendMail({
+      from: `stratital.portal@gmail.com`,
+      to: user?.email,
+      subject: "Verify your OTP",
+      html,
+    });
+
+
+    (await cookies()).set('pendingUser', JSON.stringify(user), {
+      httpOnly: true,
+      secure: true,
+      path: '/',
+      maxAge: 60 * 60
+    })
+    redirect('/verify-otp')
+  }
+
+  const token = crypto.randomBytes(32).toString("hex");
+
+  (await cookies()).set({
+    name: "authToken",
+    value: token,
+    httpOnly: true,
+    path: "/",
+    secure: process.env.NODE_ENV || 'production',
+    maxAge: 60 * 60 * 24 * 7
+  });
+
+  (await cookies()).set("user", JSON.stringify(user), {
+    httpOnly: false,
+    secure: true,
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7
+  });
+
+  redirect('/');
 }
 
 

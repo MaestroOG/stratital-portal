@@ -70,7 +70,7 @@ export const LoginUser = async (prevState, formData) => {
     });
 
     await transporter.sendMail({
-      from: `stratital.portal@gmail.com`,
+      from: `admin@stratital.com`,
       to: user?.email,
       subject: "Verify your OTP",
       html,
@@ -191,14 +191,14 @@ export const SignUpUser = async (formValues, prevState, formData) => {
     const userHtml = generateApplicationReceivedUserEmail(name, companyName, email);
 
     await transporter.sendMail({
-      from: `stratital.portal@gmail.com`,
-      to: email,
+      from: `admin@stratital.com`,
+      to: [email, 'portal@stratital.com'],
       subject: "Thanks for your interest in partnering with Stratital",
       html: userHtml,
     })
 
     await transporter.sendMail({
-      from: `stratital.portal@gmail.com`,
+      from: `admin@stratital.com`,
       to: 'portal@stratital.com',
       subject: "New User Application – Review Required",
       html,

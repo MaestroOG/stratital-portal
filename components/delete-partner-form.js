@@ -17,7 +17,11 @@ const DeletePartnerForm = ({ userId }) => {
     const [state, formAction, isPending] = useActionState(deletePartner, {})
     return (
         <>
-            <form action={formAction}>
+            <form action={formAction} onSubmit={(e) => {
+                if (!window.confirm("Are you sure you want to delete this partner?")) {
+                    e.preventDefault();
+                }
+            }}>
                 <input type="hidden" name='userId' value={userId} />
                 <Button disabled={isPending} type='submit' variant="secondary">
                     <Trash

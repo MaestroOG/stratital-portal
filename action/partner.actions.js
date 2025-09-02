@@ -17,17 +17,6 @@ export async function deletePartner(prevState, formData) {
 
     await User.findByIdAndDelete(userId);
 
-    const transporter = await createTransporter();
-
-    const html = generatePartnerShipEndEmail(user?.email, user?.name, user?.companyName, todaysDate, 'support@stratital.com')
-
-    await transporter.sendMail({
-        from: `stratital.portal@gmail.com`,
-        to: user?.email,
-        subject: "Partnership Status: Ended",
-        html,
-    })
-
     revalidatePath('/', "layout");
 
     return {

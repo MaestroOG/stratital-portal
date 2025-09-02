@@ -50,7 +50,7 @@ export async function createProject(prevState, formData) {
     })
 
     await transporter.sendMail({
-        from: `stratital.portal@gmail.com`,
+        from: `admin@stratital.com`,
         to: [user?.email, 'portal@stratital.com'],
         subject: "Project Created - Stratital",
         html,
@@ -85,8 +85,8 @@ export async function addNote(id, prevState, formData) {
 
         if (user?.role === 'user') {
             await transporter.sendMail({
-                from: `stratital.portal@gmail.com`,
-                to: 'stratital.portal@gmail.com',
+                from: `admin@stratital.com`,
+                to: ['admin@stratital.com', 'portal@stratital.com'],
                 subject: "Note Created - Stratital",
                 html,
             })
@@ -96,8 +96,8 @@ export async function addNote(id, prevState, formData) {
             const date = formatDateToYMD(project?.createdAt)
             const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date);
             await transporter.sendMail({
-                from: `stratital.portal@gmail.com`,
-                to: project?.createdBy.email,
+                from: `admin@stratital.com`,
+                to: [project?.createdBy.email, 'portal@stratital.com'],
                 subject: "Note Created - Stratital",
                 html: adminToUserHtml,
             })
@@ -129,8 +129,8 @@ export async function ApproveProject(projectId, prevState, formData) {
     const transporter = await createTransporter();
 
     await transporter.sendMail({
-        from: `stratital.portal@gmail.com`,
-        to: project?.createdBy.email,
+        from: `admin@stratital.com`,
+        to: [project?.createdBy.email, 'portal@stratital.com'],
         subject: "Project Status Update - Stratital",
         html,
     })
@@ -155,8 +155,8 @@ export async function RejectProject(projectId, prevState, formData) {
     const transporter = await createTransporter();
 
     await transporter.sendMail({
-        from: `stratital.portal@gmail.com`,
-        to: [user?.email, 'stratital.portal@gmail.com'],
+        from: `admin@stratital.com`,
+        to: [user?.email, 'portal@stratital.com'],
         subject: "Project Status Update - Stratital",
         html,
     })
@@ -183,8 +183,8 @@ export async function changeProjectStatus(projectId, prevState, formData) {
     const transporter = await createTransporter();
 
     await transporter.sendMail({
-        from: `stratital.portal@gmail.com`,
-        to: user?.email,
+        from: `admin@stratital.com`,
+        to: ["portal@stratital.com", user?.email],
         subject: "Project Status Update - Stratital",
         html,
     })

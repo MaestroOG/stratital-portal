@@ -10,10 +10,23 @@ import { revalidatePath } from "next/cache";
 
 export async function deletePartner(prevState, formData) {
     const userId = formData.get('userId');
+
+    const sendFinalEmail = formData.get('sendFinalEmail')
     const todaysDate = getTodayDate();
     await connectDB();
 
     const user = await getUserById(userId);
+
+    if (sendFinalEmail) {
+        const html = generatePartnerShipEndEmail(user?.email, user?.name, user?.companyName, todaysDate, 'support@stratital.com')
+        const transporter = await createTransporter();
+        await transporter.sendMail({
+            from: `admin@stratital.com`,
+            to: [user?.email, 'portal@stratital.com'],
+            subject: "Partnership Update - Ended",
+            html,
+        })
+    }
 
     await User.findByIdAndDelete(userId);
 

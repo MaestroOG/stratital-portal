@@ -33,8 +33,6 @@ const HomePage = async () => {
 
   const firstLogin = await isFirstLogin();
 
-  console.log(user);
-
   return (
     <>
 

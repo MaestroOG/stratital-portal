@@ -76,3 +76,12 @@ export function createOTP() {
     const buffer = crypto.randomInt(100000, 1000000);
     return buffer.toString();
 }
+
+export function toCamelCase(str) {
+    return str
+        .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
+            if (+match === 0) return ""; // skip spaces
+            return index === 0 ? match.toLowerCase() : match.toUpperCase();
+        })
+        .replace(/\s+/g, '');
+}

@@ -82,7 +82,6 @@ const Header = () => {
         getNotifications();
     }, []);
 
-    console.log(count)
 
     const links = [
         {
@@ -90,11 +89,15 @@ const Header = () => {
             title: "Dashboard",
             href: "/",
         },
-        {
-            icon: <FolderCog />,
-            title: "Projects",
-            href: "/projects",
-        },
+        ...(user?.role !== "manager"
+            ? [
+                {
+                    icon: <FolderCog />,
+                    title: "Projects",
+                    href: "/projects",
+                },
+            ]
+            : []),
         {
             icon: <Video />,
             title: "How-To",
@@ -187,12 +190,12 @@ const Header = () => {
                                     <X className='text-white' />
                                 </DrawerClose>
                                 <div className='mt-8'>
-                                    <DrawerClose asChild>
+                                    {user?.role !== 'manager' && <DrawerClose asChild>
                                         <Link href={'/projects/new-project'} className={`bg-white flex items-center gap-2.5 p-2 rounded-full cursor-pointer`}>
                                             <Image src={'/addIcon.png'} width={34} height={34} alt="Add_Icon" />
                                             <p className="font-medium text-sm">Create new project</p>
                                         </Link>
-                                    </DrawerClose>
+                                    </DrawerClose>}
 
                                     <div className="sidebar-menu">
                                         {links.map((link, i) => (

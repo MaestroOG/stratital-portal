@@ -6,6 +6,8 @@ import { getNotesByProjectId, getProjectById } from '@/lib/projects'
 import { getUser } from '@/lib/user'
 import { camelToNormal, capitalizeFirst, formatDateToYMD, timeAgo } from '@/utils/formUtils'
 import Linkify from 'linkify-react'
+import Image from 'next/image'
+import parse from 'html-react-parser';
 
 export const metadata = {
     title: 'Project Details',
@@ -19,7 +21,6 @@ const ProjectDetailPage = async ({ params }) => {
     const projectNotes = await getNotesByProjectId(id);
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
-
 
     return (
         <>
@@ -52,6 +53,7 @@ const ProjectDetailPage = async ({ params }) => {
                 <div className='flex items-end justify-between'>
                     <h1 className='text-4xl font-bold'>Comments</h1>
                 </div>
+                <NoteBox id={params?.id} />
                 <div className='mt-6'>
                     <ul>
                         {projectNotes?.length === 0 && (
@@ -59,12 +61,22 @@ const ProjectDetailPage = async ({ params }) => {
                         )}
                         {projectNotes?.map((note, index) => (
                             <li key={index} className='mb-4'>
-                                <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)} by {note?.createdBy === null ? 'Stratital Team' : note?.createdBy?.name} - {timeAgo(note?.createdAt)}</p>
-                                <p className='text-lg font-medium'><Linkify options={{ target: '_blank', className: 'text-blue-500 underline' }}>{note?.note}</Linkify></p>
+
+                                <div className='flex items-center gap-2'>
+                                    <Image src={'/placeholder-avatar.svg'} width={35} height={35} alt='avatar' />
+                                    <div>
+                                        <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)} by {note?.createdBy === null ? 'Stratital Team' : note?.createdBy?.name} - {timeAgo(note?.createdAt)}</p>
+                                        <span className='text-detail text-xs'>{note?.createdBy?.companyName}</span>
+                                    </div>
+                                </div>
+
+                                <p className="text-lg font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
+                                    {parse(note?.note)}
+                                </p>
                             </li>
                         ))}
+
                     </ul>
-                    <NoteBox id={params?.id} />
                 </div>
             </Container>
         </>

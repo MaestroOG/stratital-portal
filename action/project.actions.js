@@ -65,14 +65,14 @@ export async function createProject(prevState, formData) {
 
 export async function addNote(id, prevState, formData) {
     const user = await getUser();
-    const note = formData.get("note");
+    const commentText = formData.get('commentText');
 
     const project = await Project.findById(id).populate("createdBy");
 
     try {
         await connectDB();
         await Note.create({
-            note,
+            note: commentText,
             createdBy: user?._id,
             projectId: id,
         })

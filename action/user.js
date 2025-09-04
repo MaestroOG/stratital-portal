@@ -12,6 +12,7 @@ import User from "@/models/User";
 import { createOTP } from "@/utils/formUtils";
 import OTP from "@/models/OTP";
 import { generateOTPEmail } from "@/htmlemailtemplates/otpEmailTemplate";
+import { revalidatePath } from "next/cache";
 
 const superAdminCredentials = {
   email: String(process.env.SUPERADMIN_EMAIL) || "",
@@ -227,6 +228,7 @@ export const changeFirstLogin = async (userId, prevState, formData) => {
   await connectDB();
 
   await User.findByIdAndUpdate(userId, { firstLogIn: true });
+  revalidatePath('/', 'layout')
 
   redirect('/how-to')
 }

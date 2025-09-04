@@ -8,10 +8,9 @@ import {
 } from "@/components/ui/table"
 import { Button } from "../ui/button"
 import Link from "next/link"
-import { Eye, FolderCog, Trash } from "lucide-react"
-import DeletePartnerForm from "../delete-partner-form"
+import { ArchiveRestore } from "lucide-react"
 
-const UserTable = ({ users }) => {
+const DeletedUserTable = ({ users }) => {
     return (
         <div className="overflow-x-auto w-full">
             <Table>
@@ -30,19 +29,11 @@ const UserTable = ({ users }) => {
                             <TableCell className={'max-sm:hidden'}>{user?.name}</TableCell>
                             <TableCell className={'max-sm:hidden'}>{user?.email}</TableCell>
                             <TableCell className="max-md:text-right flex items-center justify-end gap-2">
-                                <DeletePartnerForm userId={user?._id} />
                                 <Link href={`/admin/user/${user?._id}`}>
                                     <Button variant="secondary">
-                                        <Eye
+                                        <ArchiveRestore
                                             size={24}
                                             alt="view"
-                                        />
-                                    </Button>
-                                </Link>
-                                <Link href={`/admin/user/projects?agencyId=${user?._id}`}>
-                                    <Button variant="secondary">
-                                        <FolderCog
-                                            size={24}
                                         />
                                     </Button>
                                 </Link>
@@ -52,8 +43,7 @@ const UserTable = ({ users }) => {
                 </TableBody>
             </Table>
         </div>
-
     )
 }
 
-export default UserTable
+export default DeletedUserTable

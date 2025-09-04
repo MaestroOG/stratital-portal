@@ -94,7 +94,7 @@ export async function addNote(id, prevState, formData) {
 
         if (user?.role === 'superadmin') {
             const date = formatDateToYMD(project?.createdAt)
-            const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date);
+            const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date, 'https://portal.stratital.com');
             await transporter.sendMail({
                 from: `admin@stratital.com`,
                 to: [project?.createdBy.email, 'portal@stratital.com'],

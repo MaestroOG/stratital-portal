@@ -13,7 +13,7 @@ import { camelToNormal, capitalizeFirst } from "@/utils/formUtils"
 import HomePageDialog from "@/components/dashboardComponents/HomePageDialog"
 import { getLatestUnreadNotification } from "@/lib/notifications"
 import NewLoginDialog from "@/components/dashboardComponents/NewLoginDialog"
-import { getAllManagerRelatedProjects } from "@/lib/admin"
+import { getAllCompletedProjectsThisMonth, getAllManagerRelatedProjects, getAllPendingProjectsThisMonth, getAllProjects, getAllRunningProjectsThisMonth } from "@/lib/admin"
 
 
 
@@ -26,16 +26,26 @@ const HomePage = async () => {
   const user = await getUser();
 
   let projects;
+  let completedProjectsThisMonth;
+  let pendingProjectsThisMonth;
+  let runningProjectsThisMonth;
+
   if (user?.role === 'user') {
     projects = await getAllUserProjects(user?._id);
+    completedProjectsThisMonth = await getCompletedProjectsThisMonth();
+    pendingProjectsThisMonth = await getPendingProjectsThisMonth();
+    runningProjectsThisMonth = await getRunningProjectsThisMonth();
   } else if (user?.role === 'manager') {
     projects = await getAllManagerRelatedProjects();
+  } else {
+    projects = await getAllProjects();
+    completedProjectsThisMonth = await getAllCompletedProjectsThisMonth();
+    pendingProjectsThisMonth = await getAllPendingProjectsThisMonth();
+    runningProjectsThisMonth = await getAllRunningProjectsThisMonth();
   }
   const latestNotification = await getLatestUnreadNotification();
 
-  const completedProjectsThisMonth = await getCompletedProjectsThisMonth();
-  const pendingProjectsThisMonth = await getPendingProjectsThisMonth();
-  const runningProjectsThisMonth = await getRunningProjectsThisMonth();
+
 
   const firstLogin = await isFirstLogin();
 

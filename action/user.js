@@ -14,17 +14,6 @@ import OTP from "@/models/OTP";
 import { generateOTPEmail } from "@/htmlemailtemplates/otpEmailTemplate";
 import { revalidatePath } from "next/cache";
 
-const superAdminCredentials = {
-  email: String(process.env.SUPERADMIN_EMAIL) || "",
-  password: String(process.env.SUPERADMIN_PASSWORD) || "",
-  name: String(process.env.SUPERADMIN_NAME) || "",
-  agency: String(process.env.SUPERADMIN_AGENCY) || "",
-  role: String(process.env.SUPERADMIN_ROLE) || "superadmin",
-  avatar: String(process.env.SUPERADMIN_AVATAR) || "/avatar.jpeg",
-  _id: '507f1f77bcf86cd799439011',
-  firstLogIn: true,
-}
-
 export const LoginUser = async (prevState, formData) => {
   const email = formData.get("email").toString().trim();
   const password = formData.get("password").toString().trim();
@@ -71,7 +60,7 @@ export const LoginUser = async (prevState, formData) => {
     });
 
     await transporter.sendMail({
-      from: `admin@stratital.com`,
+      from: '"Stratital" <admin@stratital.com>',
       to: user?.email,
       subject: "Verify your OTP",
       html,
@@ -192,14 +181,14 @@ export const SignUpUser = async (formValues, prevState, formData) => {
     const userHtml = generateApplicationReceivedUserEmail(name, companyName, email);
 
     await transporter.sendMail({
-      from: `admin@stratital.com`,
+      from: '"Stratital" <admin@stratital.com>',
       to: [email, 'portal@stratital.com'],
       subject: "Thanks for your interest in partnering with Stratital",
       html: userHtml,
     })
 
     await transporter.sendMail({
-      from: `admin@stratital.com`,
+      from: '"Stratital" <admin@stratital.com>',
       to: 'portal@stratital.com',
       subject: "New User Application – Review Required",
       html,

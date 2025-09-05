@@ -26,7 +26,7 @@ export async function deletePartner(prevState, formData) {
         const html = generatePartnerShipEndEmail(user?.email, user?.name, user?.companyName, todaysDate, 'support@stratital.com')
         const transporter = await createTransporter();
         await transporter.sendMail({
-            from: `admin@stratital.com`,
+            from: '"Stratital" <admin@stratital.com>',
             to: [user?.email, 'portal@stratital.com'],
             subject: "Partnership Update - Ended",
             html,

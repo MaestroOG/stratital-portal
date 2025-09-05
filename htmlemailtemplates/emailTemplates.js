@@ -609,9 +609,8 @@ export const generateNoteCreatedEmailUserTemplate = (commentUrl, name) => {
 
 
 
-export const generateAdminToUserEmailNoteTemplate = (projectTitle, name, createdAt) => {
-  return `
-  <!DOCTYPE html>
+export const generateAdminToUserEmailNoteTemplate = (projectTitle, name, createdAt, commentUrl) => {
+  return `<!DOCTYPE html>
 <html lang="en" style="margin:0;padding:0;">
 <head>
   <meta charset="UTF-8" />
@@ -711,7 +710,17 @@ export const generateAdminToUserEmailNoteTemplate = (projectTitle, name, created
                   </td>
                 </tr>
               </table>
-
+<tr>
+                  <td align="center" bgcolor="#F33C38" style="border-radius:0px;">
+                    <a href="${commentUrl}" target="_blank"
+                       class="btn"
+                       style="display:inline-block;padding:12px 20px;border-radius:8px;background:#F33C38;text-decoration:none;">
+                      <span class="fallback-font" style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:14px;color:#ffffff;font-weight:700;">
+                        View in Portal
+                      </span>
+                    </a>
+                  </td>
+                </tr>
              
             </td>
           </tr>
@@ -731,6 +740,7 @@ export const generateAdminToUserEmailNoteTemplate = (projectTitle, name, created
             </td>
           </tr>
 
+
         </table>
         <!-- /Card -->
 
@@ -740,6 +750,5 @@ export const generateAdminToUserEmailNoteTemplate = (projectTitle, name, created
   <!-- /Wrapper -->
 </body>
 </html>
-
   `;
 }

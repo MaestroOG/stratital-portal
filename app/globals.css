@@ -9,6 +9,20 @@ body {
   font-family: "Montserrat", sans-serif !important;
 }
 
+.jodit-wysiwyg a {
+  color: #1d4ed8;
+  /* Tailwind's blue-700 */
+  font-weight: bold;
+  text-decoration: underline dotted;
+}
+
+.text-content a {
+  color: #1d4ed8;
+  /* Tailwind's blue-700 */
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 @theme {
   --color-background-gray: #E8E8E8;
   --color-dark-blue: #2D2F39;

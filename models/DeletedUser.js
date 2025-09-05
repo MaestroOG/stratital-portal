@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
-const UserSchema = new Schema({
+const deletedUserSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -106,15 +106,8 @@ const UserSchema = new Schema({
     useTwoFactor: {
         type: Boolean,
         default: false
-    },
-    serviceManager: {
-        type: [String],
-        trim: true
     }
 }, { timestamps: true })
 
-const User = models.User || model("User", UserSchema);
-export default User;
-
-
-
+const DeletedUser = models.DeletedUser || model("DeletedUser", deletedUserSchema);
+export default DeletedUser;

@@ -35,11 +35,15 @@ const Sidebar = () => {
             title: "Dashboard",
             href: "/",
         },
-        {
-            icon: <FolderCog />,
-            title: "Projects",
-            href: "/projects",
-        },
+        ...(user?.role !== "manager"
+            ? [
+                {
+                    icon: <FolderCog />,
+                    title: "Projects",
+                    href: "/projects",
+                },
+            ]
+            : []),
         {
             icon: <Video />,
             title: "How-To",
@@ -78,7 +82,7 @@ const Sidebar = () => {
                 />
             </Link>
 
-            <AddProjectButton href={'/projects/new-project'} className={'md:w-full'} />
+            {user?.role !== 'manager' && <AddProjectButton href={'/projects/new-project'} className={'md:w-full'} />}
 
             <div className="sidebar-menu">
                 {links.map((link, i) => {

@@ -50,7 +50,7 @@ export async function createProject(prevState, formData) {
     })
 
     await transporter.sendMail({
-        from: `admin@stratital.com`,
+        from: '"Stratital" <admin@stratital.com>',
         to: [user?.email, 'portal@stratital.com'],
         subject: "Project Created - Stratital",
         html,
@@ -65,14 +65,14 @@ export async function createProject(prevState, formData) {
 
 export async function addNote(id, prevState, formData) {
     const user = await getUser();
-    const note = formData.get("note");
+    const commentText = formData.get('commentText');
 
     const project = await Project.findById(id).populate("createdBy");
 
     try {
         await connectDB();
         await Note.create({
-            note,
+            note: commentText,
             createdBy: user?._id,
             projectId: id,
         })
@@ -85,7 +85,7 @@ export async function addNote(id, prevState, formData) {
 
         if (user?.role === 'user') {
             await transporter.sendMail({
-                from: `admin@stratital.com`,
+                from: '"Stratital" <admin@stratital.com>',
                 to: ['admin@stratital.com', 'portal@stratital.com'],
                 subject: "Note Created - Stratital",
                 html,
@@ -94,9 +94,9 @@ export async function addNote(id, prevState, formData) {
 
         if (user?.role === 'superadmin') {
             const date = formatDateToYMD(project?.createdAt)
-            const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date);
+            const adminToUserHtml = generateAdminToUserEmailNoteTemplate(project?.projectTitle, project?.createdBy?.name, date, 'https://portal.stratital.com');
             await transporter.sendMail({
-                from: `admin@stratital.com`,
+                from: '"Stratital" <admin@stratital.com>',
                 to: [project?.createdBy.email, 'portal@stratital.com'],
                 subject: "Note Created - Stratital",
                 html: adminToUserHtml,
@@ -105,11 +105,11 @@ export async function addNote(id, prevState, formData) {
 
         return {
             success: true,
-            message: "Note added successfully",
+            message: "Comment added successfully",
         }
     } catch (error) {
         return {
-            message: "Failed to add note"
+            message: "Failed to add comment"
         }
     }
 }
@@ -129,7 +129,7 @@ export async function ApproveProject(projectId, prevState, formData) {
     const transporter = await createTransporter();
 
     await transporter.sendMail({
-        from: `admin@stratital.com`,
+        from: '"Stratital" <admin@stratital.com>',
         to: [project?.createdBy.email, 'portal@stratital.com'],
         subject: "Project Status Update - Stratital",
         html,
@@ -155,7 +155,7 @@ export async function RejectProject(projectId, prevState, formData) {
     const transporter = await createTransporter();
 
     await transporter.sendMail({
-        from: `admin@stratital.com`,
+        from: '"Stratital" <admin@stratital.com>',
         to: [user?.email, 'portal@stratital.com'],
         subject: "Project Status Update - Stratital",
         html,
@@ -183,7 +183,7 @@ export async function changeProjectStatus(projectId, prevState, formData) {
     const transporter = await createTransporter();
 
     await transporter.sendMail({
-        from: `admin@stratital.com`,
+        from: '"Stratital" <admin@stratital.com>',
         to: ["portal@stratital.com", user?.email],
         subject: "Project Status Update - Stratital",
         html,

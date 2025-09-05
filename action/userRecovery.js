@@ -22,7 +22,7 @@ export async function getRecoveryEmail(prevState, formData) {
     const html = generateRecoveryEmailTemplate(`https://portal.stratital.com/reset-password?email=${user?.email}`);
 
     await transporter.sendMail({
-        from: `admin@stratital.com`,
+        from: '"Stratital" <admin@stratital.com>',
         to: [user?.email, 'portal@stratital.com'],
         subject: "Password Reset - Stratital",
         html,

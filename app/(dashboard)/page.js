@@ -13,6 +13,7 @@ import { camelToNormal, capitalizeFirst } from "@/utils/formUtils"
 import HomePageDialog from "@/components/dashboardComponents/HomePageDialog"
 import { getLatestUnreadNotification } from "@/lib/notifications"
 import NewLoginDialog from "@/components/dashboardComponents/NewLoginDialog"
+import { getAllCompletedProjectsThisMonth, getAllManagerRelatedProjects, getAllPendingProjectsThisMonth, getAllProjects, getAllRunningProjectsThisMonth } from "@/lib/admin"
 
 
 
@@ -23,15 +24,31 @@ export const metadata = {
 const HomePage = async () => {
 
   const user = await getUser();
-  const projects = await getAllUserProjects(user?._id);
 
+  let projects;
+  let completedProjectsThisMonth;
+  let pendingProjectsThisMonth;
+  let runningProjectsThisMonth;
+
+  if (user?.role === 'user') {
+    projects = await getAllUserProjects(user?._id);
+    completedProjectsThisMonth = await getCompletedProjectsThisMonth();
+    pendingProjectsThisMonth = await getPendingProjectsThisMonth();
+    runningProjectsThisMonth = await getRunningProjectsThisMonth();
+  } else if (user?.role === 'manager') {
+    projects = await getAllManagerRelatedProjects();
+  } else {
+    projects = await getAllProjects();
+    completedProjectsThisMonth = await getAllCompletedProjectsThisMonth();
+    pendingProjectsThisMonth = await getAllPendingProjectsThisMonth();
+    runningProjectsThisMonth = await getAllRunningProjectsThisMonth();
+  }
   const latestNotification = await getLatestUnreadNotification();
 
-  const completedProjectsThisMonth = await getCompletedProjectsThisMonth();
-  const pendingProjectsThisMonth = await getPendingProjectsThisMonth();
-  const runningProjectsThisMonth = await getRunningProjectsThisMonth();
+
 
   const firstLogin = await isFirstLogin();
+
 
   return (
     <>
@@ -61,8 +78,10 @@ const HomePage = async () => {
       <Container className="bg-white p-4 rounded-lg">
         <div className="flex items-center max-sm:justify-between gap-4">
           <h1 className="text-xl font-medium">Your Projects</h1>
-          <Link className="hidden md:block" href={'/projects/new-project'}><Button className={'cursor-pointer'}>Add a Project</Button></Link>
-          <Link className="md:hidden" href={'/projects/new-project'}><Button className={'cursor-pointer rounded-full'}><Plus className="text-white" /></Button></Link>
+          {user?.role !== 'manager' && <>
+            <Link className="hidden md:block" href={'/projects/new-project'}><Button className={'cursor-pointer'}>Add a Project</Button></Link>
+            <Link className="md:hidden" href={'/projects/new-project'}><Button className={'cursor-pointer rounded-full'}><Plus className="text-white" /></Button></Link>
+          </>}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">
@@ -70,7 +89,8 @@ const HomePage = async () => {
 
           {projects?.length === 0 && (
             <div className="p-6">
-              Add your first project to get started!
+              {user?.role !== 'manager' && <span>Add your first project to get started!</span>}
+              {user?.role === 'manager' && <span>Wait for your first project to be assigned!</span>}
             </div>
           )}
           <Suspense fallback={<p>Loading...</p>}>
@@ -89,7 +109,7 @@ const HomePage = async () => {
 
       {latestNotification && <HomePageDialog title={latestNotification?.title} description={latestNotification?.description} />}
 
-      {firstLogin && <NewLoginDialog userId={user?._id} firstLogin={firstLogin} />}
+      {/* {firstLogin && <NewLoginDialog userId={user?._id} firstLogin={firstLogin} />} */}
     </>
   )
 }

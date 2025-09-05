@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { getUser } from "@/lib/user"
 import { getAllComments } from "@/lib/admin"
+import { formatDateToYMD } from "@/utils/formUtils"
 
 const CommentsPage = async () => {
     const user = await getUser();
@@ -16,6 +17,8 @@ const CommentsPage = async () => {
         notes = await getAllComments();
     }
 
+    console.log(notes)
+
     return (
         <Container className={'bg-white p-2 md:p-4'}>
             <h1 className="text-2xl md:text-4xl font-bold">Project Comments</h1>
@@ -23,7 +26,7 @@ const CommentsPage = async () => {
                 {notes && notes.length > 0 ? (
                     notes?.map(note => (
                         <Alert key={note._id} variant="default">
-                            <AlertTitle className={'font-semibold text-lg'}>{note?.projectId?.projectTitle}</AlertTitle>
+                            <AlertTitle className={'font-semibold text-lg'}>{note?.projectId?.projectTitle} - {formatDateToYMD(note?.createdAt)}</AlertTitle>
                             <AlertDescription>
                                 A comment was created by <span className="italic">{note.createdBy?.name}</span> on the project <span className="font-bold">{note.projectId?.projectTitle}</span>{" "}
                                 <Link

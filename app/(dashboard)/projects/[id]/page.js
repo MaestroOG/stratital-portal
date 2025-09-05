@@ -60,7 +60,7 @@ const ProjectDetailPage = async ({ params }) => {
                             <p className='font-medium text-center p-6'>No Comments For Now</p>
                         )}
                         {projectNotes?.map((note, index) => (
-                            <li key={index} className='mb-4'>
+                            <li key={index} className='mb-5'>
 
                                 <div className='flex items-center gap-2'>
                                     <Image src={'/placeholder-avatar.svg'} width={35} height={35} alt='avatar' />
@@ -70,7 +70,7 @@ const ProjectDetailPage = async ({ params }) => {
                                     </div>
                                 </div>
 
-                                <p className="text-lg font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
+                                <p className="text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
                                     {parse(note?.note)}
                                 </p>
                             </li>

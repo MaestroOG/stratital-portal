@@ -109,7 +109,7 @@ const HomePage = async () => {
 
       {latestNotification && <HomePageDialog title={latestNotification?.title} description={latestNotification?.description} />}
 
-      {firstLogin && <NewLoginDialog userId={user?._id} firstLogin={firstLogin} />}
+      {/* {firstLogin && <NewLoginDialog userId={user?._id} firstLogin={firstLogin} />} */}
     </>
   )
 }

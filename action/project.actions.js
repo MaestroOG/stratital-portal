@@ -105,11 +105,11 @@ export async function addNote(id, prevState, formData) {
 
         return {
             success: true,
-            message: "Note added successfully",
+            message: "Comment added successfully",
         }
     } catch (error) {
         return {
-            message: "Failed to add note"
+            message: "Failed to add comment"
         }
     }
 }

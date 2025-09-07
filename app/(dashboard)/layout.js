@@ -5,6 +5,7 @@ import Header from "@/components/dashboardComponents/Header";
 import TawkToChat from "@/components/TawkToChat";
 import { getUser } from "@/lib/user";
 import NextTopLoader from "nextjs-toploader";
+import Script from "next/script";
 
 export const metadata = {
   title: "Stratital Client Portal",
@@ -16,6 +17,23 @@ export default function RootLayout({ children }) {
   const user = getUser();
   return (
     <html lang="en">
+      <head>
+
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-GKDBGGXRL3`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-GKDBGGXRL3', {
+              page_path: window.location.pathname,
+            });
+          `}
+        </Script>
+      </head>
       <body
         className={`antialiased bg-background-gray flex`}
       >

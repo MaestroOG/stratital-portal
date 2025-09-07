@@ -4,7 +4,7 @@ import NoteBox from '@/components/superadminComponents/NoteBox'
 import { Button } from '@/components/ui/button'
 import { getNotesByProjectId, getProjectById } from '@/lib/projects'
 import { getUser } from '@/lib/user'
-import { camelToNormal, capitalizeFirst, formatDateToYMD, timeAgo } from '@/utils/formUtils'
+import { camelToNormal, capitalizeFirst, formatDateToYMD, formatTo12HourTime, timeAgo } from '@/utils/formUtils'
 import Linkify from 'linkify-react'
 import Image from 'next/image'
 import parse from 'html-react-parser';
@@ -65,7 +65,7 @@ const ProjectDetailPage = async ({ params }) => {
                                 <div className='flex items-center gap-2'>
                                     <Image src={'/placeholder-avatar.svg'} width={35} height={35} alt='avatar' />
                                     <div>
-                                        <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)} by {note?.createdBy === null ? 'Stratital Team' : note?.createdBy?.name} - {timeAgo(note?.createdAt)}</p>
+                                        <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)} by {note?.createdBy === null ? 'Stratital Team' : note?.createdBy?.name} - {timeAgo(note?.createdAt)} at {formatTo12HourTime(note?.createdAt)}</p>
                                         <span className='text-detail text-xs'>{note?.createdBy?.companyName}</span>
                                     </div>
                                 </div>

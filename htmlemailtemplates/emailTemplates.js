@@ -213,6 +213,11 @@ export const generateAcceptEmailTemplate = () => {
           You can now access your account and explore the <strong>Client Portal</strong>, where you’ll find all the tools and resources you need to get started.
         </p>
 
+        <!-- New sentence -->
+        <p style="font-size:15px; line-height:1.6; margin-top:20px; text-align:center; color:#444;">
+          Want to learn how to use the portal? <a href="https://portal.stratital.com/how-to" target="_blank" style="color:#0d47a1; font-weight:600; text-decoration:none;">Watch this video first</a>.
+        </p>
+
         <!-- Call to Action -->
         <div style="text-align:center; margin:30px 0;">
           <a href="https://portal.stratital.com/login" target="_blank" 
@@ -240,6 +245,7 @@ export const generateAcceptEmailTemplate = () => {
   </table>
 </body>
 </html>
+
 `;
 }
 

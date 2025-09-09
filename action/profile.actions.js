@@ -1,10 +1,12 @@
 'use server';
 
+import { uploadImage } from "@/lib/cloudinary";
 import { connectDB } from "@/lib/mongodb";
-import { getUserFromDB } from "@/lib/user";
+import { getUser, getUserFromDB } from "@/lib/user";
 import User from "@/models/User";
 import { comparePassword, hashPassword } from "@/utils/validatorFns";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function changeEmail(prevState, formData) {
     const oldEmail = formData.get('email');
@@ -81,4 +83,21 @@ export async function changeTwoFactor(userId, value) {
     await connectDB();
     await User.findByIdAndUpdate(userId, { useTwoFactor: value });
     revalidatePath('/', 'layout');
+}
+
+export async function changeProfilePicture(prevState, formData) {
+    const image = formData.get('image')
+    await connectDB();
+    const user = await getUser();
+    let imageUrl;
+
+    try {
+        imageUrl = await uploadImage(image)
+        await User.findByIdAndUpdate(user?._id, { profilePictureUrl: imageUrl })
+    } catch (error) {
+        throw new Error('Image upload failed. Post was not created. Please try again later')
+    }
+
+    revalidatePath('/', "layout")
+    redirect('/profile')
 }

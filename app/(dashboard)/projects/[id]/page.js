@@ -31,6 +31,7 @@ const ProjectDetailPage = async ({ params }) => {
                         <h3 className='mt-2'>{service}</h3>
                     </div>
                     <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
+                        {projectDetails?.byAdmin ? <p className='text-sm'>Created By Admin</p> : ''}
                         <p className='text-red font-medium animate-pulse'>• {status}</p>
                         {user?.role === 'superadmin' && <ProjectStatusForms status={status} projectId={id} />}
                     </div>

@@ -16,8 +16,16 @@ import {
     DialogFooter,
 } from "@/components/ui/dialog"
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
-const NewProjectForm = ({ service, fields, pricing }) => {
+const NewProjectForm = ({ partners, user, service, fields, pricing }) => {
+    const [value, setValue] = useState("")
 
     const [state, formAction, isPending] = useActionState(createProject, {})
 
@@ -30,6 +38,24 @@ const NewProjectForm = ({ service, fields, pricing }) => {
                     <form action={formAction} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <input type="hidden" name="service" value={service} />
 
+                        {user?.role === 'superadmin' && <div className="flex flex-col gap-2">
+                            <Label className="block font-medium">
+                                For Which Partner<span className="text-red-500">*</span>
+                            </Label>
+                            <Select value={value}
+                                onValueChange={(val) => setValue(val)}>
+                                <SelectTrigger className={'border border-gray-300 w-full'}>
+                                    <SelectValue placeholder="Select Partner" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {partners?.map(partner => (
+                                        <SelectItem key={partner._id} value={partner?._id}>{partner?.companyName}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            <input type="hidden" name="partnerId" value={value} />
+                        </div>}
+
                         <div className="flex flex-col gap-2">
                             <Label className="block font-medium">
                                 Project Title <span className="text-red-500">*</span> (Your Reference ID For This Project)
@@ -41,7 +67,6 @@ const NewProjectForm = ({ service, fields, pricing }) => {
                                 className="border border-gray-300"
                             />
                         </div>
-
 
 
                         {fields?.map((field) => (

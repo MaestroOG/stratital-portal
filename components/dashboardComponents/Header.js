@@ -25,7 +25,7 @@ import { countUnreadNotifications } from '@/utils/notificationUtils';
 import Linkify from 'linkify-react';
 import Loader from '../Loader';
 
-const Header = () => {
+const Header = ({ pfpLink }) => {
     const pathname = usePathname();
     const [notifications, setNotifications] = useState(null);
 
@@ -165,7 +165,7 @@ const Header = () => {
                     <Popover>
                         <PopoverTrigger>
                             <div className='relative w-10 h-10'>
-                                {user && <Image src={user?.profilePictureUrl || '/placeholder-avatar.svg'} fill className='rounded-full cursor-pointer object-cover' priority alt='avatar' />}
+                                {user && <Image src={pfpLink || '/placeholder-avatar.svg'} fill className='rounded-full cursor-pointer object-cover' priority alt='avatar' />}
                             </div>
                         </PopoverTrigger>
                         <PopoverContent>

@@ -6,10 +6,10 @@ import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
 import Note from "@/models/Note";
 import Project from "@/models/Project";
+import User from "@/models/User";
 import { cleanFormEntries, formatDateToYMD } from "@/utils/formUtils";
 import { createTransporter } from "@/utils/transporterFns";
 import { revalidatePath } from "next/cache";
-import nodemailer from "nodemailer";
 
 export async function createProject(prevState, formData) {
     const user = await getUser();
@@ -17,6 +17,7 @@ export async function createProject(prevState, formData) {
     const projectTitle = formData.get("projectTitle");
     const packageSelected = formData.get("selectedPackage")
     const entries = {};
+    const partnerId = formData.get("partnerId")
 
     // Turn formData into a plain object
     formData.forEach((value, key) => {
@@ -25,36 +26,55 @@ export async function createProject(prevState, formData) {
         }
     });
 
-
     const cleanedEntries = cleanFormEntries(entries);
-
-    const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected);
 
     await connectDB();
 
-    await Project.create({
-        projectTitle,
-        service,
-        fields: cleanedEntries,
-        status: 'pending',
-        createdBy: user?._id,
-        packageSelected
-    })
+    if (user?.role === 'superadmin') {
+        const projectForUser = await User.findById(partnerId);
+        await Project.create({
+            projectTitle,
+            service,
+            fields: cleanedEntries,
+            status: 'pending',
+            createdBy: projectForUser?._id,
+            packageSelected,
+            byAdmin: true
+        })
 
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-        },
-    })
+        const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected);
 
-    await transporter.sendMail({
-        from: '"Stratital" <admin@stratital.com>',
-        to: [user?.email, 'portal@stratital.com'],
-        subject: "Project Created - Stratital",
-        html,
-    })
+        const transporter = await createTransporter();
+
+        await transporter.sendMail({
+            from: '"Stratital" <admin@stratital.com>',
+            to: [projectForUser?.email, 'portal@stratital.com'],
+            subject: "Project Created - Stratital",
+            html,
+        })
+    }
+
+    if (user?.role === 'user') {
+        const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected);
+
+        await Project.create({
+            projectTitle,
+            service,
+            fields: cleanedEntries,
+            status: 'pending',
+            createdBy: user?._id,
+            packageSelected
+        })
+
+        const transporter = createTransporter();
+
+        await transporter.sendMail({
+            from: '"Stratital" <admin@stratital.com>',
+            to: [user?.email, 'portal@stratital.com'],
+            subject: "Project Created - Stratital",
+            html,
+        })
+    }
 
     return {
         success: true,

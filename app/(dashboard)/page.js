@@ -46,10 +46,6 @@ const HomePage = async () => {
   const latestNotification = await getLatestUnreadNotification();
 
 
-
-  const firstLogin = await isFirstLogin();
-
-
   return (
     <>
 
@@ -78,10 +74,7 @@ const HomePage = async () => {
       <Container className="bg-white p-4 rounded-lg">
         <div className="flex items-center max-sm:justify-between gap-4">
           <h1 className="text-xl font-medium">Your Projects</h1>
-          {user?.role !== 'manager' && <>
-            <Link className="hidden md:block" href={'/projects/new-project'}><Button className={'cursor-pointer'}>Add a Project</Button></Link>
-            <Link className="md:hidden" href={'/projects/new-project'}><Button className={'cursor-pointer rounded-full'}><Plus className="text-white" /></Button></Link>
-          </>}
+
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">
@@ -98,6 +91,7 @@ const HomePage = async () => {
               <div key={project._id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                 <Badge variant={"secondary"} className={'mb-2'}>{camelToNormal(project.service)}</Badge>
                 <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{project.projectTitle}</h5>
+                <p className="mb-3 font-medium">By: {project?.createdBy.companyName}</p>
                 <p className="mb-3 font-medium text-red animate-pulse">• {capitalizeFirst(project?.status) || ""}</p>
                 <Link href={`/projects/${project?._id}`}><Button variant={"default"}>Project Details</Button></Link>
               </div>

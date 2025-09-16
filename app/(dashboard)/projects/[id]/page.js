@@ -8,6 +8,7 @@ import { camelToNormal, capitalizeFirst, formatDateToYMD, formatTo12HourTime, ti
 import Linkify from 'linkify-react'
 import Image from 'next/image'
 import parse from 'html-react-parser';
+import ProjectNotesList from '@/components/ProjectNotesList'
 
 export const metadata = {
     title: 'Project Details',
@@ -17,17 +18,19 @@ export const metadata = {
 const ProjectDetailPage = async ({ params }) => {
     const user = await getUser();
     const { id } = await params;
-    const projectDetails = await getProjectById(id);
-    const projectNotes = await getNotesByProjectId(id);
+    const projectDetails = await getProjectById(id);;
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
 
+    const { notes } = await getNotesByProjectId(id, 1, 10);
+
+    console.log(notes.length)
     return (
         <>
             <Container className={'bg-white p-4'}>
                 <div className='flex md:flex-row flex-col items-start md:items-end justify-between'>
                     <div>
-                        <h1 className='text-2xl md:text-4xl font-bold whitespace-nowrap'>{projectDetails?.projectTitle}</h1>
+                        <h1 className='text-2xl md:text-4xl font-bold whitespace-nowrap'>{projectDetails?.projectTitle} by {projectDetails?.createdBy.companyName}</h1>
                         <h3 className='mt-2'>{service}</h3>
                     </div>
                     <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
@@ -57,26 +60,7 @@ const ProjectDetailPage = async ({ params }) => {
                 <NoteBox id={params?.id} />
                 <div className='mt-6'>
                     <ul>
-                        {projectNotes?.length === 0 && (
-                            <p className='font-medium text-center p-6'>No Comments For Now</p>
-                        )}
-                        {projectNotes?.map((note, index) => (
-                            <li key={index} className='mb-5'>
-
-                                <div className='flex items-center gap-2'>
-                                    <Image src={'/placeholder-avatar.svg'} width={35} height={35} alt='avatar' />
-                                    <div>
-                                        <p className='text-sm text-gray-600'>{formatDateToYMD(note?.createdAt)} by {note?.createdBy === null ? 'Stratital Team' : note?.createdBy?.name} - {timeAgo(note?.createdAt)} at {formatTo12HourTime(note?.createdAt)}</p>
-                                        <span className='text-detail text-xs'>{note?.createdBy?.companyName}</span>
-                                    </div>
-                                </div>
-
-                                <p className="text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
-                                    {parse(note?.note)}
-                                </p>
-                            </li>
-                        ))}
-
+                        {notes.length > 0 ? <ProjectNotesList projectId={params.id} initialNotes={notes} /> : <p className='p-4 text-center'>No Comments For Now.</p>}
                     </ul>
                 </div>
             </Container>

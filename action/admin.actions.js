@@ -29,3 +29,29 @@ export async function createManager(prevState, formData) {
         }
     }
 }
+
+
+export async function updateUserDetails(formValues, prevState, formData) {
+    const userId = formData.get("userId")
+
+    await connectDB();
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(userId, { $set: formValues })
+
+        if (!updatedUser) {
+            throw new Error("User not found");
+        }
+
+        return {
+            success: true,
+            message: "User updated successfully"
+        }
+    } catch (error) {
+        console.error(error)
+        return {
+            success: false,
+            message: "Something went wrong. Please try again.",
+        };
+    }
+}

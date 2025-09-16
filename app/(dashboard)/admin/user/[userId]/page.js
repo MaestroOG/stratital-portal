@@ -17,13 +17,18 @@ const AgencyDetailsPage = async ({ params }) => {
             <Container className="bg-white p-6 max-w-4xl mx-auto space-y-10">
                 {/* Header */}
                 <header className="border-b pb-6">
-                    <h1 className="text-3xl font-bold">
-                        {userDetail?.name}{" "}
-                        <span className="text-lg font-light text-gray-600">
-                            ({userDetail?.position})
-                        </span>
-                    </h1>
-                    <p className="text-gray-500">{userDetail?.companyName}</p>
+                    <div className='flex items-start justify-between'>
+                        <div>
+                            <h1 className="text-3xl font-bold">
+                                {userDetail?.name}{" "}
+                                <span className="text-lg font-light text-gray-600">
+                                    ({userDetail?.position})
+                                </span>
+                            </h1>
+                            <p className="text-gray-500">{userDetail?.companyName}</p>
+                        </div>
+                        <Link href={`/admin/user/${userId}/edit-details`}><Button>Edit Details</Button></Link>
+                    </div>
                 </header>
 
                 {/* Contact Info */}

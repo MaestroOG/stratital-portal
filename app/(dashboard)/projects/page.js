@@ -16,7 +16,6 @@ const ProjectsPage = () => {
             <Container className={'bg-white p-4 rounded-lg'}>
                 <div className="flex items-center gap-4">
                     <h1 className="text-xl font-medium">Our Services</h1>
-                    <Link href={'/projects/new-project'}><Button className={'cursor-pointer'}>Add a Project</Button></Link>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">

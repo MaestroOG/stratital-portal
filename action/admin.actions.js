@@ -1,7 +1,10 @@
 'use server'
 
+import { uploadFilesToCloudinary } from "@/lib/cloudinary";
 import { connectDB } from "@/lib/mongodb";
+import Resource from "@/models/Resource";
 import User from "@/models/User";
+import { revalidatePath } from "next/cache";
 
 export async function createManager(prevState, formData) {
     const userId = formData.get('userId');
@@ -53,5 +56,33 @@ export async function updateUserDetails(formValues, prevState, formData) {
             success: false,
             message: "Something went wrong. Please try again.",
         };
+    }
+}
+
+export async function addResource(prevState, formData) {
+    const title = formData.get('title');
+    const file = formData.get('file')
+
+    if (!file) {
+        return {
+            success: false,
+            message: "Please upload a valid file"
+        }
+    }
+
+    const fileUrl = await uploadFilesToCloudinary(file);
+
+    await connectDB();
+
+    await Resource.create({
+        title,
+        fileUrl
+    })
+
+    revalidatePath('/', 'layout')
+
+    return {
+        success: true,
+        message: "Resource added successfully"
     }
 }

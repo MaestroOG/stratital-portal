@@ -7,7 +7,7 @@ import { getUser } from "@/lib/user";
 import Note from "@/models/Note";
 import Project from "@/models/Project";
 import User from "@/models/User";
-import { cleanFormEntries, formatDateToYMD } from "@/utils/formUtils";
+import { cleanFormEntries, formatDateToYMD, validateEntries } from "@/utils/formUtils";
 import { createTransporter } from "@/utils/transporterFns";
 import { revalidatePath } from "next/cache";
 
@@ -28,7 +28,7 @@ export async function createProject(prevState, formData) {
 
     const cleanedEntries = cleanFormEntries(entries);
 
-    if (!cleanedEntries) {
+    if (!cleanedEntries || !validateEntries(cleanedEntries)) {
         return {
             success: false,
             message: "Project not created.",

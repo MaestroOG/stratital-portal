@@ -99,3 +99,17 @@ export function formatTo12HourTime(isoString) {
 
     return `${hours}:${formattedMinutes} ${ampm}`;
 }
+
+
+export function validateEntries(cleanedEntries) {
+    // Object.values gives all values of the object
+    const hasEmpty = Object.values(cleanedEntries).some(
+        (val) => val === "" || val === null || val === undefined
+    );
+
+    if (hasEmpty) {
+        return false;
+    }
+
+    return true;
+}

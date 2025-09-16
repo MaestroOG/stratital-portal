@@ -1,5 +1,5 @@
 "use client";
-import { Settings, CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle } from "lucide-react";
+import { Settings, CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -62,6 +62,11 @@ const Sidebar = () => {
         ...(user?.role === "superadmin"
             ? [
                 {
+                    icon: <Receipt />,
+                    title: "Invoices",
+                    href: "/invoices",
+                },
+                {
                     icon: <Shield />,
                     title: "Admin Panel",
                     href: "/admin",
@@ -100,10 +105,10 @@ const Sidebar = () => {
             </div>
 
 
-            <Link href={'/profile'} className="max-w-3xs p-4 rounded-sm flex items-center gap-2 justify-center bg-red text-white fixed bottom-5 cursor-pointer">
+            {/* <Link href={'/profile'} className="max-w-3xs p-4 rounded-sm flex items-center gap-2 justify-center bg-red text-white fixed bottom-5 cursor-pointer">
                 <Settings size={"32px"} />
                 <span className="text-white text-lg font-semibold hidden md:block">Profile Setting</span>
-            </Link>
+            </Link> */}
 
         </aside>
     );

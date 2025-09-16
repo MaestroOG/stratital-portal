@@ -1,5 +1,5 @@
 "use client";
-import { Settings, CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt } from "lucide-react";
+import { Settings, CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -48,6 +48,11 @@ const Sidebar = () => {
             icon: <Video />,
             title: "How-To",
             href: '/how-to'
+        },
+        {
+            icon: <Files />,
+            title: "Resources",
+            href: '/resources'
         },
         {
             icon: <CircleDollarSign />,

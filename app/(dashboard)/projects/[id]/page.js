@@ -31,7 +31,7 @@ const ProjectDetailPage = async ({ params }) => {
                 <div className='flex md:flex-row flex-col items-start md:items-end justify-between'>
                     <div>
                         <h1 className='text-2xl md:text-4xl font-bold whitespace-nowrap'>{projectDetails?.projectTitle}</h1>
-                        <h3 className='mt-2'>{service} by {projectDetails?.createdBy.companyName}</h3>
+                        <h3 className='mt-2'>{service} by {projectDetails?.createdBy?.companyName ?? ""}</h3>
                     </div>
                     <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
                         {projectDetails?.byAdmin ? <p className='text-sm'>Created By Admin</p> : ''}

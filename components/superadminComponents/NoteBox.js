@@ -14,8 +14,6 @@ const NoteBox = ({ id }) => {
     const contentRef = useRef(null);
 
     const handleSubmit = (e) => {
-
-        // ✅ reset editor after submit
         setValue("");
     };
 

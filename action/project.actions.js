@@ -28,6 +28,13 @@ export async function createProject(prevState, formData) {
 
     const cleanedEntries = cleanFormEntries(entries);
 
+    if (!cleanedEntries) {
+        return {
+            success: false,
+            message: "Project not created.",
+        }
+    }
+
     await connectDB();
 
     if (user?.role === 'superadmin') {

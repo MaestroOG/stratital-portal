@@ -18,7 +18,7 @@ export async function getRecoveryEmail(prevState, formData) {
         }
     }
 
-    const transporter = await createTransporter();
+    const transporter = createTransporter();
     const html = generateRecoveryEmailTemplate(`https://portal.stratital.com/reset-password?email=${user?.email}`);
 
     await transporter.sendMail({

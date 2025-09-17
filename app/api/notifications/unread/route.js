@@ -20,7 +20,7 @@ export async function GET() {
         }).sort({ createdAt: -1 });
 
         return NextResponse.json({
-            count: unreadNotifications.lenght,
+            count: unreadNotifications.length,
             notifications: unreadNotifications
         });
     } catch (error) {

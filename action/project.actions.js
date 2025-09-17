@@ -51,7 +51,7 @@ export async function createProject(prevState, formData) {
 
         const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected);
 
-        const transporter = await createTransporter();
+        const transporter = createTransporter();
 
         await transporter.sendMail({
             from: '"Stratital" <admin@stratital.com>',
@@ -106,7 +106,7 @@ export async function addNote(id, prevState, formData) {
 
         revalidatePath('/', "layout")
 
-        const transporter = await createTransporter();
+        const transporter = createTransporter();
 
         const html = generateNoteCreatedEmailUserTemplate('https://portal.stratital.com', user?.name);
 
@@ -153,7 +153,7 @@ export async function ApproveProject(projectId, prevState, formData) {
 
     const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'in-progress', user?.name, project?.updatedAt);
 
-    const transporter = await createTransporter();
+    const transporter = createTransporter();
 
     await transporter.sendMail({
         from: '"Stratital" <admin@stratital.com>',
@@ -179,7 +179,7 @@ export async function RejectProject(projectId, prevState, formData) {
 
     const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'cancelled', user?.name, project?.updatedAt);
 
-    const transporter = await createTransporter();
+    const transporter = createTransporter();
 
     await transporter.sendMail({
         from: '"Stratital" <admin@stratital.com>',
@@ -207,7 +207,7 @@ export async function changeProjectStatus(projectId, prevState, formData) {
 
     const html = generateProjectStatusUpdateEmail(project?.projectTitle, status, user?.name, project?.updatedAt);
 
-    const transporter = await createTransporter();
+    const transporter = createTransporter();
 
     await transporter.sendMail({
         from: '"Stratital" <admin@stratital.com>',

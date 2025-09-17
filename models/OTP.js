@@ -9,6 +9,11 @@ const otpSchema = new mongoose.Schema({
     for: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
+    },
+    expiresAt: {
+        type: Date,
+        default: Date.now,
+        index: { expires: 300 }, // expires in 5 minutes
     }
 })
 

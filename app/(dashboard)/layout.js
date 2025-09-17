@@ -52,7 +52,7 @@ export default async function RootLayout({ children }) {
           <Header pfpLink={user?.profilePictureUrl} />
           {children}
         </MainContent>
-        {user?.role !== 'superadmin' && <TawkToChat />}
+        {user && user.role !== "superadmin" && <TawkToChat />}
 
       </body>
     </html>

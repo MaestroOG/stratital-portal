@@ -20,7 +20,7 @@ const SuperAdminPage = async () => {
         <main className='h-[100vh]'>
             <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3 flex items-center gap-2'}>
                 <Link href={'/admin/projects'}><Button variant={'link'}>See All Projects</Button></Link>
-                <Link href={'/admin/create-notification'}><Button variant={'link'}>Create a global notification</Button></Link>
+                <Link href={'/admin/create-notification'}><Button variant={'link'}>Create a notification</Button></Link>
                 <Link href={'/admin/create-manager'}><Button variant={'link'}>Assign a manager</Button></Link>
             </Container>
             <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3'}>

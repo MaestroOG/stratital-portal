@@ -37,6 +37,7 @@ const Header = ({ pfpLink }) => {
     const getNotifications = async () => {
         const res = await fetch("/api/get-notifications");
         const data = await res.json();
+        console.log(data)
         setNotifications(data);
     }
 

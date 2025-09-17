@@ -16,7 +16,15 @@ export async function GET() {
         const userId = user?._id;
 
         const unreadNotifications = await Notification.find({
-            readBy: { $ne: userId },
+            $and: [
+                {
+                    $or: [
+                        { sendToAll: true },
+                        { recipients: userId }
+                    ]
+                },
+                { readBy: { $ne: userId } }
+            ]
         }).sort({ createdAt: -1 });
 
         return NextResponse.json({

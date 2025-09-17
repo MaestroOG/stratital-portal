@@ -9,10 +9,18 @@ import nodemailer from 'nodemailer';
 
 export async function addUser(prevState, formData) {
     const userId = formData.get("userId");
+    if (!userId || typeof userId !== "string") {
+        return { err: "Invalid user ID" };
+    }
     console.log("Received userId:", userId);
 
     try {
-        await connectDB();
+        try {
+            await connectDB();
+        } catch (err) {
+            console.error("❌ MongoDB connection failed:", err);
+            return { err: "Database connection error" };
+        }
         const user = await PendingUser.findById(userId);
 
         if (!user) {

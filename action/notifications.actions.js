@@ -10,6 +10,20 @@ export async function createNotification(prevState, formData) {
     const sendToAll = formData.get("sendToAll") === "true";
     const selectedUsers = formData.getAll("recipients");
 
+    // Validate input
+    if (!title || title.length < 3) {
+        return { success: false, message: "Title must be at least 3 characters." };
+    }
+    if (!description || description.length < 5) {
+        return { success: false, message: "Description must be at least 5 characters." };
+    }
+
+    if (!sendToAll) {
+        recipients = selectedUsers.filter(id => isValidObjectId(id));
+        if (recipients.length === 0) {
+            return { success: false, message: "Please select at least one valid recipient." };
+        }
+    }
 
     try {
         await connectDB();

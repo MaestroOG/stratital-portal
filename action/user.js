@@ -49,15 +49,22 @@ export const LoginUser = async (prevState, formData) => {
       for: user?._id
     })
 
-    const html = generateOTPEmail(otp, user?.name)
+    const html = generateOTPEmail(otp, user?.name);
+    let transporter;
 
-    const transporter = await nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.SMTP_USER, // e.g. "stratital.portal@gmail.com"
-        pass: process.env.SMTP_PASS, // Gmail app password, not your account password
-      },
-    });
+    try {
+      transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.SMTP_USER, // e.g. "stratital.portal@gmail.com"
+          pass: process.env.SMTP_PASS, // Gmail app password, not your account password
+        },
+      });
+    } catch (error) {
+      return {
+        err: "Invalid user"
+      }
+    }
 
     await transporter.sendMail({
       from: '"Stratital" <admin@stratital.com>',

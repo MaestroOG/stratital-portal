@@ -2,9 +2,11 @@
 
 import { uploadFilesToCloudinary } from "@/lib/cloudinary";
 import { connectDB } from "@/lib/mongodb";
+import HowToVideo from "@/models/HowToVideo";
 import Resource from "@/models/Resource";
 import User from "@/models/User";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function createManager(prevState, formData) {
     const userId = formData.get('userId');
@@ -84,5 +86,39 @@ export async function addResource(prevState, formData) {
     return {
         success: true,
         message: "Resource added successfully"
+    }
+}
+
+export async function addHowToVideo(prevState, formData) {
+    const title = formData.get('title')?.trim();
+    const videoLink = formData.get('videoLink')?.trim();
+
+    try {
+        try {
+            await connectDB();
+
+            await HowToVideo.create({
+                title,
+                videoLink
+            })
+
+            revalidatePath('/', 'layout');
+            redirect('/how-to')
+        } catch (error) {
+            return {
+                success: false,
+                message: "Something went wrong."
+            }
+        }
+
+        return {
+            success: true,
+            message: "Video added Successfully"
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Something went wrong."
+        }
     }
 }

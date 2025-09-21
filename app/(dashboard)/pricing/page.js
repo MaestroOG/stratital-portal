@@ -19,7 +19,16 @@ const PricingPage = () => {
                 </button>
 
             </a>
-            <iframe src="/stratital-pricelist.pdf#toolbar=0" width={'100%'} height={'100%'} frameborder="0"></iframe>
+            <div className="w-full h-screen">
+                <iframe
+                    src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(
+                        "https://portal.stratital.com/stratital-pricelist.pdf"
+                    )}`}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    title="Stratital Pricelist"
+                />
+            </div>
         </Container>
     )
 }

@@ -94,27 +94,20 @@ export async function addHowToVideo(prevState, formData) {
     const videoLink = formData.get('videoLink')?.trim();
 
     try {
-        try {
-            await connectDB();
 
-            await HowToVideo.create({
-                title,
-                videoLink
-            })
+        await connectDB();
 
-            revalidatePath('/', 'layout');
-            redirect('/how-to')
-        } catch (error) {
-            return {
-                success: false,
-                message: "Something went wrong."
-            }
-        }
+        await HowToVideo.create({
+            title,
+            videoLink
+        })
 
+        revalidatePath('/', 'layout');
         return {
             success: true,
             message: "Video added Successfully"
         }
+
     } catch (error) {
         return {
             success: false,

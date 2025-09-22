@@ -1,13 +1,9 @@
 import Container from '@/components/dashboardComponents/Container'
 import ProjectStatusForms from '@/components/project-status-forms'
 import NoteBox from '@/components/superadminComponents/NoteBox'
-import { Button } from '@/components/ui/button'
 import { getNotesByProjectId, getProjectById } from '@/lib/projects'
 import { getUser } from '@/lib/user'
-import { camelToNormal, capitalizeFirst, formatDateToYMD, formatTo12HourTime, timeAgo } from '@/utils/formUtils'
-import Linkify from 'linkify-react'
-import Image from 'next/image'
-import parse from 'html-react-parser';
+import { camelToNormal, capitalizeFirst } from '@/utils/formUtils'
 import ProjectNotesList from '@/components/ProjectNotesList'
 
 export const metadata = {

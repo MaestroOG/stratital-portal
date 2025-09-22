@@ -53,10 +53,10 @@ const ProjectDetailPage = async ({ params }) => {
                 <div className='flex items-end justify-between'>
                     <h1 className='text-4xl font-bold'>Comments</h1>
                 </div>
-                <NoteBox id={params?.id} />
+                <NoteBox id={id} />
                 <div className='mt-6'>
                     <ul>
-                        {notes.length > 0 ? <ProjectNotesList projectId={params.id} initialNotes={notes} /> : <p className='p-4 text-center'>No Comments For Now.</p>}
+                        {notes.length > 0 ? <ProjectNotesList projectId={id} initialNotes={notes} /> : <p className='p-4 text-center'>No Comments For Now.</p>}
                     </ul>
                 </div>
             </Container>

@@ -1,5 +1,5 @@
 'use client';
-import { CircleCheck, CircleDollarSign, FolderCog, House, Menu, MessageCircle, Settings, Shield, Video, X } from 'lucide-react'
+import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, Menu, X, Settings } from "lucide-react";
 import Image from 'next/image'
 import React, { useActionState, useEffect, useState } from 'react'
 import {
@@ -105,6 +105,11 @@ const Header = ({ pfpLink }) => {
             href: '/how-to'
         },
         {
+            icon: <Files />,
+            title: "Resources",
+            href: '/resources'
+        },
+        {
             icon: <CircleDollarSign />,
             title: "Pricing",
             href: "/pricing"
@@ -117,13 +122,20 @@ const Header = ({ pfpLink }) => {
         ...(user?.role === "superadmin"
             ? [
                 {
+                    icon: <Receipt />,
+                    title: "Invoices",
+                    href: "/invoices",
+                },
+                {
                     icon: <Shield />,
                     title: "Admin Panel",
                     href: "/admin",
                 },
             ]
             : []),
-    ]
+    ];
+
+
     return (
         <header className='bg-dark-blue w-full px-8 py-2 md:py-9 flex items-center justify-between md:justify-end gap-4 sticky top-0 z-50'>
 

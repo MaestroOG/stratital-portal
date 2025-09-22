@@ -1,5 +1,5 @@
 "use client";
-import { Settings, CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files } from "lucide-react";
+import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

@@ -4,9 +4,13 @@
 import { useActionState, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import { Textarea } from "../ui/textarea";
 import { addNote } from "@/action/project.actions";
-import JoditEditor from 'jodit-react';
+import dynamic from "next/dynamic";
+
+// 👇 import JoditEditor dynamically so it never runs on the server
+const JoditEditor = dynamic(() => import("jodit-react"), {
+    ssr: false,
+});
 
 const NoteBox = ({ id }) => {
     const [state, formAction, isPending] = useActionState(addNote.bind(null, id), {});

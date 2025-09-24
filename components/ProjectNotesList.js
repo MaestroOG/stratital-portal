@@ -61,13 +61,13 @@ export default function ProjectNotesList({ projectId, initialNotes }) {
                             height={35}
                             priority
                             alt="avatar"
+                            className="rounded-full"
                         />
                         <div>
                             <p className="text-sm text-gray-600">
-                                {formatDateToYMD(note?.createdAt)} by{" "}
-                                {note?.createdBy === null
+                                <span className="font-bold">{note?.createdBy === null
                                     ? "Stratital Team"
-                                    : note?.createdBy?.name}{" "}
+                                    : note?.createdBy?.name}</span>{" "}
                                 - {timeAgo(note?.createdAt)} at{" "}
                                 {formatTo12HourTime(note?.createdAt)}
                             </p>
@@ -77,9 +77,9 @@ export default function ProjectNotesList({ projectId, initialNotes }) {
                         </div>
                     </div>
 
-                    <p className="text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
+                    <div className="text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
                         {parse(note?.note)}
-                    </p>
+                    </div>
                 </li>
             ))}
 

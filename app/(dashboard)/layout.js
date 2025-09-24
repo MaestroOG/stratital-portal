@@ -3,7 +3,7 @@ import "../globals.css";
 import MainContent from "@/components/dashboardComponents/MainContent";
 import Header from "@/components/dashboardComponents/Header";
 import TawkToChat from "@/components/TawkToChat";
-import { getUserFromDB } from "@/lib/user";
+import { getUser, getUserFromDB } from "@/lib/user";
 import NextTopLoader from "nextjs-toploader";
 import Script from "next/script";
 
@@ -14,7 +14,8 @@ export const metadata = {
 
 
 export default async function RootLayout({ children }) {
-  const user = await getUserFromDB();
+  const user = await getUser();
+  console.log(user)
   return (
     <html lang="en">
       <head>

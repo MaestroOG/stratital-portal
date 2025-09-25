@@ -7,16 +7,8 @@ import CommentsList from "@/components/superadminComponents/CommentList"
 
 const CommentsPage = async () => {
     const user = await getUser();
-    let data;
+    let data = await getAllComments(1, 10);
 
-    if (user?.role === 'user') {
-        data = await getAllUserRelatedComments();
-    } else if (user?.role === 'superadmin') {
-        data = await getAllComments(1, 10);
-    }
-
-
-    console.log(data.notes.length)
 
     return (
         <Container className={'bg-white p-2 md:p-4'}>

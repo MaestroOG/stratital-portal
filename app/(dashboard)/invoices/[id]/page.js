@@ -4,22 +4,27 @@ import Link from "next/link"
 import { getInvoiceDetails } from "@/lib/invoice"
 import parse from "html-react-parser";
 import { formatDateToYMD } from "@/utils/formUtils";
+import InvoiceDeleteForm from "@/components/invoice-delete-form";
+import InvoiceEditForm from "@/components/invoice-edit-form";
 
 const InvoiceDetail = async ({ params }) => {
     const { id } = await params
 
-    // Example: Fetch invoice by ID here
     const invoice = await getInvoiceDetails(id);
 
     return (
         <div className="p-4">
             <Card className="rounded-2xl shadow-md">
-                <CardHeader>
-                    <CardTitle className="text-xl font-bold">INV-{invoice._id}</CardTitle>
+                <CardHeader className={'flex items-center justify-between'}>
+                    <CardTitle className="text-xl font-bold">INV-{invoice?._id}</CardTitle>
+                    <div className="flex items-center gap-2">
+                        <InvoiceDeleteForm invoiceId={id} />
+                        <InvoiceEditForm invoice={invoice} />
+                    </div>
                 </CardHeader>
                 <CardContent className="space-y-2">
                     <p>Partner: {invoice?.partner?.name}</p>
-                    <p>Date: {formatDateToYMD(invoice?.createdAt)}</p>
+                    <p>Date: {formatDateToYMD(invoice?.updatedAt)}</p>
                     <p>Status: {invoice?.status}</p>
 
                     <div className="mt-4">

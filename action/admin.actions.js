@@ -152,7 +152,17 @@ export async function editResource(prevState, formData) {
         }
     }
 
-    const fileUrl = await uploadFilesToCloudinary(file);
+    let fileUrl;
+
+    try {
+        fileUrl = await uploadFilesToCloudinary(file);
+    } catch (err) {
+        console.error(err);
+        return {
+            success: false,
+            message: 'Failed to upload file. Please try again.'
+        };
+    }
     updateData.fileUrl = fileUrl;
 
 

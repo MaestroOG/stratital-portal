@@ -4,6 +4,8 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { getUser } from "@/lib/user"
 import { getAllResources } from "@/lib/admin";
 import { formatDateToYMD } from "@/utils/formUtils";
+import ResourceDeletionForm from "@/components/resource-deletion-form";
+import ResourceEditForm from "@/components/resource-edit-form";
 
 const ResourcesPage = async () => {
     const user = await getUser();
@@ -36,6 +38,11 @@ const ResourcesPage = async () => {
                             <Card key={resource?._id} className="rounded-2xl shadow-md">
                                 <CardHeader className="flex flex-row items-center justify-between">
                                     <CardTitle className="text-lg">{resource?.title ?? ""}</CardTitle>
+                                    {user?.role === 'superadmin' && <div className="flex items-center gap-2">
+                                        <ResourceDeletionForm resourceId={resource?._id} />
+                                        <ResourceEditForm resource={resource} />
+                                    </div>
+                                    }
                                 </CardHeader>
 
                                 <CardContent className="space-y-2">

@@ -11,8 +11,7 @@ import {
 import { TabsContent } from "./ui/tabs"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { Button } from "./ui/button"
-import { useActionState, useEffect, useRef, useState } from "react"
-import JoditEditor from "jodit-react"
+import { Suspense, useActionState, useEffect, useRef, useState } from "react"
 import { createInvoice } from "@/action/invoice.actions"
 import {
     Dialog,
@@ -20,6 +19,10 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import dynamic from "next/dynamic"
+const JoditEditor = dynamic(() => import("jodit-react"), {
+    ssr: false,
+});
 
 const CreateInvoiceForm = ({ partners }) => {
     const [value, setValue] = useState("");
@@ -76,13 +79,15 @@ const CreateInvoiceForm = ({ partners }) => {
                                 </Select>
                             </div>
 
-                            <JoditEditor
-                                ref={contentRef}
-                                value={value}
-                                tabIndex={1}
-                                onBlur={newContent => setValue(newContent)}
-                                onChange={newContent => { }}
-                            />
+                            <Suspense fallback={<p className="p-4 text-center">Loading...</p>}>
+                                <JoditEditor
+                                    ref={contentRef}
+                                    value={value}
+                                    tabIndex={1}
+                                    onBlur={newContent => setValue(newContent)}
+                                    onChange={newContent => { }}
+                                />
+                            </Suspense>
                             <input type="hidden" name="details" value={value} />
                             <input type="hidden" name="partner" value={partner} />
                             <input type="hidden" name="status" value={status} />

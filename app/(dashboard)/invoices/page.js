@@ -13,6 +13,8 @@ const InvoicesPage = async () => {
     const initialInvoices = await getAllInvoices();
     const partners = await getAllSimpleUsers();
 
+    console.log(initialInvoices)
+
     return (
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">Invoices</h1>
@@ -57,7 +59,7 @@ const InvoicesPage = async () => {
 
                                 <CardContent className="space-y-2">
                                     <p className="text-sm text-muted-foreground">Partner: {invoice.partner?.name}</p>
-                                    <p className="text-sm text-muted-foreground">Date: {formatDateToYMD(invoice?.createdAt)}</p>
+                                    <p className="text-sm text-muted-foreground">Date: {formatDateToYMD(invoice?.updatedAt)}</p>
                                 </CardContent>
 
                                 <CardFooter>

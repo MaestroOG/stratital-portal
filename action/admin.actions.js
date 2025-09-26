@@ -115,3 +115,68 @@ export async function addHowToVideo(prevState, formData) {
         }
     }
 }
+
+export async function deleteResource(prevState, formData) {
+    const resourceId = formData.get('resourceId');
+
+    try {
+        await connectDB();
+        await Resource.findByIdAndDelete(resourceId);
+
+
+        revalidatePath('/resources', "page");
+        return {
+            success: true,
+            message: 'Resource deleted successfully.'
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: 'Something went wrong.'
+        }
+    }
+}
+
+export async function editResource(prevState, formData) {
+    const title = formData.get('title')?.trim();
+    const file = formData.get('file');
+    const resourceId = formData.get('resourceId');
+
+    const updateData = {};
+    if (title) updateData.title = title;
+
+    let fileUrl;
+
+    if (file && file.size > 0) {
+        try {
+            updateData.fileUrl = await uploadFilesToCloudinary(file);
+        } catch (err) {
+            console.error(err);
+            return {
+                success: false,
+                message: 'Failed to upload file. Please try again.'
+            };
+        }
+    }
+    updateData.fileUrl = fileUrl;
+
+
+    await connectDB();
+
+    const updatedResource = await Resource.findByIdAndUpdate(resourceId, { $set: updateData })
+
+    if (!updatedResource) {
+        return {
+            success: false,
+            message: "Resource not found",
+        };
+    }
+
+    revalidatePath('/resources', 'page')
+
+    return {
+        success: true,
+        message: "Resource updated successfully"
+    }
+
+}

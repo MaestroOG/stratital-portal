@@ -36,14 +36,22 @@ export async function createInvoice(prevState, formData) {
 
 
 export async function deleteInvoice(prevState, formData) {
-    const invoiceId = formData.get("invoiceId");
-
-    await connectDB();
-    const deletedInvoice = await Invoice.findByIdAndDelete(invoiceId);
-
-    if (deletedInvoice) {
+    const invoiceId = formData.get("invoiceId")?.toString();
+    if (!invoiceId) {
+        return { success: false, message: "Missing invoiceId" };
+    }
+    try {
+        await connectDB();
+        const deletedInvoice = await Invoice.findByIdAndDelete(invoiceId);
+        if (!deletedInvoice) {
+            return { success: false, message: "Invoice not found" };
+        }
+        revalidatePath("/invoices", "page");
         revalidatePath("/", "layout");
         redirect("/invoices");
+    } catch (err) {
+        console.error(err);
+        return { success: false, message: "Failed to delete invoice" };
     }
 }
 

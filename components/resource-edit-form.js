@@ -46,7 +46,7 @@ const ResourceEditForm = ({ resource }) => {
                         </DialogDescription>
                     </DialogHeader>
 
-                    <form action={formAction} className="grid gap-4">
+                    <form action={formAction} method="post" encType="multipart/form-data" className="grid gap-4">
                         <div className="grid gap-3">
                             <Label htmlFor="title">Title</Label>
                             <Input id="title" name="title" defaultValue={resource?.title} />

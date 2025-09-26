@@ -145,23 +145,18 @@ export async function editResource(prevState, formData) {
     const updateData = {};
     if (title) updateData.title = title;
 
-    if (!file) {
-        return {
-            success: false,
-            message: "Please upload a valid file"
-        }
-    }
-
     let fileUrl;
 
-    try {
-        fileUrl = await uploadFilesToCloudinary(file);
-    } catch (err) {
-        console.error(err);
-        return {
-            success: false,
-            message: 'Failed to upload file. Please try again.'
-        };
+    if (file && file.size > 0) {
+        try {
+            updateData.fileUrl = await uploadFilesToCloudinary(file);
+        } catch (err) {
+            console.error(err);
+            return {
+                success: false,
+                message: 'Failed to upload file. Please try again.'
+            };
+        }
     }
     updateData.fileUrl = fileUrl;
 
@@ -177,11 +172,11 @@ export async function editResource(prevState, formData) {
         };
     }
 
-    revalidatePath('/', 'layout')
+    revalidatePath('/resources', 'page')
 
     return {
         success: true,
-        message: "Resource added successfully"
+        message: "Resource updated successfully"
     }
 
 }

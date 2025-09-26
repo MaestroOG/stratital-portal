@@ -481,7 +481,7 @@ export const generateApplicationReceivedUserEmail = (name, companyName, email) =
                 </tr>
                 <tr>
                   <td style="padding:6px 0;color:#6b7280;">Company</td>
-                  <td style="padding:6px 0;font-weight:600;" class="text">${companyName}$</td>
+                  <td style="padding:6px 0;font-weight:600;" class="text">${companyName}</td>
                 </tr>
                 <tr>
                   <td style="padding:6px 0;color:#6b7280;">Email</td>

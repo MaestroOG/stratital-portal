@@ -166,6 +166,13 @@ export async function editHowToVideo(prevState, formData) {
         }
     }
 
+    if (!videoId) {
+        return {
+            success: false,
+            message: 'No valid id received'
+        }
+    }
+
     try {
         await connectDB();
 
@@ -176,7 +183,14 @@ export async function editHowToVideo(prevState, formData) {
         }
 
         if (videoLink) {
-            updates.videoLink = videoLink;
+            const embedUrl = getYouTubeEmbedUrl(videoLink);
+            if (!embedUrl) {
+                return {
+                    success: false,
+                    message: 'Please provide a valid YouTube link'
+                }
+            }
+            updates.videoLink = embedUrl;
         }
 
         const editedVideo = await HowToVideo.findByIdAndUpdate(videoId, { $set: updates });

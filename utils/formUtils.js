@@ -114,7 +114,17 @@ export function validateEntries(cleanedEntries) {
     return true;
 }
 
-export function getYouTubeEmbedUrl(url) {
+export function getYouTubeEmbedUrl(rawUrl) {
+
+    if (typeof rawUrl !== 'string') {
+        return null;
+    }
+
+    const url = rawUrl.trim();
+    if (!url) {
+        return null;
+    }
+
     try {
         let videoId;
 

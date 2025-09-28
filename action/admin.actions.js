@@ -5,6 +5,7 @@ import { connectDB } from "@/lib/mongodb";
 import HowToVideo from "@/models/HowToVideo";
 import Resource from "@/models/Resource";
 import User from "@/models/User";
+import { getYouTubeEmbedUrl } from "@/utils/formUtils";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -91,9 +92,11 @@ export async function addResource(prevState, formData) {
 
 export async function addHowToVideo(prevState, formData) {
     const title = formData.get('title')?.trim();
-    const videoLink = formData.get('videoLink')?.trim();
+    const link = formData.get('videoLink')?.trim();
 
     try {
+
+        const videoLink = getYouTubeEmbedUrl(link);
 
         await connectDB();
 
@@ -103,6 +106,7 @@ export async function addHowToVideo(prevState, formData) {
         })
 
         revalidatePath('/', 'layout');
+
         return {
             success: true,
             message: "Video added Successfully"
@@ -112,6 +116,87 @@ export async function addHowToVideo(prevState, formData) {
         return {
             success: false,
             message: "Something went wrong."
+        }
+    }
+}
+
+export async function deleteHowToVideo(prevState, formData) {
+    const videoId = formData.get('videoId');
+
+    if (!videoId) {
+        return {
+            success: false,
+            message: 'No valid id received'
+        }
+    }
+
+    try {
+        await connectDB();
+
+        const deletedVideo = await HowToVideo.findByIdAndDelete(videoId);
+        if (deletedVideo) {
+            revalidatePath('/how-to', 'page');
+            return {
+                success: true,
+                message: 'Video deleted successfully'
+            }
+        }
+
+        return {
+            success: false,
+            message: 'Something went wrong'
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: 'Something went wrong'
+        }
+    }
+}
+
+export async function editHowToVideo(prevState, formData) {
+    const videoId = formData.get('videoId');
+    const title = formData.get('title');
+    const videoLink = formData.get('videoLink');
+
+    if (!title || !videoLink) {
+        return {
+            success: false,
+            message: 'You cannot leave the fields empty'
+        }
+    }
+
+    try {
+        await connectDB();
+
+        const updates = {};
+
+        if (title) {
+            updates.title = title;
+        }
+
+        if (videoLink) {
+            updates.videoLink = videoLink;
+        }
+
+        const editedVideo = await HowToVideo.findByIdAndUpdate(videoId, { $set: updates });
+
+        if (editedVideo) {
+            revalidatePath('/how-to', 'page');
+            return {
+                success: true,
+                message: 'Video edited successfully'
+            }
+        }
+
+        return {
+            success: false,
+            message: 'Something went wrong'
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: 'Something went wrong'
         }
     }
 }

@@ -1,5 +1,4 @@
 import Container from '@/components/dashboardComponents/Container'
-
 import {
     Card,
     CardContent,
@@ -10,6 +9,8 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { getUser } from '@/lib/user'
 import { getAllHowToVideos } from '@/lib/admin'
+import DeleteHowToForm from '@/components/delete-howto-form'
+import EditHowToForm from '@/components/edit-howto-form'
 
 const HowToPage = async () => {
     const user = await getUser();
@@ -23,8 +24,12 @@ const HowToPage = async () => {
                 {videos?.length === 0 && <p className='p-4 text-center'>No Videos For Now</p>}
                 {videos?.length > 0 && videos?.map(video => (
                     <Card key={video?._id}>
-                        <CardHeader>
+                        <CardHeader className={'flex items-center justify-between'}>
                             <CardTitle>{video?.title}</CardTitle>
+                            <div className='flex items-center gap-1'>
+                                <DeleteHowToForm videoId={video?._id} />
+                                <EditHowToForm video={video} />
+                            </div>
                         </CardHeader>
                         <CardContent>
                             <div className="w-full max-w-xl mx-auto aspect-video">

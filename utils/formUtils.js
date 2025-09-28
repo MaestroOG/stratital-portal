@@ -113,3 +113,31 @@ export function validateEntries(cleanedEntries) {
 
     return true;
 }
+
+export function getYouTubeEmbedUrl(url) {
+    try {
+        let videoId;
+
+        // Match normal YouTube link
+        const match1 = url.match(/v=([^&]+)/);
+        if (match1) {
+            videoId = match1[1];
+        }
+
+        // Match short youtu.be link
+        const match2 = url.match(/youtu\.be\/([^?]+)/);
+        if (!videoId && match2) {
+            videoId = match2[1];
+        }
+
+        // If it’s already an embed link
+        const match3 = url.match(/embed\/([^?]+)/);
+        if (!videoId && match3) {
+            videoId = match3[1];
+        }
+
+        return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    } catch (e) {
+        return e.message;
+    }
+}

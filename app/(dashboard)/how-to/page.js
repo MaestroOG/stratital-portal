@@ -26,10 +26,10 @@ const HowToPage = async () => {
                     <Card key={video?._id}>
                         <CardHeader className={'flex items-center justify-between'}>
                             <CardTitle>{video?.title}</CardTitle>
-                            <div className='flex items-center gap-1'>
+                            {user?.role === 'superadmin' && <div className='flex items-center gap-1'>
                                 <DeleteHowToForm videoId={video?._id} />
                                 <EditHowToForm video={video} />
-                            </div>
+                            </div>}
                         </CardHeader>
                         <CardContent>
                             <div className="w-full max-w-xl mx-auto aspect-video">

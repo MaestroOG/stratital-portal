@@ -94,10 +94,10 @@ export async function addNote(id, prevState, formData) {
     const user = await getUser();
     const commentText = formData.get('commentText');
 
-    const project = await Project.findById(id).populate("createdBy");
 
     try {
         await connectDB();
+        const project = await Project.findById(id).populate("createdBy");
         await Note.create({
             note: commentText,
             createdBy: user?._id,
@@ -136,6 +136,7 @@ export async function addNote(id, prevState, formData) {
         }
     } catch (error) {
         return {
+            success: false,
             message: "Failed to add comment"
         }
     }

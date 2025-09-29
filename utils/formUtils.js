@@ -104,7 +104,7 @@ export function formatTo12HourTime(isoString) {
 export function validateEntries(cleanedEntries) {
     // Object.values gives all values of the object
     const hasEmpty = Object.values(cleanedEntries).some(
-        (val) => val === "" || val === null || val === undefined
+        (val) => val === null || val === undefined
     );
 
     if (hasEmpty) {

@@ -342,3 +342,243 @@ export const pricingConfig = {
         ]
     }
 }
+
+
+export const saPricingConfig = {
+    localSeo: {
+        pricing: [
+            {
+                id: "local-seo-single",
+                label: "Local SEO - Single Service",
+                price: "$5199",
+                period: "/month",
+                description: "Standard local SEO optimization"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    nationalSeo: {
+        pricing: [
+            {
+                id: "national-seo-single",
+                label: "National SEO - Single Service",
+                price: "$5199",
+                period: "/month",
+                description: "Nationwide SEO optimization"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    linkBuilding: {
+        pricing: [
+            {
+                id: "link-building-single",
+                label: "Link Building - Single Service",
+                price: "$2279",
+                period: "/month",
+                description: "High-quality backlink acquisition"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    googleAdvertising: {
+        pricing: [
+            {
+                id: "google-ads-single",
+                label: "Google Advertising - Single Service",
+                price: "$5199",
+                period: "/month",
+                description: "Complete Google Ads management"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    socialMediaAdvertising: {
+        pricing: [
+            {
+                id: "social-ads-single",
+                label: "Social Media Advertising - Single Service",
+                price: "$5199",
+                period: "/month",
+                description: "Targeted social media campaigns"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    socialMediaManagement: {
+        pricing: [
+            {
+                id: "social-mgmt-single",
+                label: "Social Media Management - Single Service",
+                price: "$5199",
+                period: "/month",
+                description: "Complete social media management"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    leadGeneration: {
+        pricing: [
+            {
+                id: "lead-gen-single",
+                label: "Lead Generation - Single Service",
+                price: "$1500",
+                period: "/month",
+                description: "Comprehensive lead generation"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    webDesignAndDevelopment: {
+        pricing: [
+            {
+                id: "web-dev-small",
+                label: "Up to 5 Pages - Single Service",
+                price: "$11359",
+                period: "one-time",
+                description: "Small website development"
+            },
+            {
+                id: "web-dev-medium",
+                label: "6-10 Pages - Single Service",
+                price: "$13639",
+                period: "one-time",
+                description: "Medium website development"
+            },
+            {
+                id: "web-dev-large",
+                label: "11-15 Pages - Single Service",
+                price: "$17039",
+                period: "one-time",
+                description: "Large website development"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    emailMarketing: {
+        pricing: [
+            {
+                id: "email-single",
+                label: "Email Marketing - Single Service",
+                price: "$5199",
+                period: "/month",
+                description: "Complete email marketing campaigns"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    virtualAssistanceResources: {
+        pricing: [
+            {
+                id: "va-20h-single",
+                label: "20 Hours/Month - Single Resource",
+                price: "$5679",
+                period: "/month",
+                description: "Part-time virtual assistance"
+            },
+            {
+                id: "va-40h-single",
+                label: "40 Hours/Month - Single Resource",
+                price: "$10229",
+                period: "/month",
+                description: "Full-time virtual assistance"
+            },
+            {
+                id: "va-80h-single",
+                label: "80 Hours/Month - Single Resource",
+                price: "$18179",
+                period: "/month",
+                description: "Extended virtual assistance"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    'leadGeneration-ColdCalling': {
+        pricing: [
+            {
+                id: "cold-call-20h-single",
+                label: "Single Resource",
+                price: "$17039",
+                period: "/month",
+                description: "Part-time cold calling service"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    }
+};

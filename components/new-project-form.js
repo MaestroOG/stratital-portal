@@ -23,13 +23,25 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { pricingConfig, saPricingConfig } from '@/utils/formConfig';
+import { useCountry } from '@/hooks/useCountry';
 
-const NewProjectForm = ({ partners, user, service, fields, pricing }) => {
-    const [value, setValue] = useState("")
+const NewProjectForm = ({ partners, user, service, fields }) => {
+    const [value, setValue] = useState("");
+    const { countryCode, loading, error } = useCountry();
+
+    let pricing;
 
     const [state, formAction, isPending] = useActionState(createProject, {})
 
     const [selectedPackage, setSelectedPackage] = useState("");
+    if (countryCode) {
+        if (countryCode?.trim() === 'ZA') {
+            pricing = saPricingConfig[service];
+        } else {
+            pricing = pricingConfig[service];
+        }
+    }
 
     return (
         <>
@@ -95,61 +107,67 @@ const NewProjectForm = ({ partners, user, service, fields, pricing }) => {
                             </>
                         ))}
 
-                        {pricing && (
-                            <div className="flex flex-col gap-4">
-                                <Label className="block font-medium text-lg">
-                                    Select Package <span className="text-red-500">*</span>
-                                </Label>
-                                <RadioGroup value={selectedPackage}
-                                    onValueChange={(val) => setSelectedPackage(val)} name="selectedPackage" required className="space-y-3">
-                                    {pricing?.map((priceOption) => (
+                        {loading ? (
+                            <div className="p-4 border border-gray-200 rounded-lg text-gray-500 animate-pulse">
+                                Loading pricing...
+                            </div>
+                        ) : (
+                            pricing && (
+                                <div className="flex flex-col gap-4">
+                                    <Label className="block font-medium text-lg">
+                                        Select Package <span className="text-red-500">*</span>
+                                    </Label>
+                                    <RadioGroup value={selectedPackage}
+                                        onValueChange={(val) => setSelectedPackage(val)} name="selectedPackage" required className="space-y-3">
+                                        {pricing?.pricing.map((priceOption) => (
 
-                                        <div key={priceOption.id} className='border border-gray-200 rounded-lg hover:border-red transition-colors'>
-                                            <div className="flex items-start space-x-3 p-4 ">
-                                                <RadioGroupItem
-                                                    value={priceOption.price}
-                                                    id={priceOption.id}
-                                                    className="mt-1"
-                                                />
-                                                <div>
-                                                    <Label
-                                                        htmlFor={priceOption.id}
-                                                        className="cursor-pointer"
-                                                    >
-                                                        <div className="flex justify-between items-start mb-1">
-                                                            <span className="font-semibold text-gray-900">
-                                                                {priceOption.label}
+                                            <div key={priceOption.id} className='border border-gray-200 rounded-lg hover:border-red transition-colors'>
+                                                <div className="flex items-start space-x-3 p-4 ">
+                                                    <RadioGroupItem
+                                                        value={priceOption.price}
+                                                        id={priceOption.id}
+                                                        className="mt-1"
+                                                    />
+                                                    <div>
+                                                        <Label
+                                                            htmlFor={priceOption.id}
+                                                            className="cursor-pointer"
+                                                        >
+                                                            <div className="flex justify-between items-start mb-1">
+                                                                <span className="font-semibold text-gray-900">
+                                                                    {priceOption.label}
+                                                                </span>
+
+                                                            </div>
+                                                        </Label>
+                                                        <span className="font-bold text-red text-lg">
+                                                            {priceOption.price}{" "}
+                                                            <span className="text-sm font-normal text-gray-500">
+                                                                {priceOption.period}
                                                             </span>
-
-                                                        </div>
-                                                    </Label>
-                                                    <span className="font-bold text-red text-lg">
-                                                        {priceOption.price}{" "}
-                                                        <span className="text-sm font-normal text-gray-500">
-                                                            {priceOption.period}
                                                         </span>
-                                                    </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                    ))}
-                                </RadioGroup>
-                                {selectedPackage.startsWith("custom") && (
-                                    <div className="flex flex-col gap-2">
-                                        <Label className="block font-medium">
-                                            Additional Details <span className="text-red-500">*</span>
-                                        </Label>
-                                        <Input
-                                            type="text"
-                                            name="customPrice"
-                                            required
-                                            placeholder="Enter any additional details"
-                                            className="border border-gray-300"
-                                        />
-                                    </div>
-                                )}
-                            </div>
+                                        ))}
+                                    </RadioGroup>
+                                    {selectedPackage.startsWith("custom") && (
+                                        <div className="flex flex-col gap-2">
+                                            <Label className="block font-medium">
+                                                Additional Details <span className="text-red-500">*</span>
+                                            </Label>
+                                            <Input
+                                                type="text"
+                                                name="customPrice"
+                                                required
+                                                placeholder="Enter any additional details"
+                                                className="border border-gray-300"
+                                            />
+                                        </div>
+                                    )}
+                                </div>
+                            )
                         )}
                         {service && <Button key={service} disabled={isPending} type="submit">Submit</Button>}
 

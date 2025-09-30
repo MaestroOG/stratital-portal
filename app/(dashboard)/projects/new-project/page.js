@@ -1,10 +1,10 @@
-
 import AddProjectSelect from '@/components/dashboardComponents/AddProjectSelect'
 import Container from '@/components/dashboardComponents/Container'
 import NewProjectForm from '@/components/new-project-form';
 import { getAllPartners } from '@/lib/admin';
 import { getUser } from '@/lib/user';
 import { formConfig, pricingConfig } from '@/utils/formConfig';
+
 
 export const metadata = {
     title: "Add a New Project"
@@ -13,7 +13,7 @@ export const metadata = {
 const NewProjectPage = async ({ searchParams }) => {
     const user = await getUser();
     let partners;
-    const { service } = await searchParams;
+    const { service } = searchParams;
     const formattedService = service?.toLowerCase()
         .split(' ')
         .map((word, index) => {
@@ -23,7 +23,7 @@ const NewProjectPage = async ({ searchParams }) => {
         .join('') || "";
 
     const fields = formConfig[formattedService];
-    const pricing = pricingConfig[formattedService];
+
 
     if (user?.role === 'superadmin') {
         partners = await getAllPartners();
@@ -42,7 +42,7 @@ const NewProjectPage = async ({ searchParams }) => {
                 <p className="text-red-500">No form found for this service.</p>
             </Container>}
 
-            <NewProjectForm partners={partners} user={user} service={formattedService} pricing={pricing?.pricing} fields={fields} />
+            {fields && <NewProjectForm partners={partners} user={user} service={formattedService} fields={fields} />}
         </>
     )
 }

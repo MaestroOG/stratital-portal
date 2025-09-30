@@ -77,8 +77,7 @@ const Header = ({ pfpLink }) => {
             setCount(unreadNotifs);
         };
         fetchUnread();
-    }, []);
-
+    }, [user]);
 
 
 
@@ -144,18 +143,19 @@ const Header = ({ pfpLink }) => {
 
             <Link href={'/'} className='md:hidden'><Image src='/logo.png' alt="stratital logo" width={135} height={37} priority /></Link>
             <div className='flex items-center gap-4'>
-                <div className="flex items-center">
-                    {loading && '...'}
-                    {error && null}
-                    {countryCode && <Image
-                        src={countryCode === 'ZA' ? '/south-africa.svg' : "/australia.svg"}
-                        width={32}
-                        height={32}
-                        alt="country_flag"
-                        className="cursor-pointer hidden md:block"
-                    />}
-                </div>
-                <div className="flex items-center">
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center">
+                        {loading && <Loader size="h-4 w-4" />}
+                        {!loading && !error && countryCode && <Image
+                            src={countryCode.trim() === 'ZA' ? '/south-africa.svg' : "/australia.svg"}
+                            width={32}
+                            height={32}
+                            alt="country_flag"
+                            className="cursor-pointer hidden md:block"
+                        />
+                        }
+
+                    </div>
                     <Popover onOpenChange={handleOpen}>
                         <PopoverTrigger> <NotificationBtn length={count} /></PopoverTrigger>
                         <PopoverContent className={'w-[400px] h-96 overflow-y-auto'}>

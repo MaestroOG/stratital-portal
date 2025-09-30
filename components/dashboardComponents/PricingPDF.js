@@ -9,7 +9,7 @@ const PricingPDF = () => {
     if (error) return <p className="text-center p-4">Unable to load pricing document</p>;
 
     const pdfUrl =
-        countryCode === "ZA"
+        countryCode?.trim() === "ZA"
             ? "/stratital-pricelist-south-africa.pdf"
             : "/stratital-pricelist.pdf";
 

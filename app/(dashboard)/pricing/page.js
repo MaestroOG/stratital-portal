@@ -1,5 +1,5 @@
 import Container from "@/components/dashboardComponents/Container"
-import { Button } from "@/components/ui/button"
+import PricingPDF from "@/components/dashboardComponents/PricingPDF";
 import { ArrowDown } from 'lucide-react';
 
 const PricingPage = () => {
@@ -20,14 +20,7 @@ const PricingPage = () => {
 
             </a>
             <div className="w-full h-screen">
-                <iframe
-                    src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(
-                        "https://portal.stratital.com/stratital-pricelist.pdf"
-                    )}`}
-                    className="w-full h-full"
-                    frameBorder="0"
-                    title="Stratital Pricelist"
-                />
+                <PricingPDF />
             </div>
         </Container>
     )

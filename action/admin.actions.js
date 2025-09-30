@@ -73,7 +73,23 @@ export async function addResource(prevState, formData) {
         }
     }
 
-    const fileUrl = await uploadFilesToCloudinary(file);
+    let fileUrl;
+
+    try {
+        fileUrl = await uploadFilesToCloudinary(file);
+    } catch (error) {
+        if (error?.response?.status === 413) {
+            return {
+                success: false,
+                message: "File is too large. Please upload a smaller file.",
+            };
+        }
+
+        return {
+            success: false,
+            message: "Something went wrong during upload.",
+        };
+    }
 
     await connectDB();
 
@@ -251,6 +267,12 @@ export async function editResource(prevState, formData) {
             updateData.fileUrl = await uploadFilesToCloudinary(file);
         } catch (err) {
             console.error(err);
+            if (err?.response?.status === 413) {
+                return {
+                    success: false,
+                    message: "File is too large. Please upload a smaller file.",
+                };
+            }
             return {
                 success: false,
                 message: 'Failed to upload file. Please try again.'

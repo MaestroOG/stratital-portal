@@ -267,7 +267,7 @@ export async function editResource(prevState, formData) {
             updateData.fileUrl = await uploadFilesToCloudinary(file);
         } catch (err) {
             console.error(err);
-            if (error?.response?.status === 413) {
+            if (err?.response?.status === 413) {
                 return {
                     success: false,
                     message: "File is too large. Please upload a smaller file.",

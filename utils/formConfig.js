@@ -350,7 +350,7 @@ export const saPricingConfig = {
             {
                 id: "local-seo-single",
                 label: "Local SEO - Single Service",
-                price: "$5199",
+                price: "R5199",
                 period: "/month",
                 description: "Standard local SEO optimization"
             },
@@ -369,7 +369,7 @@ export const saPricingConfig = {
             {
                 id: "national-seo-single",
                 label: "National SEO - Single Service",
-                price: "$5199",
+                price: "R5199",
                 period: "/month",
                 description: "Nationwide SEO optimization"
             },
@@ -388,7 +388,7 @@ export const saPricingConfig = {
             {
                 id: "link-building-single",
                 label: "Link Building - Single Service",
-                price: "$2279",
+                price: "R2279",
                 period: "/month",
                 description: "High-quality backlink acquisition"
             },
@@ -407,7 +407,7 @@ export const saPricingConfig = {
             {
                 id: "google-ads-single",
                 label: "Google Advertising - Single Service",
-                price: "$5199",
+                price: "R5199",
                 period: "/month",
                 description: "Complete Google Ads management"
             },
@@ -426,7 +426,7 @@ export const saPricingConfig = {
             {
                 id: "social-ads-single",
                 label: "Social Media Advertising - Single Service",
-                price: "$5199",
+                price: "R5199",
                 period: "/month",
                 description: "Targeted social media campaigns"
             },
@@ -445,7 +445,7 @@ export const saPricingConfig = {
             {
                 id: "social-mgmt-single",
                 label: "Social Media Management - Single Service",
-                price: "$5199",
+                price: "R5199",
                 period: "/month",
                 description: "Complete social media management"
             },
@@ -464,7 +464,7 @@ export const saPricingConfig = {
             {
                 id: "lead-gen-single",
                 label: "Lead Generation - Single Service",
-                price: "$1500",
+                price: "R1500",
                 period: "/month",
                 description: "Comprehensive lead generation"
             },
@@ -483,21 +483,21 @@ export const saPricingConfig = {
             {
                 id: "web-dev-small",
                 label: "Up to 5 Pages - Single Service",
-                price: "$11359",
+                price: "R11359",
                 period: "one-time",
                 description: "Small website development"
             },
             {
                 id: "web-dev-medium",
                 label: "6-10 Pages - Single Service",
-                price: "$13639",
+                price: "R13639",
                 period: "one-time",
                 description: "Medium website development"
             },
             {
                 id: "web-dev-large",
                 label: "11-15 Pages - Single Service",
-                price: "$17039",
+                price: "R17039",
                 period: "one-time",
                 description: "Large website development"
             },
@@ -516,7 +516,7 @@ export const saPricingConfig = {
             {
                 id: "email-single",
                 label: "Email Marketing - Single Service",
-                price: "$5199",
+                price: "R5199",
                 period: "/month",
                 description: "Complete email marketing campaigns"
             },
@@ -535,21 +535,21 @@ export const saPricingConfig = {
             {
                 id: "va-20h-single",
                 label: "20 Hours/Month - Single Resource",
-                price: "$5679",
+                price: "R5679",
                 period: "/month",
                 description: "Part-time virtual assistance"
             },
             {
                 id: "va-40h-single",
                 label: "40 Hours/Month - Single Resource",
-                price: "$10229",
+                price: "R10229",
                 period: "/month",
                 description: "Full-time virtual assistance"
             },
             {
                 id: "va-80h-single",
                 label: "80 Hours/Month - Single Resource",
-                price: "$18179",
+                price: "R18179",
                 period: "/month",
                 description: "Extended virtual assistance"
             },
@@ -568,7 +568,7 @@ export const saPricingConfig = {
             {
                 id: "cold-call-20h-single",
                 label: "Single Resource",
-                price: "$17039",
+                price: "R17039",
                 period: "/month",
                 description: "Part-time cold calling service"
             },

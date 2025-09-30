@@ -4,8 +4,15 @@ export function middleware(request) {
     const authToken = request.cookies.get("authToken")?.value;
     const { pathname } = request.nextUrl;
 
+    const country = request.geo?.country || "Unknown";
+    const region = request.geo?.region || "Unknown";
+
+    const response = NextResponse.next();
+    response.cookies.set("userCountry", country, { path: "/" });
+    response.cookies.set("userRegion", region, { path: "/" });
+
     if (pathname.startsWith("/login") || pathname.startsWith("/signup") || pathname.startsWith("/forgot-password") || pathname.startsWith('/reset-password') || pathname.startsWith('/verify-otp')) {
-        return NextResponse.next();
+        return response;
     }
 
     if (!authToken) {
@@ -13,7 +20,7 @@ export function middleware(request) {
         return NextResponse.redirect(loginUrl);
     }
 
-    return NextResponse.next();
+    return response;
 }
 
 export const config = {

@@ -1,11 +1,11 @@
 import Container from "@/components/dashboardComponents/Container"
-import { Button } from "@/components/ui/button"
+import PricingPDF from "@/components/dashboardComponents/PricingPDF";
 import { ArrowDown } from 'lucide-react';
 
 const PricingPage = () => {
     return (
         <Container className={'bg-white p-4 mt-6 h-[80vh]'}>
-            <a className="mb-2 float-right" href="/stratital-pricelist.pdf" download="Stratital Pricelist" target='_blank'>
+            <a className="mb-2 float-right" href={"/stratital-pricelist.pdf"} download="Stratital Pricelist" target='_blank' rel="noopener noreferrer">
                 <button
                     className="bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group cursor-pointer"
                     type="button"
@@ -19,15 +19,8 @@ const PricingPage = () => {
                 </button>
 
             </a>
-            <div className="w-full h-screen">
-                <iframe
-                    src={`https://docs.google.com/gview?embedded=true&url=${encodeURIComponent(
-                        "https://portal.stratital.com/stratital-pricelist.pdf"
-                    )}`}
-                    className="w-full h-full"
-                    frameBorder="0"
-                    title="Stratital Pricelist"
-                />
+            <div className="w-full h-full">
+                <PricingPDF />
             </div>
         </Container>
     )

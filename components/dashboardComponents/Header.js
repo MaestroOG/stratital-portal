@@ -24,6 +24,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { countUnreadNotifications } from '@/utils/notificationUtils';
 import Linkify from 'linkify-react';
 import Loader from '../Loader';
+import { useCountry } from "@/hooks/useCountry";
 
 const Header = ({ pfpLink }) => {
     const pathname = usePathname();
@@ -32,6 +33,8 @@ const Header = ({ pfpLink }) => {
 
     const [state, formAction, isPending] = useActionState(signOutUser, "")
     const [user, setUser] = useState(null);
+
+    const { countryCode, countryName, loading, error } = useCountry();
 
     const [count, setCount] = useState(0)
     const getNotifications = async () => {
@@ -74,8 +77,7 @@ const Header = ({ pfpLink }) => {
             setCount(unreadNotifs);
         };
         fetchUnread();
-    }, []);
-
+    }, [user]);
 
 
 
@@ -141,16 +143,19 @@ const Header = ({ pfpLink }) => {
 
             <Link href={'/'} className='md:hidden'><Image src='/logo.png' alt="stratital logo" width={135} height={37} priority /></Link>
             <div className='flex items-center gap-4'>
-                <div className="flex items-center">
-                    <Image
-                        src={"/australia.svg"}
-                        width={32}
-                        height={32}
-                        alt="country_flag"
-                        className="cursor-pointer hidden md:block"
-                    />
-                </div>
-                <div className="flex items-center">
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center">
+                        {loading && <Loader size="h-4 w-4" />}
+                        {!loading && !error && countryCode && <Image
+                            src={countryCode.trim() === 'ZA' ? '/south-africa.svg' : "/australia.svg"}
+                            width={32}
+                            height={32}
+                            alt="country_flag"
+                            className="cursor-pointer hidden md:block"
+                        />
+                        }
+
+                    </div>
                     <Popover onOpenChange={handleOpen}>
                         <PopoverTrigger> <NotificationBtn length={count} /></PopoverTrigger>
                         <PopoverContent className={'w-[400px] h-96 overflow-y-auto'}>

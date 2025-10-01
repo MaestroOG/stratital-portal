@@ -24,13 +24,15 @@ const ProjectDeleteForm = ({ id }) => {
     }
 
     useEffect(() => {
-        if (state?.message || state?.success) {
+        if (state?.success) {
             setDeleteOpen(false);
             setOpen(true);
 
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 router.replace('/projects');
             }, 2000);
+
+            return () => clearTimeout(timer);
         } else if (state?.message) {
             setDeleteOpen(false);
             setOpen(true);

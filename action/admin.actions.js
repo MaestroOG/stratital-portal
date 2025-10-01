@@ -2,6 +2,7 @@
 
 import { uploadFilesToCloudinary } from "@/lib/cloudinary";
 import { connectDB } from "@/lib/mongodb";
+import { getUser } from "@/lib/user";
 import HowToVideo from "@/models/HowToVideo";
 import Project from "@/models/Project";
 import Resource from "@/models/Resource";
@@ -310,6 +311,15 @@ export async function deleteProject(prevState, formData) {
         return {
             success: false,
             message: 'No valid id received'
+        }
+    }
+
+    const user = await getUser();
+
+    if (user?.role !== 'superadmin') {
+        return {
+            success: false,
+            message: 'You do not have permission to perform this action'
         }
     }
 

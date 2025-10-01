@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button'
-import { useActionState, useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -23,15 +23,25 @@ const ProjectDeleteForm = ({ id }) => {
         setDeleteOpen(true);
     }
 
-    const handleSubmit = (e) => {
-        router.replace('/projects');
-    }
+    useEffect(() => {
+        if (state?.message || state?.success) {
+            setDeleteOpen(false);
+            setOpen(true);
+
+            setTimeout(() => {
+                router.replace('/projects');
+            }, 2000);
+        } else if (state?.message) {
+            setDeleteOpen(false);
+            setOpen(true);
+        }
+    }, [state, router]);
     return (
         <>
-            <Button type='submit' onClick={handleClick}>Delete Project</Button>
+            <Button type='button' onClick={handleClick}>Delete Project</Button>
             <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
                 <DialogContent>
-                    <form onSubmit={handleSubmit} action={formAction}>
+                    <form action={formAction}>
                         <input type="hidden" name='projectId' value={id} />
                         <DialogHeader>
                             <DialogTitle>

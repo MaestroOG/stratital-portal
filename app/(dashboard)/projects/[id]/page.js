@@ -5,6 +5,8 @@ import { getNotesByProjectId, getProjectById } from '@/lib/projects'
 import { getUser } from '@/lib/user'
 import { camelToNormal, capitalizeFirst } from '@/utils/formUtils'
 import ProjectNotesList from '@/components/ProjectNotesList'
+import ProjectDeleteForm from '@/components/project-delete-form'
+
 
 export const metadata = {
     title: 'Project Details',
@@ -26,7 +28,10 @@ const ProjectDetailPage = async ({ params }) => {
             <Container className={'bg-white p-4'}>
                 <div className='flex md:flex-row flex-col items-start md:items-end justify-between'>
                     <div>
-                        <h1 className='text-2xl md:text-4xl font-bold whitespace-nowrap'>{projectDetails?.projectTitle}</h1>
+                        <div className='flex items-center gap-2'>
+                            <h1 className='text-2xl md:text-4xl font-bold whitespace-nowrap'>{projectDetails?.projectTitle}</h1>
+                            {user?.role === 'superadmin' && <ProjectDeleteForm id={id} />}
+                        </div>
                         <h3 className='mt-2'>{service} by {projectDetails?.createdBy?.companyName ?? ""}</h3>
                     </div>
                     <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>

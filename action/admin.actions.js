@@ -3,6 +3,7 @@
 import { uploadFilesToCloudinary } from "@/lib/cloudinary";
 import { connectDB } from "@/lib/mongodb";
 import HowToVideo from "@/models/HowToVideo";
+import Project from "@/models/Project";
 import Resource from "@/models/Resource";
 import User from "@/models/User";
 import { getYouTubeEmbedUrl } from "@/utils/formUtils";
@@ -300,4 +301,45 @@ export async function editResource(prevState, formData) {
         message: "Resource updated successfully"
     }
 
+}
+
+export async function deleteProject(prevState, formData) {
+    const projectId = formData.get('projectId');
+
+    if (!projectId) {
+        return {
+            success: false,
+            message: 'No valid id received'
+        }
+    }
+
+    try {
+        await connectDB();
+    } catch (err) {
+        return {
+            success: false,
+            message: 'Something went wrong'
+        }
+    }
+
+    try {
+        const deletedProject = await Project.findByIdAndDelete(projectId);
+        if (deletedProject) {
+            revalidatePath('/', 'layout');
+            return {
+                success: true,
+                message: 'Project deleted successfully'
+            }
+        }
+
+        return {
+            success: false,
+            message: 'Something went wrong'
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: 'Something went wrong'
+        }
+    }
 }

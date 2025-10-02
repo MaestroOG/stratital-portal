@@ -513,7 +513,7 @@ export const generateApplicationReceivedUserEmail = (name, companyName, email) =
   `;
 }
 
-export const generateNoteCreatedEmailUserTemplate = (commentUrl, name) => {
+export const generateNoteCreatedEmailUserTemplate = (commentUrl, name, projectTitle) => {
   return `
   <!DOCTYPE html>
 <html lang="en" style="margin:0;padding:0;">
@@ -570,7 +570,7 @@ export const generateNoteCreatedEmailUserTemplate = (commentUrl, name) => {
           <tr>
             <td style="padding:28px 28px 8px 28px;">
               <h1 class="fallback-font text" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:30px;color:#0f172a;font-weight:700;">
-                Thanks, ${name}! Your comment is in review.
+                ${name}! just added a comment.
               </h1>
             </td>
           </tr>
@@ -579,7 +579,7 @@ export const generateNoteCreatedEmailUserTemplate = (commentUrl, name) => {
           <tr>
             <td style="padding:0 28px 16px 28px;">
               <p class="fallback-font text" style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:24px;color:#1f2937;">
-                You successfully added a comment.
+                on project with title "${projectTitle}"
               </p>
             </td>
           </tr>
@@ -608,9 +608,7 @@ export const generateNoteCreatedEmailUserTemplate = (commentUrl, name) => {
   </table>
   <!-- /Wrapper -->
 </body>
-</html>
-
-  `;
+</html>  `;
 }
 
 

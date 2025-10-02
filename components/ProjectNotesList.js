@@ -77,7 +77,7 @@ export default function ProjectNotesList({ projectId, initialNotes }) {
                         </div>
                     </div>
 
-                    <div className="text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
+                    <div className="max-w-5xl text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
                         {parse(note?.note)}
                     </div>
                 </li>

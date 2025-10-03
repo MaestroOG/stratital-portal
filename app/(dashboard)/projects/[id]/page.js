@@ -38,10 +38,10 @@ const ProjectDetailPage = async ({ params }) => {
                             {user?.role === 'superadmin' && <ProjectDeleteForm id={id} />}
                         </div>
                         <h3 className='mt-2'>{service} by {projectDetails?.createdBy?.companyName ?? ""}</h3>
+                        {projectDetails?.byAdmin ? <p className='text-sm mt-2'>Created By Admin</p> : ''}
                     </div>
                     <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
-                        {projectDetails?.byAdmin ? <p className='text-sm'>Created By Admin</p> : ''}
-                        <p className='text-red font-medium animate-pulse'>• {status}</p>
+                        <p className='text-red font-medium animate-pulse whitespace-nowrap'>• {status}</p>
                         {user?.role === 'superadmin' && <ProjectStatusForms status={status} projectId={id} />}
                     </div>
                 </div>

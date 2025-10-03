@@ -46,7 +46,7 @@ const ProjectStatusForms = ({ projectId, status }) => {
             {status !== 'Pending' && (
                 <form action={projectFormAction} className="flex items-center gap-2">
                     <Select onValueChange={(value) => setProjectStatus(value)}>
-                        <SelectTrigger className="w-[250px] ring ring-red">
+                        <SelectTrigger className="w-[190px] ring ring-red">
                             <SelectValue placeholder="Change Project Status" />
                         </SelectTrigger>
                         <SelectContent>
@@ -58,7 +58,7 @@ const ProjectStatusForms = ({ projectId, status }) => {
 
                     <input type="hidden" name="status" value={projectStatus} />
 
-                    <Button disabled={projectIsPending} type='submit'>Change Status</Button>
+                    <Button size={'sm'} disabled={projectIsPending} type='submit'>Change Status</Button>
                 </form>
             )}
 

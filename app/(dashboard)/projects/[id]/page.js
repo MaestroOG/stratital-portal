@@ -6,6 +6,7 @@ import { getUser } from '@/lib/user'
 import { camelToNormal, capitalizeFirst } from '@/utils/formUtils'
 import ProjectNotesList from '@/components/ProjectNotesList'
 import ProjectDeleteForm from '@/components/project-delete-form'
+import { notFound } from 'next/navigation'
 
 
 export const metadata = {
@@ -23,9 +24,13 @@ const ProjectDetailPage = async ({ params }) => {
     const { notes } = await getNotesByProjectId(id, 1, 10);
 
 
+    if (!projectDetails) {
+        notFound();
+    }
+
     return (
         <>
-            <Container className={'bg-white p-4'}>
+            <Container className={'bg-white p-4 overflow-x-hidden'}>
                 <div className='flex md:flex-row flex-col items-start md:items-end justify-between'>
                     <div>
                         <div className='flex items-center gap-2'>

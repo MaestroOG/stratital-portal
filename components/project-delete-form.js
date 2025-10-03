@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { deleteProject } from '@/action/admin.actions';
 import { useRouter } from 'next/navigation';
+import { Trash } from 'lucide-react';
 
 const ProjectDeleteForm = ({ id }) => {
     const [deleteOpen, setDeleteOpen] = useState(false);
@@ -27,20 +28,12 @@ const ProjectDeleteForm = ({ id }) => {
         if (state?.success) {
             setDeleteOpen(false);
             setOpen(true);
-
-            const timer = setTimeout(() => {
-                router.replace('/projects');
-            }, 2000);
-
-            return () => clearTimeout(timer);
-        } else if (state?.message) {
-            setDeleteOpen(false);
-            setOpen(true);
+            router.replace('/projects');
         }
     }, [state, router]);
     return (
         <>
-            <Button type='button' onClick={handleClick}>Delete Project</Button>
+            <Button size={'sm'} type='button' onClick={handleClick}><Trash /></Button>
             <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
                 <DialogContent>
                     <form action={formAction}>

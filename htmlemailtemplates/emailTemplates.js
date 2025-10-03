@@ -331,7 +331,7 @@ export const generateRejectEmailTemplate = () => {
 }
 
 
-export const generateProjectCreatedEmailTemplate = (companyName, projectTitle, service, packageSelected) => {
+export const generateProjectCreatedEmailTemplate = (companyName, projectTitle, service, packageSelected, projectUrl) => {
   return `
   <!DOCTYPE html>
 <html lang="en">
@@ -378,7 +378,15 @@ export const generateProjectCreatedEmailTemplate = (companyName, projectTitle, s
                 </tr>
               </table>
 
-              <p style="margin:0; font-size:14px; color:#6b7280;">
+              <!-- View Project Button -->
+              <div style="text-align:center; margin:30px 0;">
+                <a href="${projectUrl}" target="_blank" 
+                   style="display:inline-block; background:#F33C38; color:#ffffff; padding:12px 24px; font-size:15px; font-weight:bold; text-decoration:none; border-radius:6px;">
+                  View Project
+                </a>
+              </div>
+
+              <p style="margin:0; font-size:14px; color:#6b7280; text-align:center;">
                 You can view and manage this project from your dashboard.
               </p>
             </td>
@@ -396,9 +404,7 @@ export const generateProjectCreatedEmailTemplate = (companyName, projectTitle, s
   </table>
 
 </body>
-</html>
-
-  `;
+</html>`;
 }
 
 export const generateApplicationReceivedUserEmail = (name, companyName, email) => {

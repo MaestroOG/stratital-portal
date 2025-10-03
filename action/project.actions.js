@@ -39,7 +39,7 @@ export async function createProject(prevState, formData) {
 
     if (user?.role === 'superadmin') {
         const projectForUser = await User.findById(partnerId);
-        await Project.create({
+        const project = await Project.create({
             projectTitle,
             service,
             fields: cleanedEntries,
@@ -49,7 +49,7 @@ export async function createProject(prevState, formData) {
             byAdmin: true
         })
 
-        const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected);
+        const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected, `https://portal.stratital.com/projects/${project?._id}`);
 
         const transporter = createTransporter();
 
@@ -62,9 +62,8 @@ export async function createProject(prevState, formData) {
     }
 
     if (user?.role === 'user') {
-        const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected);
 
-        await Project.create({
+        const project = await Project.create({
             projectTitle,
             service,
             fields: cleanedEntries,
@@ -72,6 +71,10 @@ export async function createProject(prevState, formData) {
             createdBy: user?._id,
             packageSelected
         })
+
+        console.log(project)
+
+        const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected, `https://portal.stratital.com/projects/${project?._id}`);
 
         const transporter = createTransporter();
 

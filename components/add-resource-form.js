@@ -41,7 +41,7 @@ const AddResourceForm = () => {
                 <p>OR</p>
                 <div className="grid gap-2">
                     <Label htmlFor="resourceLink">Resource Link</Label>
-                    <Input type='text' name='resourceLink' />
+                    <Input type='url' name='resourceLink' />
                 </div>
                 <Button type='submit' disabled={isPending} className={'mt-2'}>Submit</Button>
             </form>

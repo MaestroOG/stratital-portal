@@ -69,7 +69,6 @@ export async function addResource(prevState, formData) {
     const file = formData.get('file');
     const resourceLink = formData.get('resourceLink')
 
-    console.log(resourceLink)
 
     if ((!file || file.size === 0) && !resourceLink) {
         return {
@@ -86,7 +85,7 @@ export async function addResource(prevState, formData) {
             fileUrl = await uploadFilesToCloudinary(file);
         }
 
-        else if (resourceLink && !file || file.size === 0) {
+        else if (resourceLink && (!file || file.size === 0)) {
             fileUrl = resourceLink;
         }
     } catch (error) {

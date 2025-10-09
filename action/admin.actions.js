@@ -66,19 +66,29 @@ export async function updateUserDetails(formValues, prevState, formData) {
 
 export async function addResource(prevState, formData) {
     const title = formData.get('title');
-    const file = formData.get('file')
+    const file = formData.get('file');
+    const resourceLink = formData.get('resourceLink')
 
-    if (!file) {
+    console.log(resourceLink)
+
+    if ((!file || file.size === 0) && !resourceLink) {
         return {
             success: false,
-            message: "Please upload a valid file"
-        }
+            message: "Please upload a valid file or provide a resource link.",
+        };
     }
 
     let fileUrl;
 
     try {
-        fileUrl = await uploadFilesToCloudinary(file);
+
+        if (file && file.size > 0) {
+            fileUrl = await uploadFilesToCloudinary(file);
+        }
+
+        else if (resourceLink && !file || file.size === 0) {
+            fileUrl = resourceLink;
+        }
     } catch (error) {
         if (error?.response?.status === 413) {
             return {
@@ -92,6 +102,7 @@ export async function addResource(prevState, formData) {
             message: "Something went wrong during upload.",
         };
     }
+
 
     await connectDB();
 
@@ -258,6 +269,7 @@ export async function editResource(prevState, formData) {
     const title = formData.get('title')?.trim();
     const file = formData.get('file');
     const resourceId = formData.get('resourceId');
+    const resourceLink = formData.get('resourceLink')?.trim();
 
     const updateData = {};
     if (title) updateData.title = title;
@@ -280,7 +292,10 @@ export async function editResource(prevState, formData) {
                 message: 'Failed to upload file. Please try again.'
             };
         }
+    } else if (resourceLink && !file || file.size === 0) {
+        fileUrl = resourceLink;
     }
+
     updateData.fileUrl = fileUrl;
 
 

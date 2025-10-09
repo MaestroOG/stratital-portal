@@ -63,6 +63,12 @@ const ResourceEditForm = ({ resource }) => {
                             />
                         </div>
 
+                        <p>OR</p>
+                        <div className="grid gap-2">
+                            <Label htmlFor="resourceLink">Resource Link</Label>
+                            <Input type='text' defaultValue={resource?.fileUrl} name='resourceLink' className={'border border-input'} />
+                        </div>
+
                         <input type="hidden" name="resourceId" value={resource?._id} />
 
                         <DialogFooter>

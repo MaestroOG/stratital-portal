@@ -23,6 +23,7 @@ const ProjectDetailPage = async ({ params }) => {
 
     const { notes } = await getNotesByProjectId(id, 1, 10);
 
+    const isUnread = notes.some(note => !note.readBy.includes(user.id));
 
     if (!projectDetails) {
         notFound();
@@ -66,7 +67,7 @@ const ProjectDetailPage = async ({ params }) => {
                 <NoteBox id={id} />
                 <div className='mt-6'>
                     <ul>
-                        {notes.length > 0 ? <ProjectNotesList projectId={id} initialNotes={notes} /> : <p className='p-4 text-center'>No Comments For Now.</p>}
+                        {notes.length > 0 ? <ProjectNotesList user={user} isUnread={isUnread} projectId={id} initialNotes={notes} /> : <p className='p-4 text-center'>No Comments For Now.</p>}
                     </ul>
                 </div>
             </Container>

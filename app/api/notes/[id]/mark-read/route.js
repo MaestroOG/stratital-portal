@@ -1,10 +1,17 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb"; // your MongoDB connection file
 import Note from "@/models/Note"; // your Note model
+import { getUser } from "@/lib/user";
 
 // PATCH /api/notes/[id]/mark-read
 export async function POST(req, { params }) {
     try {
+        // Verify user is authenticated (example using next-auth)
+        const user = await getUser();
+        if (!user) {
+            return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
         const { id } = params; // Note ID from URL
         const { userId } = await req.json(); // user ID from request body
 
@@ -12,7 +19,13 @@ export async function POST(req, { params }) {
             return NextResponse.json({ error: "User ID is required" }, { status: 400 });
         }
 
-        // Connect to DB
+        // Verify the authenticated user matches the userId in the request
+        if (user._id !== userId) {
+            return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+        }
+
+        // …rest of your handler…
+
         await connectDB();
 
         // Find the note
@@ -22,17 +35,20 @@ export async function POST(req, { params }) {
         }
 
         // If user hasn't read it yet, add them to readBy array
-        if (!note.readBy.includes(userId)) {
-            note.readBy.push(userId);
-            await note.save();
-        }
-
+        // Atomically add userId to readBy if not already present
+        await Note.findByIdAndUpdate(
+            id,
+            { $addToSet: { readBy: userId } },
+            { new: true }
+        );
         return NextResponse.json({ success: true, note });
     } catch (error) {
-        console.error("Error marking note as read:", error);
+        // error handling…
+        onsole.error("Error marking note as read:", error);
         return NextResponse.json(
             { error: "Failed to mark note as read" },
             { status: 500 }
         );
     }
 }
+

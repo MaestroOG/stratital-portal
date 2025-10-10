@@ -23,7 +23,7 @@ export default function ProjectNotesList({ user, projectId, initialNotes }) {
             // ✅ Optimistic UI update
             setNotes((prevNotes) =>
                 prevNotes.map((note) =>
-                    note._id === noteId && !note.readBy.includes(user._id)
+                    note._id === noteId && user && !note.readBy.includes(user._id)
                         ? { ...note, readBy: [...note.readBy, user._id] }
                         : note
                 )
@@ -32,7 +32,6 @@ export default function ProjectNotesList({ user, projectId, initialNotes }) {
             console.error("Error marking note as read:", err);
         }
     };
-
     // ✅ Fetch more notes for pagination
     const fetchMore = useCallback(async () => {
         if (!hasMore || loading) return;

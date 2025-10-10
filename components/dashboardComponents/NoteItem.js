@@ -38,11 +38,9 @@ const NoteItem = ({ note, isUnread, onMarkAsRead, user }) => {
                     src={note?.createdBy?.profilePictureUrl || "/placeholder-avatar.svg"}
                     width={35}
                     height={35}
-                    priority
                     alt="avatar"
                     className="rounded-full"
-                />
-                <div>
+                />                <div>
                     <p className="text-sm text-gray-600">
                         <span className="font-bold">
                             {note?.createdBy === null ? "Stratital Team" : note?.createdBy?.name}

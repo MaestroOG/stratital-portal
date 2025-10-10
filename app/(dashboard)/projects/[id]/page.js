@@ -23,8 +23,7 @@ const ProjectDetailPage = async ({ params }) => {
 
     const { notes } = await getNotesByProjectId(id, 1, 10);
 
-    const isUnread = notes.some(note => !note.readBy.includes(user.id));
-
+    const isUnread = user ? notes.some(note => !note.readBy.includes(user.id)) : false;
     if (!projectDetails) {
         notFound();
     }

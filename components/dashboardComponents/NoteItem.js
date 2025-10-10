@@ -20,7 +20,7 @@ const NoteItem = ({ note, isUnread, onMarkAsRead, user }) => {
                     }
                 });
             },
-            { threshold: 0.5 } // 50% visible
+            { threshold: 1 } // 50% visible
         );
 
         const currentRef = noteRef.current;

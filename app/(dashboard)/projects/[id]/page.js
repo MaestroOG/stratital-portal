@@ -1,12 +1,14 @@
 import Container from '@/components/dashboardComponents/Container'
 import ProjectStatusForms from '@/components/project-status-forms'
 import NoteBox from '@/components/superadminComponents/NoteBox'
-import { getNotesByProjectId, getProjectById } from '@/lib/projects'
+import { getNotesByProjectId, getProjectById, getUnreadNotesByProject } from '@/lib/projects'
 import { getUser } from '@/lib/user'
 import { camelToNormal, capitalizeFirst } from '@/utils/formUtils'
 import ProjectNotesList from '@/components/ProjectNotesList'
 import ProjectDeleteForm from '@/components/project-delete-form'
 import { notFound } from 'next/navigation'
+import FilterCommentsForm from '@/components/filter-comments-form'
+import { Suspense } from 'react'
 
 
 export const metadata = {
@@ -14,16 +16,27 @@ export const metadata = {
     description: 'View details of a specific project',
 }
 
-const ProjectDetailPage = async ({ params }) => {
+const ProjectDetailPage = async ({ params, searchParams }) => {
     const user = await getUser();
     const { id } = await params;
     const projectDetails = await getProjectById(id);;
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
+    const { filter } = searchParams;
 
-    const { notes } = await getNotesByProjectId(id, 1, 10);
+    let notes;
 
-    const isUnread = user ? notes.some(note => !note.readBy.includes(user.id)) : false;
+    if (filter === "unread") {
+        const { notes: unreadNotes } = await getUnreadNotesByProject(id, user?._id);
+        notes = unreadNotes;
+    } else {
+        const { notes: allNotes } = await getNotesByProjectId(id, 1, 10);
+        notes = allNotes;
+    }
+
+    const isUnread = user ? notes?.some(note => !(note?.readBy ?? []).includes(user._id)) : false;
+
+
     if (!projectDetails) {
         notFound();
     }
@@ -62,11 +75,23 @@ const ProjectDetailPage = async ({ params }) => {
             <Container className={'bg-white p-4 mt-6'}>
                 <div className='flex items-end justify-between'>
                     <h1 className='text-4xl font-bold'>Comments</h1>
+                    <FilterCommentsForm />
                 </div>
                 <NoteBox id={id} />
-                <div className='mt-6'>
+                <div className="mt-6">
                     <ul>
-                        {notes.length > 0 ? <ProjectNotesList user={user} isUnread={isUnread} projectId={id} initialNotes={notes} /> : <p className='p-4 text-center'>No Comments For Now.</p>}
+                        {notes?.length > 0 ? (
+                            <Suspense fallback={<p>Loading notes...</p>}>
+                                <ProjectNotesList
+                                    user={user}
+                                    isUnread={isUnread}
+                                    projectId={id}
+                                    initialNotes={notes}
+                                />
+                            </Suspense>
+                        ) : (
+                            <p className="p-4 text-center">No Comments For Now.</p>
+                        )}
                     </ul>
                 </div>
             </Container>

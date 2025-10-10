@@ -27,13 +27,16 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
     let notes;
 
     if (filter === "unread") {
-        const { notes: unreadNotes } = await getUnreadNotesByProject(id, user?._id);
-        notes = unreadNotes;
+        if (!user?._id) {
+            notes = [];
+        } else {
+            const { notes: unreadNotes } = await getUnreadNotesByProject(id, user?._id);
+            notes = unreadNotes;
+        }
     } else {
         const { notes: allNotes } = await getNotesByProjectId(id, 1, 10);
         notes = allNotes;
     }
-
     const isUnread = user ? notes?.some(note => !(note?.readBy ?? []).includes(user._id)) : false;
 
 
@@ -81,15 +84,12 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                 <div className="mt-6">
                     <ul>
                         {notes?.length > 0 ? (
-                            <Suspense fallback={<p>Loading notes...</p>}>
-                                <ProjectNotesList
-                                    user={user}
-                                    isUnread={isUnread}
-                                    projectId={id}
-                                    initialNotes={notes}
-                                />
-                            </Suspense>
-                        ) : (
+                            <ProjectNotesList
+                                user={user}
+                                isUnread={isUnread}
+                                projectId={id}
+                                initialNotes={notes}
+                            />) : (
                             <p className="p-4 text-center">No Comments For Now.</p>
                         )}
                     </ul>

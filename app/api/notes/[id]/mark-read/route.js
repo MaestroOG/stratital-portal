@@ -44,7 +44,7 @@ export async function POST(req, { params }) {
         return NextResponse.json({ success: true, note });
     } catch (error) {
         // error handling…
-        onsole.error("Error marking note as read:", error);
+        console.error("Error marking note as read:", error);
         return NextResponse.json(
             { error: "Failed to mark note as read" },
             { status: 500 }

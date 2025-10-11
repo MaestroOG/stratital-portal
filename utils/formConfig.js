@@ -100,6 +100,26 @@ export const formConfig = {
         { label: "Goal of Calls (e.g., Appointments, Sales, Market Research)", name: "callGoal", type: "text", required: true },
         { label: "CRM or Tools Used (if any)", name: "crmTools", type: "text" }
     ],
+    managedWebSupport: [
+        { label: "Website Name or URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url", required: true },
+        { label: "Current Hosting Provider (e.g., Hostinger, GoDaddy, AWS)", name: "hostingProvider", type: "text" },
+        { label: "Type of Website (e.g., Portfolio, E-commerce, Corporate)", name: "websiteType", type: "text", required: true },
+        { label: "Areas of Support Needed (e.g., Updates, Security, Performance, Backup)", name: "supportAreas", type: "textarea", required: true },
+        { label: "Frequency of Maintenance (e.g., Weekly, Monthly, Quarterly)", name: "maintenanceFrequency", type: "text" },
+        { label: "Access Details (if applicable)", name: "accessDetails", type: "textarea" },
+        { label: "Preferred Communication Channel (e.g., Email, Slack, WhatsApp)", name: "communicationChannel", type: "text" },
+        { label: "Additional Notes or Requirements", name: "additionalNotes", type: "textarea" }
+    ],
+    adhocSupport: [
+        { label: "Website Name or URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url", required: true },
+        { label: "Type of Issue or Task (e.g., Bug Fix, Content Update, Plugin Installation)", name: "issueType", type: "text", required: true },
+        { label: "Detailed Description of the Problem or Task", name: "taskDetails", type: "textarea", required: true },
+        { label: "Priority Level (Low, Medium, High, Urgent)", name: "priorityLevel", type: "text" },
+        { label: "Expected Deadline or Completion Date", name: "deadline", type: "text" },
+        { label: "Access Details (if applicable)", name: "accessDetails", type: "textarea" },
+        { label: "Preferred Communication Channel (e.g., Email, WhatsApp, Slack)", name: "communicationChannel", type: "text" },
+        { label: "Additional Notes", name: "additionalNotes", type: "textarea" }
+    ],
 
 }
 
@@ -113,6 +133,44 @@ export const pricingConfig = {
                 price: "$450",
                 period: "/month",
                 description: "Standard local SEO optimization"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    managedWebSupport: {
+        pricing: [
+            {
+                id: "managed-web-support-standard",
+                label: "Managed Web Support",
+                price: "$99",
+                period: "/month",
+                description: "Ongoing website maintenance, security monitoring, and performance optimization."
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    adhocSupport: {
+        pricing: [
+            {
+                id: "adhoc-support-advanced",
+                label: "Adhoc Support",
+                price: "$50",
+                period: "/hour",
+                description: "Complex troubleshooting, backend adjustments, or multiple-page edits."
             },
             {
                 id: "custom-bundle",
@@ -353,6 +411,43 @@ export const saPricingConfig = {
                 price: "R5199",
                 period: "/month",
                 description: "Standard local SEO optimization"
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+
+    managedWebSupport: {
+        pricing: [
+            {
+                id: "managed-web-support-standard",
+                label: "Managed Web Support",
+                price: "R1708",
+                period: "/month",
+                description: "Ongoing website maintenance, security monitoring, and performance optimization."
+            },
+            {
+                id: "custom-bundle",
+                label: "Custom Quote",
+                price: "custom",
+                period: "",
+                description: ""
+            },
+        ]
+    },
+    adhocSupport: {
+        pricing: [
+            {
+                id: "adhoc-support-advanced",
+                label: "Adhoc Support",
+                price: "R862",
+                period: "/hour",
+                description: "Complex troubleshooting, backend adjustments, or multiple-page edits."
             },
             {
                 id: "custom-bundle",

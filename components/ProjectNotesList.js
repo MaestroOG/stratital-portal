@@ -1,38 +1,60 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import Image from "next/image";
-import parse from "html-react-parser";
-import { formatDateToYMD, timeAgo, formatTo12HourTime } from "@/utils/formUtils"
+import NoteItem from "./dashboardComponents/NoteItem";
 
-export default function ProjectNotesList({ projectId, initialNotes }) {
+export default function ProjectNotesList({ user, projectId, initialNotes }) {
     const [notes, setNotes] = useState(initialNotes);
     const [page, setPage] = useState(2);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const loader = useRef(null);
 
+    // ✅ Mark note as read
+    const handleMarkAsRead = async (noteId) => {
+        try {
+            const res = await fetch(`/api/notes/${noteId}/mark-read`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId: user?._id }),
+            });
+            if (!res.ok) throw new Error("Failed to mark as read");
+
+            // ✅ Optimistic UI update
+            setNotes((prevNotes) =>
+                prevNotes.map((note) =>
+                    note._id === noteId && user && !note.readBy.includes(user._id)
+                        ? { ...note, readBy: [...note.readBy, user._id] }
+                        : note
+                )
+            );
+        } catch (err) {
+            console.error("Error marking note as read:", err);
+        }
+    };
+    // ✅ Fetch more notes for pagination
     const fetchMore = useCallback(async () => {
         if (!hasMore || loading) return;
-
         setLoading(true);
+
         const res = await fetch(`/api/projects/${projectId}/notes?page=${page}&limit=10`, {
             cache: "no-store",
         });
         const data = await res.json();
 
-        setNotes(prev => [...prev, ...data.notes]);
+        setNotes((prev) => [...prev, ...data.notes]);
         setHasMore(data.hasMore);
         setLoading(false);
     }, [page, hasMore, loading, projectId]);
 
+    // ✅ Observe loader for infinite scroll
     useEffect(() => {
         if (!hasMore) return;
 
         const observer = new IntersectionObserver(
-            entries => {
+            (entries) => {
                 if (entries[0].isIntersecting && !loading) {
-                    setPage(prev => prev + 1);
+                    setPage((prev) => prev + 1);
                 }
             },
             { threshold: 1 }
@@ -45,43 +67,24 @@ export default function ProjectNotesList({ projectId, initialNotes }) {
     }, [hasMore, loading]);
 
     useEffect(() => {
-        if (page > 1) {
-            fetchMore();
-        }
-    }, [page]);
+        if (page > 1) fetchMore();
+    }, [page, fetchMore]);
 
     return (
         <ul>
-            {notes.map((note, index) => (
-                <li key={index} className="mb-5">
-                    <div className="flex items-center gap-2">
-                        <Image
-                            src={note?.createdBy?.profilePictureUrl || "/placeholder-avatar.svg"}
-                            width={35}
-                            height={35}
-                            priority
-                            alt="avatar"
-                            className="rounded-full"
-                        />
-                        <div>
-                            <p className="text-sm text-gray-600">
-                                <span className="font-bold">{note?.createdBy === null
-                                    ? "Stratital Team"
-                                    : note?.createdBy?.name}</span>{" "}
-                                - {timeAgo(note?.createdAt)} at{" "}
-                                {formatTo12HourTime(note?.createdAt)}
-                            </p>
-                            <span className="text-detail text-xs">
-                                {note?.createdBy?.companyName}
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="max-w-5xl text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
-                        {parse(note?.note)}
-                    </div>
-                </li>
-            ))}
+            {notes?.map((note, index) => {
+                const isUnread = !(note?.readBy?.includes(user._id));
+                return (
+                    <NoteItem
+                        key={note._id || index}
+                        note={note}
+                        index={index}
+                        isUnread={isUnread}
+                        user={user}
+                        onMarkAsRead={handleMarkAsRead}
+                    />
+                );
+            })}
 
             {hasMore && (
                 <div
@@ -94,4 +97,3 @@ export default function ProjectNotesList({ projectId, initialNotes }) {
         </ul>
     );
 }
-

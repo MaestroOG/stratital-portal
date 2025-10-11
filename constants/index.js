@@ -50,5 +50,15 @@ export const yourProjects = [
         id: Math.random(),
         projectTitle: "Lead Generation - Cold Calling",
         desc: "Outbound calling to generate leads, book appointments, or qualify prospects."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Managed Web Support",
+        desc: "Ongoing website maintenance and technical support to ensure your site remains updated, secure, and high-performing."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Adhoc Support",
+        desc: "On-demand technical assistance and troubleshooting for specific website issues or updates as needed."
     }
 ];

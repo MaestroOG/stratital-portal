@@ -1,5 +1,5 @@
 'use client';
-import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, Menu, X, Settings } from "lucide-react";
+import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, Menu, X, Settings, MessageCircleQuestionMark } from "lucide-react";
 import Image from 'next/image'
 import React, { useActionState, useEffect, useState } from 'react'
 import {
@@ -110,6 +110,11 @@ const Header = ({ pfpLink }) => {
             icon: <Files />,
             title: "Resources",
             href: '/resources'
+        },
+        {
+            icon: <MessageCircleQuestionMark />,
+            title: "FAQs",
+            href: '/faqs'
         },
         {
             icon: <CircleDollarSign />,

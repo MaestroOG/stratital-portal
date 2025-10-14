@@ -1,5 +1,3 @@
-
-
 export const yourProjects = [
     {
         id: Math.random(),
@@ -62,3 +60,221 @@ export const yourProjects = [
         desc: "On-demand technical assistance and troubleshooting for specific website issues or updates as needed."
     }
 ];
+
+export const faqs = {
+    "local-seo": [
+        {
+            question: "What is Local SEO?",
+            answer:
+                "Local SEO focuses on optimizing your website to appear in local search results and attract nearby customers looking for your services."
+        },
+        {
+            question: "Why is Local SEO important?",
+            answer:
+                "It helps small and local businesses gain visibility in their target area, driving more foot traffic, calls, and leads from nearby customers."
+        },
+        {
+            question: "How long does it take to see results?",
+            answer:
+                "Most businesses see noticeable improvements in 3–6 months, depending on competition and consistency of optimization."
+        }
+    ],
+
+    "national-seo": [
+        {
+            question: "What is National SEO?",
+            answer:
+                "National SEO aims to rank your website across an entire country instead of targeting a single city or region."
+        },
+        {
+            question: "Who should invest in National SEO?",
+            answer:
+                "It’s ideal for companies offering products or services nationwide, such as e-commerce stores or national brands."
+        },
+        {
+            question: "How does it differ from Local SEO?",
+            answer:
+                "While Local SEO focuses on specific locations, National SEO targets broader, high-competition keywords across the country."
+        }
+    ],
+
+    "link-building": [
+        {
+            question: "What is link building?",
+            answer:
+                "Link building is the process of acquiring backlinks from other websites to improve your site’s authority and search ranking."
+        },
+        {
+            question: "Why are backlinks important?",
+            answer:
+                "Search engines treat backlinks as votes of confidence, helping your website rank higher in results."
+        },
+        {
+            question: "How do you ensure link quality?",
+            answer:
+                "We only build links from high-domain-authority and relevant websites to maintain credibility and avoid penalties."
+        }
+    ],
+
+    "google-advertising": [
+        {
+            question: "What is Google Advertising?",
+            answer:
+                "Google Advertising uses paid ads on Google Search and Display networks to reach customers searching for your products or services."
+        },
+        {
+            question: "How do you target the right audience?",
+            answer:
+                "We use precise keyword research, demographics, and location targeting to ensure your ads reach the right people."
+        },
+        {
+            question: "What budget should I start with?",
+            answer:
+                "Budgets vary by industry, but you can start small and scale once we analyze performance and ROI."
+        }
+    ],
+
+    "social-media-management": [
+        {
+            question: "What does Social Media Management include?",
+            answer:
+                "It covers strategy, content creation, posting, engagement, and analytics across major social platforms."
+        },
+        {
+            question: "Which platforms do you manage?",
+            answer:
+                "We manage Facebook, Instagram, LinkedIn, X (Twitter), and more depending on your brand’s audience."
+        },
+        {
+            question: "How often do you post?",
+            answer:
+                "We tailor posting frequency to your goals — typically 3–5 times per week for consistent engagement."
+        }
+    ],
+
+    "social-media-advertising": [
+        {
+            question: "What is Social Media Advertising?",
+            answer:
+                "It involves running paid campaigns on platforms like Facebook, Instagram, and LinkedIn to increase brand reach and conversions."
+        },
+        {
+            question: "What results can I expect?",
+            answer:
+                "You can expect increased traffic, engagement, and leads depending on campaign objectives and budget."
+        },
+        {
+            question: "Do you handle ad creatives and copy?",
+            answer:
+                "Yes, we design ad visuals, write compelling copy, and optimize campaigns for best performance."
+        }
+    ],
+
+    "web-design-and-development": [
+        {
+            question: "What services are included in Web Design and Development?",
+            answer:
+                "We handle UI/UX design, responsive front-end development, CMS integration, and full website deployment."
+        },
+        {
+            question: "Do you make websites mobile-friendly?",
+            answer:
+                "Yes, every website is fully responsive and optimized for mobile, tablet, and desktop."
+        },
+        {
+            question: "How long does it take to build a website?",
+            answer:
+                "Typical timelines range from 2–6 weeks depending on the project’s size and features."
+        }
+    ],
+
+    "email-marketing": [
+        {
+            question: "What is Email Marketing?",
+            answer:
+                "Email marketing uses targeted campaigns to communicate with customers, promote offers, and nurture leads."
+        },
+        {
+            question: "Do you design email templates?",
+            answer:
+                "Yes, we create visually appealing and responsive email templates aligned with your brand identity."
+        },
+        {
+            question: "How do you measure success?",
+            answer:
+                "We track metrics like open rates, click-through rates, and conversions to optimize performance."
+        }
+    ],
+
+    "virtual-assistance-resources": [
+        {
+            question: "What tasks can a Virtual Assistant handle?",
+            answer:
+                "They can manage administrative duties, social media, research, email communication, and customer support."
+        },
+        {
+            question: "Are virtual assistants trained?",
+            answer:
+                "Yes, we provide trained and experienced professionals who adapt to your workflow quickly."
+        },
+        {
+            question: "How do I communicate with my virtual assistant?",
+            answer:
+                "You can use your preferred tools — Slack, email, Zoom, or project management platforms."
+        }
+    ],
+
+    "lead-generation-cold-calling": [
+        {
+            question: "What is Lead Generation through Cold Calling?",
+            answer:
+                "It involves making outbound calls to prospects to generate leads, set appointments, or qualify potential clients."
+        },
+        {
+            question: "Do you provide call scripts?",
+            answer:
+                "Yes, we create and optimize professional scripts tailored to your business and target audience."
+        },
+        {
+            question: "Can you track call performance?",
+            answer:
+                "We provide regular reports on leads generated, conversion rates, and call outcomes."
+        }
+    ],
+
+    "managed-web-support": [
+        {
+            question: "What does Managed Web Support include?",
+            answer:
+                "It includes regular updates, security monitoring, backups, and technical troubleshooting for your website."
+        },
+        {
+            question: "Do you offer 24/7 support?",
+            answer:
+                "Yes, depending on your plan, we provide around-the-clock monitoring and assistance."
+        },
+        {
+            question: "Can I request small updates?",
+            answer:
+                "Yes, minor content or design updates are included in your ongoing maintenance plan."
+        }
+    ],
+
+    "adhoc-support": [
+        {
+            question: "What is Adhoc Support?",
+            answer:
+                "Adhoc support provides one-time, on-demand technical help for urgent website issues or updates."
+        },
+        {
+            question: "How is it billed?",
+            answer:
+                "It’s billed per task or hourly, depending on the nature and complexity of the issue."
+        },
+        {
+            question: "What kind of issues can you fix?",
+            answer:
+                "From fixing broken pages to resolving hosting or plugin errors — we handle most technical website problems."
+        }
+    ]
+};

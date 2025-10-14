@@ -1,5 +1,4 @@
 import Container from '@/components/dashboardComponents/Container'
-import IntroText from '@/components/IntroText'
 import { Button } from '@/components/ui/button'
 import { yourProjects } from '@/constants'
 import Link from 'next/link'
@@ -12,7 +11,6 @@ const ProjectsPage = () => {
 
     return (
         <>
-
             <Container className={'bg-white p-4 rounded-lg'}>
                 <div className="flex items-center gap-4">
                     <h1 className="text-xl font-medium">Our Services</h1>

@@ -151,3 +151,10 @@ export function getYouTubeEmbedUrl(rawUrl) {
         return e.message;
     }
 }
+
+export const unslugify = (slug) => {
+    return slug
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}

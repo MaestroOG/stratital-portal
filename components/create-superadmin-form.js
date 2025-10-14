@@ -47,7 +47,7 @@ const CreateSuperAdminForm = ({ users }) => {
 
                 <input type="hidden" name="user" value={value} />
 
-                <Button type="submit" disabled={isPending} className="mt-4">Assign SuperAdmin Role</Button>
+                <Button type="submit" disabled={isPending || !value} className="mt-4">Assign SuperAdmin Role</Button>
             </form>
             <Dialog open={open} onOpenChange={setOpen} className='bg-white'>
                 <DialogContent>

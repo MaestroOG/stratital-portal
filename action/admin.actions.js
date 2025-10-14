@@ -377,6 +377,15 @@ export async function createSuperAdmin(prevState, formData) {
         }
     }
 
+    const currentUser = await getUser();
+
+    if (currentUser?.role !== 'superadmin') {
+        return {
+            success: false,
+            message: 'You do not have permission to perform this action'
+        }
+    }
+
     try {
         await connectDB();
 

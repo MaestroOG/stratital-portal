@@ -5,6 +5,7 @@ import UserTable from '@/components/superadminComponents/UserTable';
 import { Button } from '@/components/ui/button';
 
 import { getAllDeletedUsers, getAllPendingUsers, getAllUsers } from '@/lib/admin'
+import { getUser } from '@/lib/user';
 import Link from 'next/link';
 
 export const metadata = {
@@ -12,6 +13,7 @@ export const metadata = {
 }
 
 const SuperAdminPage = async () => {
+    const user = await getUser();
     const pendingUsers = await getAllPendingUsers();
     const allUsers = await getAllUsers();
     const deletedUser = await getAllDeletedUsers();
@@ -22,6 +24,8 @@ const SuperAdminPage = async () => {
                 <Link href={'/admin/projects'}><Button variant={'link'}>See All Projects</Button></Link>
                 <Link href={'/admin/create-notification'}><Button variant={'link'}>Create a notification</Button></Link>
                 <Link href={'/admin/create-manager'}><Button variant={'link'}>Assign a manager</Button></Link>
+                {user?.name === 'Muneeb Ur Rehman' && <Link href={'/admin/create-superadmin'}><Button variant={'link'}>Assign a superadmin</Button></Link>}
+
             </Container>
             <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3'}>
                 <h1 className="font-bold text-2xl md:text-4xl">Pending User Requests</h1>

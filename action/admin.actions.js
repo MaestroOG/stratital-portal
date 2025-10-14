@@ -9,7 +9,6 @@ import Resource from "@/models/Resource";
 import User from "@/models/User";
 import { getYouTubeEmbedUrl } from "@/utils/formUtils";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function createManager(prevState, formData) {
     const userId = formData.get('userId');
@@ -361,6 +360,47 @@ export async function deleteProject(prevState, formData) {
             message: 'Something went wrong'
         }
     } catch (error) {
+        return {
+            success: false,
+            message: 'Something went wrong'
+        }
+    }
+}
+
+export async function createSuperAdmin(prevState, formData) {
+    const userId = formData.get('user');
+
+    if (!userId) {
+        return {
+            success: false,
+            message: 'No valid id received'
+        }
+    }
+
+    try {
+        await connectDB();
+
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { $set: { role: "superadmin" } },
+            { new: true }
+        );
+
+        if (!user) {
+            return {
+                success: false,
+                message: 'User not found'
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: 'Role Assigned Successfully'
+        }
+    } catch (error) {
+        console.error(error);
         return {
             success: false,
             message: 'Something went wrong'

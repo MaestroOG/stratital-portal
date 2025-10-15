@@ -153,8 +153,10 @@ export function getYouTubeEmbedUrl(rawUrl) {
 }
 
 export const unslugify = (slug) => {
+    if (!slug || typeof slug !== 'string') return '';
     return slug
         .split('-')
+        .filter(word => word.length > 0)
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 }

@@ -14,10 +14,14 @@ import {
 import { archiveProject } from '@/action/project.actions';
 
 const ArchiveProjectForm = ({ projectId }) => {
+    if (!projectId) {
+        console.error('ArchiveProjectForm: projectId is required');
+        return null;
+    }
+
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [open, setOpen] = useState(false);
     const [state, formAction, isPending] = useActionState(archiveProject, {});
-
     const handleOpenClick = () => {
         setConfirmOpen(true);
     }
@@ -38,7 +42,7 @@ const ArchiveProjectForm = ({ projectId }) => {
                         <DialogHeader>
                             <DialogTitle>Archive project</DialogTitle>
                             <DialogDescription>
-                                Are you sure you want to archive this project? This action cannot be undone.
+                                Are you sure you want to archive this project?
                             </DialogDescription>
                         </DialogHeader>
                         <DialogFooter className={'mt-5'}>

@@ -36,6 +36,9 @@ const HomePage = async () => {
     runningProjectsThisMonth = await getRunningProjectsThisMonth();
   } else if (user?.role === 'manager') {
     projects = await getAllManagerRelatedProjects();
+    completedProjectsThisMonth = await getAllCompletedProjectsThisMonth();
+    pendingProjectsThisMonth = await getAllPendingProjectsThisMonth();
+    runningProjectsThisMonth = await getAllRunningProjectsThisMonth();
   } else {
     projects = await getAllProjects();
     completedProjectsThisMonth = await getAllCompletedProjectsThisMonth();

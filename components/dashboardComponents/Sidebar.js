@@ -22,7 +22,6 @@ const Sidebar = () => {
         if (cookieValue) {
             try {
                 setUser(JSON.parse(decodeURIComponent(cookieValue)));
-                console.log(JSON.parse(decodeURIComponent(cookieValue)))
             } catch (err) {
                 console.error("Invalid user cookie", err);
             }

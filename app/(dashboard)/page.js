@@ -79,6 +79,7 @@ const HomePage = async () => {
           <div className="flex items-center gap-2">
             <Link href={'/projects/completed'}><Button>See Completed Projects</Button></Link>
             <Link href={'/projects/archived'}><Button>See Archived Projects</Button></Link>
+            {user?.role === 'superadmin' && <Link href={'/projects/all'}><Button>See All Projects</Button></Link>}
           </div>
         </div>
 

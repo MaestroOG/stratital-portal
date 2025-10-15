@@ -1,24 +1,12 @@
 import Container from "@/components/dashboardComponents/Container"
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { getAllCompletedProjects, getAllCompletedUserProjects } from "@/lib/projects";
-import { getUser } from "@/lib/user";
+import { getEveryProject } from "@/lib/projects";
 import { camelToNormal, capitalizeFirst } from "@/utils/formUtils";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 
-
-const CompletedProjectsPage = async () => {
-    const user = await getUser();
-    let projects;
-
-    if (user?.role === 'superadmin') {
-        projects = await getAllCompletedProjects();
-    } else if (user?.role === 'user') {
-        projects = await getAllCompletedUserProjects();
-    } else {
-        return notFound();
-    }
+const AllProjectsPage = async () => {
+    const projects = await getEveryProject();
     return (
         <Container className={'bg-white p-4 rounded-lg'}>
             <h1 className="text-xl font-medium">Completed Projects</h1>
@@ -38,4 +26,4 @@ const CompletedProjectsPage = async () => {
     )
 }
 
-export default CompletedProjectsPage
+export default AllProjectsPage

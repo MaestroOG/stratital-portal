@@ -19,11 +19,6 @@ const ArchiveProjectForm = ({ projectId }) => {
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [open, setOpen] = useState(false);
     const [state, formAction, isPending] = useActionState(archiveProject, {});
-
-    if (!projectId) {
-        console.error('ArchiveProjectForm: projectId is required');
-        return null;
-    }
     const handleOpenClick = () => {
         setConfirmOpen(true);
     }

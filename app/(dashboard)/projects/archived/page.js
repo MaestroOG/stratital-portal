@@ -17,7 +17,7 @@ const ArchivedProjects = async () => {
     } else if (user?.role === 'user') {
         projects = await getAllArchivedUserProjects();
     } else {
-        notFound();
+        return notFound();
     }
     return (
         <Container className={'bg-white p-4 rounded-lg'}>

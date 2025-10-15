@@ -8,7 +8,7 @@ import ProjectNotesList from '@/components/ProjectNotesList'
 import ProjectDeleteForm from '@/components/project-delete-form'
 import { notFound } from 'next/navigation'
 import FilterCommentsForm from '@/components/filter-comments-form'
-import { Suspense } from 'react'
+import ArchiveProjectForm from '@/components/archive-project-form'
 
 
 export const metadata = {
@@ -59,6 +59,7 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                     <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
                         <p className='text-red font-medium animate-pulse whitespace-nowrap'>• {status}</p>
                         {user?.role === 'superadmin' && <ProjectStatusForms status={status} projectId={id} />}
+                        {user?.role === 'superadmin' && <ArchiveProjectForm projectId={id} />}
                     </div>
                 </div>
                 <div className='grid grid-cols-2 gap-4 mt-6'>

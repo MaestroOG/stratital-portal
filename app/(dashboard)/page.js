@@ -5,14 +5,13 @@ import { Badge } from "@/components/ui/badge"
 import IntroText from "@/components/IntroText"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
-import { Plus, Search } from "lucide-react"
-import { getUser, isFirstLogin } from "@/lib/user"
+import { Search } from "lucide-react"
+import { getUser } from "@/lib/user"
 import { getAllUserProjects, getCompletedProjectsThisMonth, getPendingProjectsThisMonth, getRunningProjectsThisMonth } from "@/lib/projects"
 import { Suspense } from "react"
 import { camelToNormal, capitalizeFirst } from "@/utils/formUtils"
 import HomePageDialog from "@/components/dashboardComponents/HomePageDialog"
 import { getLatestUnreadNotification } from "@/lib/notifications"
-import NewLoginDialog from "@/components/dashboardComponents/NewLoginDialog"
 import { getAllCompletedProjectsThisMonth, getAllManagerRelatedProjects, getAllPendingProjectsThisMonth, getAllProjects, getAllRunningProjectsThisMonth } from "@/lib/admin"
 
 
@@ -72,9 +71,12 @@ const HomePage = async () => {
       </Container>
 
       <Container className="bg-white p-4 rounded-lg">
-        <div className="flex items-center max-sm:justify-between gap-4">
+        <div className="flex items-center md:justify-between gap-4">
           <h1 className="text-xl font-medium">Your Projects</h1>
-
+          <div className="flex items-center gap-2">
+            <Link href={'/projects/completed'}><Button>See Completed Projects</Button></Link>
+            <Link href={'/projects/archived'}><Button>See Archived Projects</Button></Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">

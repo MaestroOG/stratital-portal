@@ -225,3 +225,31 @@ export async function changeProjectStatus(projectId, prevState, formData) {
         message: "Project status updated successfully",
     }
 }
+
+export async function archiveProject(prevState, formData) {
+    const projectId = formData.get("projectId");
+
+    try {
+        await connectDB();
+        const updatedProject = await Project.findByIdAndUpdate(projectId, { status: 'archived' }, { new: true });
+        if (!updatedProject) {
+            return {
+                success: false,
+                message: "Failed to archive project.",
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: 'Project archived successfully.'
+        }
+    } catch (error) {
+        console.error("Error archiving project:", error);
+        return {
+            success: false,
+            message: "Something went wrong.",
+        }
+    }
+}

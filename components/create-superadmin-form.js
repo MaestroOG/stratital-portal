@@ -49,8 +49,8 @@ const CreateSuperAdminForm = ({ users }) => {
 
                 <Button type="submit" disabled={isPending || !value} className="mt-4">Assign SuperAdmin Role</Button>
             </form>
-            <Dialog open={open} onOpenChange={setOpen} className='bg-white'>
-                <DialogContent>
+            <Dialog open={open} onOpenChange={setOpen} >
+                <DialogContent className='bg-white'>
                     <DialogHeader>
                         <DialogTitle>
                             {state.success ? 'Success ✅' : 'Error ⚠️'}

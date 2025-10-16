@@ -47,14 +47,33 @@ export async function deletePartner(prevState, formData) {
 export async function assignCredit(prevData, formData) {
     const partnerId = formData.get('partnerId');
     const creditValue = parseInt(formData.get('creditValue'));
-    let finalSum = 0;
+    if (!partnerId) {
+        return {
+            success: false,
+            message: "Partner ID is required"
+        }
+    }
+
+    if (isNaN(creditValue)) {
+        return {
+            success: false,
+            message: "Invalid credit value"
+        }
+    }
 
     try {
         await connectDB();
 
         const user = await getUserFromDB();
 
-        const updatedCredit = await User.findByIdAndUpdate(partnerId, { $inc: { credit: creditValue } });
+        if (!user || user.role !== 'superadmin') {
+            return {
+                success: false,
+                message: "Unauthorized to assign credits"
+            }
+        }
+
+        const updatedCredit = await User.findByIdAndUpdate(partnerId, { $inc: { credit: creditValue } }, { new: true });
 
         if (!updatedCredit) {
             return {

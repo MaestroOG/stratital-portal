@@ -227,7 +227,7 @@ export async function changeProjectStatus(projectId, prevState, formData) {
 }
 
 export async function archiveProject(prevState, formData) {
-    const projectId = formData.get("projectId");
+    const projectId = formData.get("projectId")?.trim();
 
     try {
         await connectDB();

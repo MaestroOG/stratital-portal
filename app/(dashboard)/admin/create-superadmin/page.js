@@ -5,7 +5,7 @@ import { getAllSimpleUsers } from '@/lib/admin'
 const CreateSuperAdminPage = async () => {
     const allUsers = await getAllSimpleUsers();
 
-    if (!allUsers) {
+    if (!allUsers || allUsers.length === 0) {
         return (
             <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3'}>
                 <h1 className="font-bold text-2xl md:text-4xl">Assign a new superadmin</h1>

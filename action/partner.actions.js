@@ -3,6 +3,7 @@
 import { generatePartnerShipEndEmail } from "@/htmlemailtemplates/partnerEmailTemplates";
 import { getUserById } from "@/lib/admin";
 import { connectDB } from "@/lib/mongodb";
+import { getUserFromDB } from "@/lib/user";
 import DeletedUser from "@/models/DeletedUser";
 import User from "@/models/User";
 import { getTodayDate } from "@/utils/formUtils";
@@ -40,5 +41,38 @@ export async function deletePartner(prevState, formData) {
     return {
         success: true,
         message: "Deleted Partner Successfully"
+    }
+}
+
+export async function assignCredit(prevData, formData) {
+    const partnerId = formData.get('partnerId');
+    const creditValue = parseInt(formData.get('creditValue'));
+    let finalSum = 0;
+
+    try {
+        await connectDB();
+
+        const user = await getUserFromDB();
+
+        const updatedCredit = await User.findByIdAndUpdate(partnerId, { $inc: { credit: creditValue } });
+
+        if (!updatedCredit) {
+            return {
+                success: false,
+                message: "Failed to assign credit"
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: `Successfully assigned credit.`,
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "An error occurred while assigning credit",
+        }
     }
 }

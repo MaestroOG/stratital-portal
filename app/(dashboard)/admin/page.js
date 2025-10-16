@@ -24,6 +24,7 @@ const SuperAdminPage = async () => {
                 <Link href={'/admin/projects'}><Button variant={'link'}>See All Projects</Button></Link>
                 <Link href={'/admin/create-notification'}><Button variant={'link'}>Create a notification</Button></Link>
                 <Link href={'/admin/create-manager'}><Button variant={'link'}>Assign a manager</Button></Link>
+                <Link href={'/admin/assign-credit'}><Button variant={'link'}>Assign credit</Button></Link>
                 {user?.name === 'Muneeb Ur Rehman' && <Link href={'/admin/create-superadmin'}><Button variant={'link'}>Assign a superadmin</Button></Link>}
 
             </Container>

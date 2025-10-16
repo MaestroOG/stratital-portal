@@ -3,7 +3,7 @@ import "../globals.css";
 import MainContent from "@/components/dashboardComponents/MainContent";
 import Header from "@/components/dashboardComponents/Header";
 import TawkToChat from "@/components/TawkToChat";
-import { getUser } from "@/lib/user";
+import { getUser, getUserFromDB } from "@/lib/user";
 import NextTopLoader from "nextjs-toploader";
 import Script from "next/script";
 
@@ -15,6 +15,7 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const user = await getUser();
+  const userFromDB = await getUserFromDB();
   return (
     <html lang="en">
       <head>
@@ -49,7 +50,7 @@ export default async function RootLayout({ children }) {
         />
         <Sidebar />
         <MainContent>
-          <Header pfpLink={user?.profilePictureUrl} />
+          <Header userFromDB={userFromDB} pfpLink={user?.profilePictureUrl} />
           {children}
         </MainContent>
         {user && user.role !== "superadmin" && <TawkToChat />}

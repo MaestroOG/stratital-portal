@@ -8,16 +8,23 @@ import { formatDateToYMD, formatTo12HourTime } from "@/utils/formUtils";
 import CommentsList from "@/components/superadminComponents/CommentList"
 
 const CommentsPage = async () => {
+
     const user = await getUser();
+    if (!user) {
+        return (
+            <Container className="bg-white p-2 md:p-4">
+                <p className="text-red-500">User not found.</p>
+            </Container>
+        );
+    }
+
     let data;
 
     if (user.role !== 'superadmin') {
-        data = await getAllCommentsOnUserProjects(user?._id);
+        data = await getAllCommentsOnUserProjects(user._id);
     } else {
         data = await getAllComments(1, 10);
     }
-
-    console.log(data)
 
     return (
         <Container className={'bg-white p-2 md:p-4'}>

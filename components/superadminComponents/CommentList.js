@@ -56,7 +56,7 @@ export default function CommentsList({ initialNotes }) {
 
     return (
         <div className="space-y-4">
-            {notes.map((note, index) => (
+            {notes?.map((note, index) => (
                 <Alert key={index} variant="default">
                     <AlertTitle className={'font-semibold text-lg'}>{note?.projectId?.projectTitle} - {formatDateToYMD(note?.createdAt)} - {formatTo12HourTime(note?.createdAt)}</AlertTitle>
                     <AlertDescription>

@@ -416,3 +416,33 @@ export async function createSuperAdmin(prevState, formData) {
         }
     }
 }
+
+export async function editCredit(prevState, formData) {
+    const credit = parseInt(formData.get('credit'));
+    const partnerId = formData.get('partnerId');
+
+    try {
+        await connectDB();
+
+        const updatedUser = await User.findByIdAndUpdate(partnerId, { $set: { credit } }, { new: true });
+
+        if (!updatedUser) {
+            return {
+                success: false,
+                message: "Something went wrong. Please try again.",
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: "Credit updated successfully"
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Cannot update credit at the moment. Please try again later."
+        }
+    }
+}

@@ -36,7 +36,7 @@ const AssignCreditForm = ({ users }) => {
                 <div className="grid gap-2">
                     <Label htmlFor="partner">Select Partner</Label>
                     <Select value={value} onValueChange={setValue}>
-                        <SelectTrigger id='partner' className={'max-w-2xl'}>
+                        <SelectTrigger id='partner' className={'w-2xl max-w-2xl'}>
                             <SelectValue placeholder="Select Partner" />
                         </SelectTrigger>
                         <SelectContent>

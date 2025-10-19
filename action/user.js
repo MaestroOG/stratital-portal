@@ -91,14 +91,14 @@ export const LoginUser = async (prevState, formData) => {
     httpOnly: true,
     path: "/",
     secure: process.env.NODE_ENV || 'production',
-    maxAge: 60 * 60 * 24 * 7
+    maxAge: 60 * 60 * 24
   });
 
   (await cookies()).set("user", JSON.stringify(user), {
     httpOnly: false,
     secure: true,
     path: '/',
-    maxAge: 60 * 60 * 24 * 7
+    maxAge: 60 * 60 * 24
   });
 
   redirect('/');

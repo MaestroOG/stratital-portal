@@ -446,3 +446,48 @@ export async function editCredit(prevState, formData) {
         }
     }
 }
+
+export async function editPackageAmount(prevState, formData) {
+    const packageSelected = formData.get('packageSelected');
+    const projectId = formData.get('projectId');
+
+    const newPackageAmount = parseInt(packageSelected);
+
+    try {
+        await connectDB();
+
+        const project = await Project.findById(projectId);
+
+        const alreadySelectedAmount = Number(project?.packageSelected.replace(/[^0-9.]/g, '').replace(/,/g, ''));
+
+        const updatedProject = await Project.findByIdAndUpdate(projectId, { $set: { packageSelected: `$${packageSelected}` } }, { new: true });
+        const creditDifference = alreadySelectedAmount - newPackageAmount;
+
+        if (creditDifference > 0) {
+            await User.findByIdAndUpdate(project.createdBy, { $inc: { credit: creditDifference } });
+        }
+
+        if (creditDifference < 0) {
+            await User.findByIdAndUpdate(project.createdBy, { $inc: { credit: creditDifference } });
+        }
+
+        if (!updatedProject) {
+            return {
+                success: false,
+                message: "Something went wrong. Please try again.",
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: "Package amount updated successfully and credit adjusted."
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Cannot update package amount at the moment. Please try again later."
+        }
+    }
+}

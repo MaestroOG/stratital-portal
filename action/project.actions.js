@@ -229,27 +229,45 @@ export async function ApproveProject(projectId, prevState, formData) {
 
 export async function RejectProject(projectId, prevState, formData) {
     const user = await getUser();
-    await connectDB();
-    await Project.findByIdAndUpdate(projectId, { status: 'rejected' });
-    revalidatePath('/', "layout");
+    try {
+        await connectDB();
+        await Project.findByIdAndUpdate(projectId, { status: 'rejected' });
+        revalidatePath('/', "layout");
 
-    const project = await Project.findById(projectId);
+        const project = await Project.findById(projectId);
+
+        const amount = Number(project?.packageSelected.replace(/[^0-9.]/g, '').replace(/,/g, ''));
+
+        const updatedUser = await User.findByIdAndUpdate(project?.createdBy, { $inc: { credit: amount } }, { new: true });
+
+        if (!updatedUser) {
+            return {
+                success: false,
+                message: "Failed to refund credit to user.",
+            }
+        }
 
 
-    const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'cancelled', user?.name, project?.updatedAt);
+        const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'cancelled', user?.name, project?.updatedAt);
 
-    const transporter = createTransporter();
+        const transporter = createTransporter();
 
-    await transporter.sendMail({
-        from: '"Stratital" <admin@stratital.com>',
-        to: [user?.email, 'portal@stratital.com'],
-        subject: "Project Status Update - Stratital",
-        html,
-    })
+        await transporter.sendMail({
+            from: '"Stratital" <admin@stratital.com>',
+            to: [user?.email, 'portal@stratital.com'],
+            subject: "Project Status Update - Stratital",
+            html,
+        })
 
-    return {
-        success: true,
-        message: "Project rejected successfully",
+        return {
+            success: true,
+            message: "Project rejected successfully and credit refunded.",
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Something went wrong.",
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 "use client";
-import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, MessageCircleQuestionMark } from "lucide-react";
+
+import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, MessageCircleQuestionMark, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -76,6 +77,11 @@ const Sidebar = () => {
                     href: "/invoices",
                 },
                 {
+                    icon: <Users />,
+                    title: "Discussions",
+                    href: "/discussions"
+                },
+                {
                     icon: <Shield />,
                     title: "Admin Panel",
                     href: "/admin",
@@ -98,7 +104,7 @@ const Sidebar = () => {
 
             {user?.role !== 'manager' && <AddProjectButton href={'/projects/new-project'} className={'md:w-full'} />}
 
-            <div className="sidebar-menu">
+            <div className="sidebar-menu overflow-y-auto">
                 {links.map((link, i) => {
                     const isActive =
                         pathname === link.href || pathname.startsWith(link.href + "/")

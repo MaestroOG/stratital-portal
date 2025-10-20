@@ -160,3 +160,9 @@ export const unslugify = (slug) => {
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 }
+
+export function truncateToSixWords(text) {
+    const words = text.split(" "); // split by spaces
+    if (words.length <= 6) return text; // if 6 or fewer words, return as is
+    return words.slice(0, 6).join(" ") + "..."; // take first 6 words
+}

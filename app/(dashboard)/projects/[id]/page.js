@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation'
 import ArchiveProjectForm from '@/components/archive-project-form'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 
 export const metadata = {
@@ -28,6 +29,9 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
 
     const isUnread = user ? notes?.some(note => !(note?.readBy ?? []).includes(user._id)) : false;
 
+    const fields = Object.entries(projectDetails?.fields || {}).filter(
+        ([key]) => key !== "selectedPackage"
+    );
 
     if (!projectDetails) {
         notFound();
@@ -56,25 +60,47 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                         {user?.role === 'superadmin' && <ArchiveProjectForm projectId={id} />}
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-4 mt-6'>
-                    <div className='flex flex-col gap-4'>
-                        {Object.keys(projectDetails?.fields || {})
-                            .filter(key => key !== "selectedPackage")
-                            .map(key => (
-                                <p key={key}>{camelToNormal(key)}</p>
-                            ))}
-                        <p>Selected Package</p>
-                    </div>
-                    <div className='flex flex-col gap-4'>
-                        {Object.entries(projectDetails?.fields || {})
-                            .filter(([key]) => key !== "selectedPackage")
-                            .map(([key, value]) => (
-                                <p key={key} className="font-bold text-heading">
-                                    {camelToNormal(value)}
-                                </p>
-                            ))}
-                        <p className='font-bold text-heading'>{projectDetails?.packageSelected}</p>
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                    {/* Render all fields except selectedPackage */}
+                    {fields.map(([key, value]) => {
+                        const displayValue =
+                            value && value.toString().trim() !== "" ? camelToNormal(value) : "Not provided";
+
+                        return (
+                            <Card
+                                key={key}
+                                className="rounded-2xl shadow-sm border border-border hover:shadow-md transition-all duration-200"
+                            >
+                                <CardHeader>
+                                    <CardTitle className="text-sm text-muted-foreground tracking-wide">
+                                        {camelToNormal(key)}
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p
+                                        className={`text-lg font-medium ${displayValue === "Not provided" ? "text-muted-foreground italic" : "text-foreground"
+                                            } break-words`}
+                                    >
+                                        {displayValue}
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        );
+                    })}
+
+                    {/* Selected Package Card */}
+                    <Card className="rounded-2xl shadow-sm border border-border hover:shadow-md transition-all duration-200 bg-muted/30">
+                        <CardHeader>
+                            <CardTitle className="text-sm text-muted-foreground tracking-wide">
+                                Selected Package
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-lg font-semibold text-foreground">
+                                {projectDetails?.packageSelected || "Not provided"}
+                            </p>
+                        </CardContent>
+                    </Card>
                 </div>
             </Container>
 

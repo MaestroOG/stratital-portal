@@ -1,5 +1,6 @@
 'use server'
 
+import { addExpenditure } from "@/lib/admin";
 import { uploadFilesToCloudinary } from "@/lib/cloudinary";
 import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
@@ -465,10 +466,14 @@ export async function editPackageAmount(prevState, formData) {
 
         if (creditDifference > 0) {
             await User.findByIdAndUpdate(project.createdBy, { $inc: { credit: creditDifference } });
+            const expenditureChange = -creditDifference;
+            const expenditure = await addExpenditure(project?.createdBy, expenditureChange);
         }
 
         if (creditDifference < 0) {
             await User.findByIdAndUpdate(project.createdBy, { $inc: { credit: creditDifference } });
+            const expenditureChange = -creditDifference;
+            const expenditure = await addExpenditure(project?.createdBy, expenditureChange);
         }
 
         if (!updatedProject) {

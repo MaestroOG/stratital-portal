@@ -2,8 +2,10 @@
 
 import { generateAdminToUserEmailNoteTemplate, generateNoteCreatedEmailUserTemplate, generateProjectCreatedEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
 import { generateProjectStatusUpdateEmail } from "@/htmlemailtemplates/projectStatusTemplates";
+import { addExpenditure } from "@/lib/admin";
 import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
+import Expenditure from "@/models/Expenditure";
 import Note from "@/models/Note";
 import Project from "@/models/Project";
 import User from "@/models/User";
@@ -52,6 +54,8 @@ export async function createProject(prevState, formData) {
                 }
             }
 
+            const expenditure = await addExpenditure(partnerId, amount);
+
             const updatedUser = await User.findByIdAndUpdate(
                 partnerId,
                 { $set: { credit: userBalance - amount } },
@@ -99,6 +103,8 @@ export async function createProject(prevState, formData) {
                     message: "Insufficient credit balance. Please top up your account.",
                 }
             }
+
+            const expenditure = await addExpenditure(partnerId, amount);
 
             const updatedUser = await User.findByIdAndUpdate(
                 partnerId,
@@ -239,6 +245,8 @@ export async function RejectProject(projectId, prevState, formData) {
         const amount = Number(project?.packageSelected.replace(/[^0-9.]/g, '').replace(/,/g, ''));
 
         const updatedUser = await User.findByIdAndUpdate(project?.createdBy, { $inc: { credit: amount } }, { new: true });
+
+        const expenditure = await addExpenditure(project?.createdBy, -amount);
 
         if (!updatedUser) {
             return {

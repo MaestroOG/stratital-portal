@@ -24,7 +24,7 @@ const ArchivedProjects = async () => {
             <h1 className="text-xl font-medium">Archived Projects</h1>
             <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">
                 <Suspense fallback={<p>Loading...</p>}>
-                    {projects?.length === 0 && <p className="text-center p-6">No completed projects found.</p>}
+                    {projects?.length === 0 && <p className="text-center p-6">No archived projects found.</p>}
                     {projects?.length > 0 && projects?.map(project => (
                         <div key={project._id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                             <Badge variant={"secondary"} className={'mb-2'}>{camelToNormal(project.service)}</Badge>

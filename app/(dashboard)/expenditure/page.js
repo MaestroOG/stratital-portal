@@ -25,7 +25,7 @@ const ExpenditurePage = async () => {
     return (
         <Container className={'bg-white p-4 rounded-lg'}>
             <div className="flex flex-wrap items-center justify-between gap-3">
-                <h1 className="text-2xl font-semibold">Total Expenditure</h1>
+                <h1 className="text-2xl font-semibold">Total {user?.role === 'superadmin' ? 'Revenue' : 'Expenditure'}</h1>
 
                 <div className="flex items-center gap-2">
 
@@ -44,7 +44,7 @@ const ExpenditurePage = async () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
                 <Card>
                     <CardContent className="p-4">
-                        <p className="text-sm text-muted-foreground">Total Spent</p>
+                        <p className="text-sm text-muted-foreground">Total {user?.role === 'superadmin' ? 'Revenue' : 'Spent'}</p>
                         <p className="text-2xl font-semibold">$ {totalSpent.toLocaleString()}.00</p>
                     </CardContent>
                 </Card>

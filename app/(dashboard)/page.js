@@ -80,7 +80,7 @@ const HomePage = async () => {
             <Link href={'/projects/completed'}><Button>See Completed Projects</Button></Link>
             <Link href={'/projects/archived'}><Button>See Archived Projects</Button></Link>
             {user?.role === 'superadmin' && <Link href={'/projects/all'}><Button>See All Projects</Button></Link>}
-            <Link href={'/expenditure'}><Button>See Monthly Expenditure</Button></Link>
+            <Link href={'/expenditure'}><Button>See {user?.role === 'superadmin' ? 'Generated Revenue' : 'Monthly Expenditure'}</Button></Link>
           </div>
         </div>
 

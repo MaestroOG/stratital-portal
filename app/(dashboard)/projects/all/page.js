@@ -9,9 +9,9 @@ const AllProjectsPage = async () => {
     const projects = await getEveryProject();
     return (
         <Container className={'bg-white p-4 rounded-lg'}>
-            <h1 className="text-xl font-medium">Completed Projects</h1>
+            <h1 className="text-xl font-medium">All Projects</h1>
             <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">
-                {projects?.length === 0 && <p className="text-center p-6">No completed projects found.</p>}
+                {projects?.length === 0 && <p className="text-center p-6">No projects found.</p>}
                 {projects?.length > 0 && projects?.map(project => (
                     <div key={project._id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                         <Badge variant={"secondary"} className={'mb-2'}>{camelToNormal(project.service)}</Badge>

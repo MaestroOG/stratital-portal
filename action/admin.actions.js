@@ -4,6 +4,7 @@ import { addExpenditure } from "@/lib/admin";
 import { uploadFilesToCloudinary } from "@/lib/cloudinary";
 import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
+import Category from "@/models/Category";
 import HowToVideo from "@/models/HowToVideo";
 import Project from "@/models/Project";
 import Resource from "@/models/Resource";
@@ -67,7 +68,8 @@ export async function updateUserDetails(formValues, prevState, formData) {
 export async function addResource(prevState, formData) {
     const title = formData.get('title');
     const file = formData.get('file');
-    const resourceLink = formData.get('resourceLink')
+    const resourceLink = formData.get('resourceLink');
+    const category = formData.get('category');
 
 
     if ((!file || file.size === 0) && !resourceLink) {
@@ -103,12 +105,27 @@ export async function addResource(prevState, formData) {
     }
 
 
-    await connectDB();
+    try {
+        await connectDB();
 
-    await Resource.create({
-        title,
-        fileUrl
-    })
+        const resource = await Resource.create({
+            title,
+            fileUrl,
+            category: category || null
+        })
+
+        if (!resource) {
+            return {
+                success: false,
+                message: "Failed to add resource. Please try again."
+            }
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Something went wrong. Please try again."
+        }
+    }
 
     revalidatePath('/', 'layout')
 
@@ -269,9 +286,12 @@ export async function editResource(prevState, formData) {
     const file = formData.get('file');
     const resourceId = formData.get('resourceId');
     const resourceLink = formData.get('resourceLink')?.trim();
+    const category = formData.get('category');
 
     const updateData = {};
     if (title) updateData.title = title;
+
+    if (category) updateData.category = category;
 
     let fileUrl;
 
@@ -298,18 +318,26 @@ export async function editResource(prevState, formData) {
     updateData.fileUrl = fileUrl;
 
 
-    await connectDB();
+    try {
+        await connectDB();
 
-    const updatedResource = await Resource.findByIdAndUpdate(resourceId, { $set: updateData })
+        const updatedResource = await Resource.findByIdAndUpdate(resourceId, { $set: updateData })
 
-    if (!updatedResource) {
+        if (!updatedResource) {
+            return {
+                success: false,
+                message: "Resource not found",
+            };
+        }
+    } catch (error) {
+        console.error(error);
         return {
             success: false,
-            message: "Resource not found",
+            message: "Something went wrong. Please try again.",
         };
     }
 
-    revalidatePath('/resources', 'page')
+    revalidatePath('/', 'layout');
 
     return {
         success: true,
@@ -493,6 +521,53 @@ export async function editPackageAmount(prevState, formData) {
         return {
             success: false,
             message: "Cannot update package amount at the moment. Please try again later."
+        }
+    }
+}
+
+export async function addResourceCategory(prevState, formData) {
+    const name = formData.get('name')?.trim();
+    const description = formData.get('description')?.trim();
+
+    if (!name || name.length === 0) {
+        return {
+            success: false,
+            message: "Category name cannot be empty."
+        }
+    }
+
+    try {
+        await connectDB();
+
+        const existingCategory = await Category.findOne({ name });
+        if (existingCategory) {
+            return {
+                success: false,
+                message: "Category with this name already exists."
+            }
+        }
+
+        const category = await Category.create({
+            name,
+            description
+        });
+
+        if (!category) {
+            return {
+                success: false,
+                message: "Failed to create category. Please try again."
+            }
+        }
+
+        return {
+            success: true,
+            message: "Category created successfully."
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            success: false,
+            message: "Something went wrong. Please try again."
         }
     }
 }

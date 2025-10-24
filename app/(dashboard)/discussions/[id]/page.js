@@ -29,7 +29,7 @@ const DiscussionPage = async ({ params }) => {
                 <ul>
                     {opinions.length === 0 && <p className="text-gray-500">No opinions yet.</p>}
                     {opinions && opinions.length > 0 && opinions.map((opinion, index) => (
-                        <li className="mb-5 transition-all duration-300">
+                        <li key={index} className="mb-5 transition-all duration-300">
                             <div className="flex items-center gap-2">
                                 <Image
                                     src={opinion?.createdBy?.profilePictureUrl || "/placeholder-avatar.svg"}

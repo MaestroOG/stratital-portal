@@ -11,10 +11,18 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
-const AddResourceForm = () => {
+const AddResourceForm = ({ categories }) => {
     const [open, setOpen] = useState(false);
     const [state, formAction, isPending] = useActionState(addResource, {})
+    const [value, setValue] = useState("");
 
     useEffect(() => {
         if (state.success || state.message) {
@@ -26,7 +34,22 @@ const AddResourceForm = () => {
             <form action={formAction} className="bg-white p-2 rounded-lg grid gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="title">Resource Title (optional)</Label>
-                    <Input type='text' name='title' />
+                    <Input className="max-w-2xl w-2xl" type='text' name='title' />
+                </div>
+                <div className="grid gap-2">
+                    <Label htmlFor="title">Assign Category</Label>
+                    <Select value={value} onValueChange={setValue} name="category">
+                        <SelectTrigger className="max-w-2xl w-2xl">
+                            <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {categories?.map((category) => (
+                                <SelectItem key={category?._id} value={category?._id}>
+                                    {category?.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor="file">Upload File</Label>
@@ -41,7 +64,7 @@ const AddResourceForm = () => {
                 <p>OR</p>
                 <div className="grid gap-2">
                     <Label htmlFor="resourceLink">Resource Link</Label>
-                    <Input type='url' name='resourceLink' />
+                    <Input className="max-w-2xl w-2xl" type='url' name='resourceLink' />
                 </div>
                 <Button type='submit' disabled={isPending} className={'mt-2'}>Submit</Button>
             </form>

@@ -156,7 +156,10 @@ const Header = ({ userFromDB, pfpLink }) => {
             <Link href={'/'} className='md:hidden'><Image src='/logo.png' alt="stratital logo" width={135} height={37} priority /></Link>
             <div className='flex items-center gap-4'>
                 <div className="flex items-center gap-4">
-                    {userFromDB?.credit > 0 && <div className="text-white">AUD {userFromDB?.credit}.00</div>}
+                    {userFromDB?.credit > 0 && <div className="flex items-center gap-2 p-2 border border-red">
+                        <CircleDollarSign className="text-white" />
+                        <p className="text-white">AUD {userFromDB?.credit}.00</p>
+                    </div>}
                     <div className="flex items-center">
                         {loading && <Loader size="h-4 w-4" />}
                         {!loading && !error && countryCode && <Image

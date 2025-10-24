@@ -15,11 +15,10 @@ const ResourcesPage = async ({ searchParams }) => {
     const categories = await getResourceCategories();
     const { filter } = await searchParams;
 
-    console.log("Filter param:", filter);
 
     if (filter) {
         resources = resources.filter(resource =>
-            resource.category.name.includes(filter)
+            resource?.category?.name?.includes(filter)
         );
     }
 
@@ -73,7 +72,7 @@ const ResourcesPage = async ({ searchParams }) => {
                                 </CardHeader>
 
                                 <CardContent className="space-y-2">
-                                    <p className="text-sm text-muted-foreground">Category: {resource?.category.name}</p>
+                                    <p className="text-sm text-muted-foreground">Category: {resource?.category?.name || 'Uncategorized'}</p>
                                     <p className="text-sm text-muted-foreground">Date: {formatDateToYMD(resource?.createdAt)}</p>
 
                                     <a

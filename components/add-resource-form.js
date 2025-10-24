@@ -34,10 +34,10 @@ const AddResourceForm = ({ categories }) => {
             <form action={formAction} className="bg-white p-2 rounded-lg grid gap-4">
                 <div className="grid gap-2">
                     <Label htmlFor="title">Resource Title (optional)</Label>
-                    <Input className="max-w-2xl w-2xl" type='text' name='title' />
+                    <Input className="max-w-2xl w-full" type='text' name='title' />
                 </div>
                 <div className="grid gap-2">
-                    <Label htmlFor="title">Assign Category</Label>
+                    <Label htmlFor="category">Assign Category</Label>
                     <Select value={value} onValueChange={setValue} name="category">
                         <SelectTrigger className="max-w-2xl w-2xl">
                             <SelectValue placeholder="Select category" />

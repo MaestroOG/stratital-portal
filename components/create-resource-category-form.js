@@ -31,11 +31,11 @@ const CreateResourceCategoryForm = () => {
             <form action={formAction} className='grid gap-4'>
                 <div className='grid gap-2'>
                     <Label htmlFor="name">Category Name</Label>
-                    <Input type='text' name='name' placeholder='Enter category name' className={'w-2xl max-w-2xl'} required />
+                    <Input id='name' type='text' name='name' placeholder='Enter category name' className={'w-2xl max-w-2xl'} required />
                 </div>
                 <div className='grid gap-2'>
                     <Label htmlFor="description">Category description (optional)</Label>
-                    <Textarea name='description' placeholder='Enter category description' className={'w-2xl max-w-2xl'} />
+                    <Textarea id='description' name='description' placeholder='Enter category description' className={'w-2xl max-w-2xl'} />
                 </div>
                 <Button disabled={isPending} type='submit' className='w-2xl max-w-2xl'>Create Category</Button>
             </form>
@@ -44,10 +44,10 @@ const CreateResourceCategoryForm = () => {
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>
-                            {state.success ? "✅ Success" : "⚠️ Error"}
+                            {state?.success ? "✅ Success" : "⚠️ Error"}
                         </DialogTitle>
                     </DialogHeader>
-                    <p>{state.message}</p>
+                    <p>{state?.message}</p>
                 </DialogContent>
             </Dialog>
         </Container>

@@ -19,7 +19,7 @@ const ResourceFilterSelect = ({ categories }) => {
     const handleValueChange = (value) => {
         const params = new URLSearchParams(searchParams)
         params.set("filter", value)
-        router.replace(`?${params.toString()}`)
+        router.replace(`${window.location.pathname}?${params.toString()}`)
     }
     return (
         <Select value={filter} onValueChange={handleValueChange}>

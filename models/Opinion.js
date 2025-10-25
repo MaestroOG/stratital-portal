@@ -17,7 +17,14 @@ const opinionSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Discussion",
         required: true,
-    }
+    },
+    readBy: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            default: [],
+        },
+    ],
 }, { timestamps: true });
 
 const Opinion = models.Opinion || model('Opinion', opinionSchema);

@@ -5,10 +5,14 @@ import DiscussionCommentBox from "@/components/superadminComponents/DiscussionCo
 import parse from "html-react-parser";
 import { formatTo12HourTime, timeAgo } from "@/utils/formUtils";
 import Image from "next/image";
+import MarkAllReadButton from "@/components/opinion-mark-read";
+import { getUserFromDB } from "@/lib/user";
 
 const DiscussionPage = async ({ params }) => {
 
     const { id } = await params;
+
+    const user = await getUserFromDB();
 
     const discussion = await getDiscussionById(id);
     const opinions = await getOpinionsByDiscussionId(id)
@@ -20,8 +24,9 @@ const DiscussionPage = async ({ params }) => {
                 <p>{discussion?.subtitle}</p>
             </div>
             <Separator className={'my-6'} />
-            <div className='flex items-end justify-between'>
+            <div className='flex items-center justify-between'>
                 <h1 className='text-4xl font-bold'>Messages</h1>
+                <MarkAllReadButton discussionId={id} userId={user?._id} />
             </div>
 
             <DiscussionCommentBox id={id} />

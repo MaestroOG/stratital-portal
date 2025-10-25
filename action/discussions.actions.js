@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
 import Discussion from "@/models/Discussion";
 import Opinion from "@/models/Opinion";
+import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 
 export async function createDiscussion(prevState, formData) {
@@ -148,4 +149,37 @@ export async function addOpinion(prevState, formData) {
         }
     }
 
+}
+
+export async function markAllOpinionsAsRead(prevState, formData) {
+    const discussionId = formData.get("discussionId");
+    const userId = formData.get("userId");
+
+    if (!discussionId || !userId) {
+        return { success: false, message: "Discussion ID and User ID are required." };
+    }
+
+    try {
+        await connectDB();
+
+        const opinion = await Opinion.updateMany(
+            {
+                discussionId: new mongoose.Types.ObjectId(discussionId),
+                readBy: { $ne: new mongoose.Types.ObjectId(userId) },
+            },
+            { $addToSet: { readBy: new mongoose.Types.ObjectId(userId) } } // ✅ use $addToSet to avoid duplicates
+        );
+
+        // Optionally revalidate path to refresh data
+        revalidatePath('/', 'layout');
+
+        if (!opinion.modifiedCount) {
+            return { success: false, message: "No new unread opinions to mark." };
+        }
+
+        return { success: true, message: "Marked all as read." };
+    } catch (error) {
+        console.error("Error marking opinions as read:", error);
+        return { success: false, message: "An error occurred while marking opinions as read." };
+    }
 }

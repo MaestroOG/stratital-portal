@@ -1,15 +1,16 @@
 'use server'
 
+import { addExpenditure } from "@/lib/admin";
 import { uploadFilesToCloudinary } from "@/lib/cloudinary";
 import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
+import Category from "@/models/Category";
 import HowToVideo from "@/models/HowToVideo";
 import Project from "@/models/Project";
 import Resource from "@/models/Resource";
 import User from "@/models/User";
 import { getYouTubeEmbedUrl } from "@/utils/formUtils";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function createManager(prevState, formData) {
     const userId = formData.get('userId');
@@ -67,7 +68,8 @@ export async function updateUserDetails(formValues, prevState, formData) {
 export async function addResource(prevState, formData) {
     const title = formData.get('title');
     const file = formData.get('file');
-    const resourceLink = formData.get('resourceLink')
+    const resourceLink = formData.get('resourceLink');
+    const category = formData.get('category');
 
 
     if ((!file || file.size === 0) && !resourceLink) {
@@ -103,12 +105,27 @@ export async function addResource(prevState, formData) {
     }
 
 
-    await connectDB();
+    try {
+        await connectDB();
 
-    await Resource.create({
-        title,
-        fileUrl
-    })
+        const resource = await Resource.create({
+            title,
+            fileUrl,
+            category: category || null
+        })
+
+        if (!resource) {
+            return {
+                success: false,
+                message: "Failed to add resource. Please try again."
+            }
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Something went wrong. Please try again."
+        }
+    }
 
     revalidatePath('/', 'layout')
 
@@ -269,9 +286,12 @@ export async function editResource(prevState, formData) {
     const file = formData.get('file');
     const resourceId = formData.get('resourceId');
     const resourceLink = formData.get('resourceLink')?.trim();
+    const category = formData.get('category');
 
     const updateData = {};
     if (title) updateData.title = title;
+
+    if (category) updateData.category = category;
 
     let fileUrl;
 
@@ -298,18 +318,26 @@ export async function editResource(prevState, formData) {
     updateData.fileUrl = fileUrl;
 
 
-    await connectDB();
+    try {
+        await connectDB();
 
-    const updatedResource = await Resource.findByIdAndUpdate(resourceId, { $set: updateData })
+        const updatedResource = await Resource.findByIdAndUpdate(resourceId, { $set: updateData })
 
-    if (!updatedResource) {
+        if (!updatedResource) {
+            return {
+                success: false,
+                message: "Resource not found",
+            };
+        }
+    } catch (error) {
+        console.error(error);
         return {
             success: false,
-            message: "Resource not found",
+            message: "Something went wrong. Please try again.",
         };
     }
 
-    revalidatePath('/resources', 'page')
+    revalidatePath('/', 'layout');
 
     return {
         success: true,
@@ -364,6 +392,182 @@ export async function deleteProject(prevState, formData) {
         return {
             success: false,
             message: 'Something went wrong'
+        }
+    }
+}
+
+export async function createSuperAdmin(prevState, formData) {
+    const userId = formData.get('user');
+
+    if (!userId) {
+        return {
+            success: false,
+            message: 'No valid id received'
+        }
+    }
+
+    const currentUser = await getUser();
+
+    if (currentUser?.role !== 'superadmin') {
+        return {
+            success: false,
+            message: 'You do not have permission to perform this action'
+        }
+    }
+
+    try {
+        await connectDB();
+
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { $set: { role: "superadmin" } },
+            { new: true }
+        );
+
+        if (!user) {
+            return {
+                success: false,
+                message: 'User not found'
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: 'Role Assigned Successfully'
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            success: false,
+            message: 'Something went wrong'
+        }
+    }
+}
+
+export async function editCredit(prevState, formData) {
+    const credit = parseInt(formData.get('credit'));
+    const partnerId = formData.get('partnerId');
+
+    try {
+        await connectDB();
+
+        const updatedUser = await User.findByIdAndUpdate(partnerId, { $set: { credit } }, { new: true });
+
+        if (!updatedUser) {
+            return {
+                success: false,
+                message: "Something went wrong. Please try again.",
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: "Credit updated successfully"
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Cannot update credit at the moment. Please try again later."
+        }
+    }
+}
+
+export async function editPackageAmount(prevState, formData) {
+    const packageSelected = formData.get('packageSelected');
+    const projectId = formData.get('projectId');
+
+    const newPackageAmount = parseInt(packageSelected);
+
+    try {
+        await connectDB();
+
+        const project = await Project.findById(projectId);
+
+        const alreadySelectedAmount = Number(project?.packageSelected.replace(/[^0-9.]/g, '').replace(/,/g, ''));
+
+        const updatedProject = await Project.findByIdAndUpdate(projectId, { $set: { packageSelected: `$${packageSelected}` } }, { new: true });
+        const creditDifference = alreadySelectedAmount - newPackageAmount;
+
+        if (creditDifference > 0) {
+            await User.findByIdAndUpdate(project.createdBy, { $inc: { credit: creditDifference } });
+            const expenditureChange = -creditDifference;
+            const expenditure = await addExpenditure(project?.createdBy, expenditureChange);
+        }
+
+        if (creditDifference < 0) {
+            await User.findByIdAndUpdate(project.createdBy, { $inc: { credit: creditDifference } });
+            const expenditureChange = -creditDifference;
+            const expenditure = await addExpenditure(project?.createdBy, expenditureChange);
+        }
+
+        if (!updatedProject) {
+            return {
+                success: false,
+                message: "Something went wrong. Please try again.",
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: "Package amount updated successfully and credit adjusted."
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Cannot update package amount at the moment. Please try again later."
+        }
+    }
+}
+
+export async function addResourceCategory(prevState, formData) {
+    const name = formData.get('name')?.trim();
+    const description = formData.get('description')?.trim();
+
+    if (!name || name.length === 0) {
+        return {
+            success: false,
+            message: "Category name cannot be empty."
+        }
+    }
+
+    try {
+        await connectDB();
+
+        const existingCategory = await Category.findOne({ name });
+        if (existingCategory) {
+            return {
+                success: false,
+                message: "Category with this name already exists."
+            }
+        }
+
+        const category = await Category.create({
+            name,
+            description
+        });
+
+        if (!category) {
+            return {
+                success: false,
+                message: "Failed to create category. Please try again."
+            }
+        }
+
+        return {
+            success: true,
+            message: "Category created successfully."
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            success: false,
+            message: "Something went wrong. Please try again."
         }
     }
 }

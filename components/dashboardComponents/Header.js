@@ -1,5 +1,6 @@
 'use client';
-import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, Menu, X, Settings } from "lucide-react";
+
+import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, Menu, X, Settings, MessageCircleQuestionMark, Users } from "lucide-react";
 import Image from 'next/image'
 import React, { useActionState, useEffect, useState } from 'react'
 import {
@@ -26,7 +27,7 @@ import Linkify from 'linkify-react';
 import Loader from '../Loader';
 import { useCountry } from "@/hooks/useCountry";
 
-const Header = ({ pfpLink }) => {
+const Header = ({ userFromDB, pfpLink }) => {
     const pathname = usePathname();
     const [notifications, setNotifications] = useState(null);
 
@@ -112,6 +113,11 @@ const Header = ({ pfpLink }) => {
             href: '/resources'
         },
         {
+            icon: <MessageCircleQuestionMark />,
+            title: "FAQs",
+            href: '/faqs'
+        },
+        {
             icon: <CircleDollarSign />,
             title: "Pricing",
             href: "/pricing"
@@ -121,12 +127,18 @@ const Header = ({ pfpLink }) => {
             title: "Comments",
             href: "/comments"
         },
+
         ...(user?.role === "superadmin"
             ? [
                 {
                     icon: <Receipt />,
                     title: "Invoices",
                     href: "/invoices",
+                },
+                {
+                    icon: <Users />,
+                    title: "Discussions",
+                    href: "/discussions"
                 },
                 {
                     icon: <Shield />,
@@ -144,6 +156,10 @@ const Header = ({ pfpLink }) => {
             <Link href={'/'} className='md:hidden'><Image src='/logo.png' alt="stratital logo" width={135} height={37} priority /></Link>
             <div className='flex items-center gap-4'>
                 <div className="flex items-center gap-4">
+                    {userFromDB?.credit > 0 && <div className="flex items-center gap-2 p-2 border border-red">
+                        <CircleDollarSign className="text-white" />
+                        <p className="text-white">AUD {userFromDB?.credit}.00</p>
+                    </div>}
                     <div className="flex items-center">
                         {loading && <Loader size="h-4 w-4" />}
                         {!loading && !error && countryCode && <Image

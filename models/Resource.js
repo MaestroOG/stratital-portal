@@ -1,4 +1,5 @@
 import { Schema, model, models } from "mongoose";
+import Category from "./Category";
 
 const resourceSchema = new Schema({
     title: {
@@ -11,6 +12,11 @@ const resourceSchema = new Schema({
         required: true,
         trim: true,
         unique: true
+    },
+    category: {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+        default: null
     }
 }, { timestamps: true });
 

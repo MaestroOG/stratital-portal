@@ -151,3 +151,18 @@ export function getYouTubeEmbedUrl(rawUrl) {
         return e.message;
     }
 }
+
+export const unslugify = (slug) => {
+    if (!slug || typeof slug !== 'string') return '';
+    return slug
+        .split('-')
+        .filter(word => word.length > 0)
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}
+
+export function truncateToSixWords(text) {
+    const words = text.split(" "); // split by spaces
+    if (words.length <= 6) return text; // if 6 or fewer words, return as is
+    return words.slice(0, 6).join(" ") + "..."; // take first 6 words
+}

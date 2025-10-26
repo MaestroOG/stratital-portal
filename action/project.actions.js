@@ -2,8 +2,10 @@
 
 import { generateAdminToUserEmailNoteTemplate, generateNoteCreatedEmailUserTemplate, generateProjectCreatedEmailTemplate } from "@/htmlemailtemplates/emailTemplates";
 import { generateProjectStatusUpdateEmail } from "@/htmlemailtemplates/projectStatusTemplates";
+import { addExpenditure } from "@/lib/admin";
 import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
+import Expenditure from "@/models/Expenditure";
 import Note from "@/models/Note";
 import Project from "@/models/Project";
 import User from "@/models/User";
@@ -17,7 +19,8 @@ export async function createProject(prevState, formData) {
     const projectTitle = formData.get("projectTitle");
     const packageSelected = formData.get("selectedPackage")
     const entries = {};
-    const partnerId = formData.get("partnerId")
+    const partnerId = formData.get("partnerId");
+    const amount = Number(packageSelected.replace(/[^0-9.]/g, '').replace(/,/g, ''));
 
     // Turn formData into a plain object
     formData.forEach((value, key) => {
@@ -35,60 +38,118 @@ export async function createProject(prevState, formData) {
         }
     }
 
-    await connectDB();
+    try {
+        await connectDB();
 
-    if (user?.role === 'superadmin') {
-        const projectForUser = await User.findById(partnerId);
-        const project = await Project.create({
-            projectTitle,
-            service,
-            fields: cleanedEntries,
-            status: 'pending',
-            createdBy: projectForUser?._id,
-            packageSelected,
-            byAdmin: true
-        })
 
-        const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected, `https://portal.stratital.com/projects/${project?._id}`);
+        if (user?.role === 'superadmin') {
+            const projectForUser = await User.findById(partnerId);
 
-        const transporter = createTransporter();
+            const userBalance = projectForUser?.credit || 0;
 
-        await transporter.sendMail({
-            from: '"Stratital" <admin@stratital.com>',
-            to: [projectForUser?.email, 'portal@stratital.com'],
-            subject: "Project Created - Stratital",
-            html,
-        })
-    }
+            // if (userBalance < amount) {
+            //     return {
+            //         success: false,
+            //         message: "Insufficient credit balance. Please top up the user's account.",
+            //     }
+            // }
 
-    if (user?.role === 'user') {
+            const expenditure = await addExpenditure(partnerId, amount);
 
-        const project = await Project.create({
-            projectTitle,
-            service,
-            fields: cleanedEntries,
-            status: 'pending',
-            createdBy: user?._id,
-            packageSelected
-        })
+            const updatedUser = await User.findByIdAndUpdate(
+                partnerId,
+                { $set: { credit: userBalance - amount } },
+                { new: true } // ✅ returns the updated user
+            );
 
-        console.log(project)
+            if (!updatedUser) {
+                return {
+                    success: false,
+                    message: "Failed to deduct credit from user.",
+                }
+            }
 
-        const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected, `https://portal.stratital.com/projects/${project?._id}`);
+            const project = await Project.create({
+                projectTitle,
+                service,
+                fields: cleanedEntries,
+                status: 'pending',
+                createdBy: projectForUser?._id,
+                packageSelected,
+                byAdmin: true
+            })
 
-        const transporter = createTransporter();
+            const html = generateProjectCreatedEmailTemplate(projectForUser?.companyName, projectTitle, service, packageSelected, `https://portal.stratital.com/projects/${project?._id}`);
 
-        await transporter.sendMail({
-            from: '"Stratital" <admin@stratital.com>',
-            to: [user?.email, 'portal@stratital.com'],
-            subject: "Project Created - Stratital",
-            html,
-        })
-    }
+            const transporter = createTransporter();
 
-    return {
-        success: true,
-        message: "Project created successfully",
+            await transporter.sendMail({
+                from: '"Stratital" <admin@stratital.com>',
+                to: [projectForUser?.email, 'portal@stratital.com'],
+                subject: "Project Created - Stratital",
+                html,
+            })
+        }
+
+        if (user?.role === 'user') {
+
+            const userFromDB = await User.findById(user?._id);
+
+            const userBalance = userFromDB?.credit || 0;
+
+            if (userBalance < amount) {
+                return {
+                    success: false,
+                    message: "Insufficient credit balance. Please top up your account.",
+                }
+            }
+
+            const expenditure = await addExpenditure(partnerId, amount);
+
+            const updatedUser = await User.findByIdAndUpdate(
+                partnerId,
+                { $set: { credit: userBalance - amount } },
+                { new: true } // ✅ returns the updated user
+            );
+
+            if (!updatedUser) {
+                return {
+                    success: false,
+                    message: "Failed to deduct credit from user.",
+                }
+            }
+
+            const project = await Project.create({
+                projectTitle,
+                service,
+                fields: cleanedEntries,
+                status: 'pending',
+                createdBy: user?._id,
+                packageSelected
+            })
+
+
+            const html = generateProjectCreatedEmailTemplate(user?.companyName, projectTitle, service, packageSelected, `https://portal.stratital.com/projects/${project?._id}`);
+
+            const transporter = createTransporter();
+
+            await transporter.sendMail({
+                from: '"Stratital" <admin@stratital.com>',
+                to: [user?.email, 'portal@stratital.com'],
+                subject: "Project Created - Stratital",
+                html,
+            })
+        }
+
+        return {
+            success: true,
+            message: "Project created successfully",
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Failed to create project."
+        }
     }
 }
 
@@ -174,27 +235,47 @@ export async function ApproveProject(projectId, prevState, formData) {
 
 export async function RejectProject(projectId, prevState, formData) {
     const user = await getUser();
-    await connectDB();
-    await Project.findByIdAndUpdate(projectId, { status: 'rejected' });
-    revalidatePath('/', "layout");
+    try {
+        await connectDB();
+        await Project.findByIdAndUpdate(projectId, { status: 'rejected' });
+        revalidatePath('/', "layout");
 
-    const project = await Project.findById(projectId);
+        const project = await Project.findById(projectId);
+
+        const amount = Number(project?.packageSelected.replace(/[^0-9.]/g, '').replace(/,/g, ''));
+
+        const updatedUser = await User.findByIdAndUpdate(project?.createdBy, { $inc: { credit: amount } }, { new: true });
+
+        const expenditure = await addExpenditure(project?.createdBy, -amount);
+
+        if (!updatedUser) {
+            return {
+                success: false,
+                message: "Failed to refund credit to user.",
+            }
+        }
 
 
-    const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'cancelled', user?.name, project?.updatedAt);
+        const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'cancelled', user?.name, project?.updatedAt);
 
-    const transporter = createTransporter();
+        const transporter = createTransporter();
 
-    await transporter.sendMail({
-        from: '"Stratital" <admin@stratital.com>',
-        to: [user?.email, 'portal@stratital.com'],
-        subject: "Project Status Update - Stratital",
-        html,
-    })
+        await transporter.sendMail({
+            from: '"Stratital" <admin@stratital.com>',
+            to: [user?.email, 'portal@stratital.com'],
+            subject: "Project Status Update - Stratital",
+            html,
+        })
 
-    return {
-        success: true,
-        message: "Project rejected successfully",
+        return {
+            success: true,
+            message: "Project rejected successfully and credit refunded.",
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Something went wrong.",
+        }
     }
 }
 
@@ -223,5 +304,33 @@ export async function changeProjectStatus(projectId, prevState, formData) {
     return {
         success: true,
         message: "Project status updated successfully",
+    }
+}
+
+export async function archiveProject(prevState, formData) {
+    const projectId = formData.get("projectId")?.trim();
+
+    try {
+        await connectDB();
+        const updatedProject = await Project.findByIdAndUpdate(projectId, { status: 'archived' }, { new: true });
+        if (!updatedProject) {
+            return {
+                success: false,
+                message: "Failed to archive project.",
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: 'Project archived successfully.'
+        }
+    } catch (error) {
+        console.error("Error archiving project:", error);
+        return {
+            success: false,
+            message: "Something went wrong.",
+        }
     }
 }

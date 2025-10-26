@@ -1,14 +1,16 @@
 import Container from '@/components/dashboardComponents/Container'
 import ProjectStatusForms from '@/components/project-status-forms'
 import NoteBox from '@/components/superadminComponents/NoteBox'
-import { getNotesByProjectId, getProjectById, getUnreadNotesByProject } from '@/lib/projects'
+import { getNotesByProjectId, getProjectById } from '@/lib/projects'
 import { getUser } from '@/lib/user'
 import { camelToNormal, capitalizeFirst } from '@/utils/formUtils'
 import ProjectNotesList from '@/components/ProjectNotesList'
 import ProjectDeleteForm from '@/components/project-delete-form'
 import { notFound } from 'next/navigation'
-import FilterCommentsForm from '@/components/filter-comments-form'
-import { Suspense } from 'react'
+import ArchiveProjectForm from '@/components/archive-project-form'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 
 export const metadata = {
@@ -19,26 +21,17 @@ export const metadata = {
 const ProjectDetailPage = async ({ params, searchParams }) => {
     const user = await getUser();
     const { id } = await params;
-    const projectDetails = await getProjectById(id);;
+    const projectDetails = await getProjectById(id);
     const service = camelToNormal(projectDetails?.service);
     const status = capitalizeFirst(projectDetails?.status);
-    const { filter } = searchParams;
+    const notesData = await getNotesByProjectId(id, 1, 10);
+    const notes = notesData?.notes || [];
 
-    let notes;
-
-    if (filter === "unread") {
-        if (!user?._id) {
-            notes = [];
-        } else {
-            const { notes: unreadNotes } = await getUnreadNotesByProject(id, user?._id);
-            notes = unreadNotes;
-        }
-    } else {
-        const { notes: allNotes } = await getNotesByProjectId(id, 1, 10);
-        notes = allNotes;
-    }
     const isUnread = user ? notes?.some(note => !(note?.readBy ?? []).includes(user._id)) : false;
 
+    const fields = Object.entries(projectDetails?.fields || {}).filter(
+        ([key]) => key !== "selectedPackage"
+    );
 
     if (!projectDetails) {
         notFound();
@@ -51,7 +44,12 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                     <div>
                         <div className='flex items-center gap-2'>
                             <h1 className='text-2xl md:text-4xl font-bold whitespace-nowrap'>{projectDetails?.projectTitle}</h1>
-                            {user?.role === 'superadmin' && <ProjectDeleteForm id={id} />}
+                            {user?.role === 'superadmin' &&
+                                <>
+                                    <ProjectDeleteForm id={id} />
+                                    <Link href={`/projects/${id}/edit-package`}><Button>Edit Package</Button></Link>
+                                </>
+                            }
                         </div>
                         <h3 className='mt-2'>{service} by {projectDetails?.createdBy?.companyName ?? ""}</h3>
                         {projectDetails?.byAdmin ? <p className='text-sm mt-2'>Created By Admin</p> : ''}
@@ -59,26 +57,56 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                     <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
                         <p className='text-red font-medium animate-pulse whitespace-nowrap'>• {status}</p>
                         {user?.role === 'superadmin' && <ProjectStatusForms status={status} projectId={id} />}
+                        {user?.role === 'superadmin' && <ArchiveProjectForm projectId={id} />}
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-4 mt-6'>
-                    <div className='flex flex-col gap-4'>
-                        {Object.keys(projectDetails?.fields).map(key => (
-                            <p key={key}>{camelToNormal(key)}</p>
-                        ))}
-                    </div>
-                    <div className='flex flex-col gap-4'>
-                        {Object.values(projectDetails?.fields).map(value => (
-                            <p key={value} className='font-bold text-heading'>{camelToNormal(value)}</p>
-                        ))}
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+                    {/* Render all fields except selectedPackage */}
+                    {fields.map(([key, value]) => {
+                        const displayValue =
+                            value && value.toString().trim() !== "" ? camelToNormal(value) : "Not provided";
+
+                        return (
+                            <Card
+                                key={key}
+                                className="rounded-2xl shadow-sm border border-border hover:shadow-md transition-all duration-200"
+                            >
+                                <CardHeader>
+                                    <CardTitle className="text-sm text-muted-foreground tracking-wide">
+                                        {camelToNormal(key)}
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <p
+                                        className={`text-lg font-medium ${displayValue === "Not provided" ? "text-muted-foreground italic" : "text-foreground"
+                                            } break-words`}
+                                    >
+                                        {displayValue}
+                                    </p>
+                                </CardContent>
+                            </Card>
+                        );
+                    })}
+
+                    {/* Selected Package Card */}
+                    <Card className="rounded-2xl shadow-sm border border-border hover:shadow-md transition-all duration-200 bg-muted/30">
+                        <CardHeader>
+                            <CardTitle className="text-sm text-muted-foreground tracking-wide">
+                                Selected Package
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-lg font-semibold text-foreground">
+                                {projectDetails?.packageSelected || "Not provided"}
+                            </p>
+                        </CardContent>
+                    </Card>
                 </div>
             </Container>
 
             <Container className={'bg-white p-4 mt-6'}>
                 <div className='flex items-end justify-between'>
                     <h1 className='text-4xl font-bold'>Comments</h1>
-                    <FilterCommentsForm />
                 </div>
                 <NoteBox id={id} />
                 <div className="mt-6">

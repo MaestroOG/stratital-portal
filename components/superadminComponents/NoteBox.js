@@ -7,7 +7,6 @@ import { Label } from "../ui/label";
 import { addNote } from "@/action/project.actions";
 import dynamic from "next/dynamic";
 
-// 👇 import JoditEditor dynamically so it never runs on the server
 const JoditEditor = dynamic(() => import("jodit-react"), {
     ssr: false,
 });

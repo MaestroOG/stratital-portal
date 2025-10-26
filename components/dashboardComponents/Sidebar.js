@@ -1,5 +1,6 @@
 "use client";
-import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files } from "lucide-react";
+
+import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, MessageCircleQuestionMark, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,7 +23,6 @@ const Sidebar = () => {
         if (cookieValue) {
             try {
                 setUser(JSON.parse(decodeURIComponent(cookieValue)));
-                console.log(JSON.parse(decodeURIComponent(cookieValue)))
             } catch (err) {
                 console.error("Invalid user cookie", err);
             }
@@ -55,6 +55,11 @@ const Sidebar = () => {
             href: '/resources'
         },
         {
+            icon: <MessageCircleQuestionMark />,
+            title: "FAQs",
+            href: '/faqs'
+        },
+        {
             icon: <CircleDollarSign />,
             title: "Pricing",
             href: "/pricing"
@@ -70,6 +75,11 @@ const Sidebar = () => {
                     icon: <Receipt />,
                     title: "Invoices",
                     href: "/invoices",
+                },
+                {
+                    icon: <Users />,
+                    title: "Discussions",
+                    href: "/discussions"
                 },
                 {
                     icon: <Shield />,
@@ -94,7 +104,7 @@ const Sidebar = () => {
 
             {user?.role !== 'manager' && <AddProjectButton href={'/projects/new-project'} className={'md:w-full'} />}
 
-            <div className="sidebar-menu">
+            <div className="sidebar-menu overflow-y-auto">
                 {links.map((link, i) => {
                     const isActive =
                         pathname === link.href || pathname.startsWith(link.href + "/")

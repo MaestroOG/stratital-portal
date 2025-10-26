@@ -15,11 +15,20 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
-const ResourceEditForm = ({ resource }) => {
+const ResourceEditForm = ({ resource, categories }) => {
     const [state, formAction, isPending] = useActionState(editResource, {})
     const [editFormOpen, setEditFormOpen] = useState(false);
     const [open, setOpen] = useState(false)
+
+    const [selectedCategory, setSelectedCategory] = useState(resource?.category?._id);
 
     const handleEditClick = () => {
         setEditFormOpen(true);
@@ -62,7 +71,19 @@ const ResourceEditForm = ({ resource }) => {
                                 name="file"
                             />
                         </div>
-
+                        <div className="grid gap-2">
+                            <Label htmlFor="categorySelect">Select Category</Label>
+                            <Select value={selectedCategory} onValueChange={setSelectedCategory} id="categorySelect" name="category" defaultValue={resource?.category?._id}>
+                                <SelectTrigger className={'w-full'}>
+                                    <SelectValue placeholder="Select Category" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {categories.map((category) => (
+                                        <SelectItem key={category._id} value={category._id}>{category.name}</SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                        </div>
                         <p>OR</p>
                         <div className="grid gap-2">
                             <Label htmlFor="resourceLink">Resource Link</Label>
@@ -76,6 +97,8 @@ const ResourceEditForm = ({ resource }) => {
                             </DialogClose>
                             <Button disabled={isPending} type="submit">Save changes</Button>
                         </DialogFooter>
+
+                        <input type="hidden" name="category" value={selectedCategory} />
                     </form>
                 </DialogContent>
             </Dialog>

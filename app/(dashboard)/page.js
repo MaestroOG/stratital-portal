@@ -1,19 +1,18 @@
 import Container from "@/components/dashboardComponents/Container"
-import ProjectCard from "@/components/dashboardComponents/ProjectCard"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import IntroText from "@/components/IntroText"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
-import { Plus, Search } from "lucide-react"
-import { getUser, isFirstLogin } from "@/lib/user"
-import { getAllUserProjects, getCompletedProjectsThisMonth, getPendingProjectsThisMonth, getRunningProjectsThisMonth } from "@/lib/projects"
+import { Search } from "lucide-react"
+import { getUser } from "@/lib/user"
+import { getAllCompletedProjects, getAllPendingProjects, getAllRunningProjects, getAllUserFinishedProjects, getAllUserPendingProjects, getAllUserProjects, getAllUserRunningProjects, getCompletedProjectsThisMonth, getEveryProject, getEveryUserProjects, getPendingProjectsThisMonth, getRunningProjectsThisMonth } from "@/lib/projects"
 import { Suspense } from "react"
 import { camelToNormal, capitalizeFirst } from "@/utils/formUtils"
 import HomePageDialog from "@/components/dashboardComponents/HomePageDialog"
 import { getLatestUnreadNotification } from "@/lib/notifications"
-import NewLoginDialog from "@/components/dashboardComponents/NewLoginDialog"
 import { getAllCompletedProjectsThisMonth, getAllManagerRelatedProjects, getAllPendingProjectsThisMonth, getAllProjects, getAllRunningProjectsThisMonth } from "@/lib/admin"
+import ProjectCardsGrid from "@/components/dashboardComponents/ProjectCardsGrid"
 
 
 
@@ -21,9 +20,11 @@ export const metadata = {
   title: "Stratital Client Portal"
 }
 
-const HomePage = async () => {
+const HomePage = async ({ searchParams }) => {
 
   const user = await getUser();
+
+  const { filter } = await searchParams;
 
   let projects;
   let completedProjectsThisMonth;
@@ -31,19 +32,43 @@ const HomePage = async () => {
   let runningProjectsThisMonth;
 
   if (user?.role === 'user') {
-    projects = await getAllUserProjects(user?._id);
+    if (filter === 'all') {
+      projects = await getEveryUserProjects(user?._id);
+    } else if (filter === 'finished') {
+      projects = await getAllUserFinishedProjects(user?._id);
+    } else if (filter === 'running') {
+      projects = await getAllUserRunningProjects(user?._id);
+    } else if (filter === 'pending') {
+      projects = await getAllUserPendingProjects(user?._id);
+    } else {
+      projects = await getAllUserProjects(user?._id);
+    }
     completedProjectsThisMonth = await getCompletedProjectsThisMonth();
     pendingProjectsThisMonth = await getPendingProjectsThisMonth();
     runningProjectsThisMonth = await getRunningProjectsThisMonth();
   } else if (user?.role === 'manager') {
     projects = await getAllManagerRelatedProjects();
+    completedProjectsThisMonth = await getAllCompletedProjectsThisMonth();
+    pendingProjectsThisMonth = await getAllPendingProjectsThisMonth();
+    runningProjectsThisMonth = await getAllRunningProjectsThisMonth();
   } else {
-    projects = await getAllProjects();
+    if (filter === 'finished') {
+      projects = await getAllCompletedProjects();
+    } else if (filter === 'running') {
+      projects = await getAllRunningProjects();
+    } else if (filter === 'all') {
+      projects = await getEveryProject();
+    } else if (filter === 'pending') {
+      projects = await getAllPendingProjects();
+    } else {
+      projects = await getAllProjects();
+    }
     completedProjectsThisMonth = await getAllCompletedProjectsThisMonth();
     pendingProjectsThisMonth = await getAllPendingProjectsThisMonth();
     runningProjectsThisMonth = await getAllRunningProjectsThisMonth();
   }
   const latestNotification = await getLatestUnreadNotification();
+
 
 
   return (
@@ -60,21 +85,17 @@ const HomePage = async () => {
 
       <IntroText />
 
-
-
-      <Container className={'grid items-stretch place-items-center grid-cols-1 md:grid-cols-3 2xl:grid-cols-4 gap-4 px-9 md:px-0 max-sm:bg-white max-sm:mt-0 max-sm:py-7'}>
-        <ProjectCard success={true} title="Total Projects" desc="All Projects This Month" number={projects?.length} />
-        <ProjectCard yellow={true} title={"Running Project"} desc={"In-Progress This Month"} number={runningProjectsThisMonth} />
-        <ProjectCard title={"Pending"} desc={"Pending This Month"} number={pendingProjectsThisMonth} />
-        <ProjectCard success={true} title={"Finished Projects"} desc={"Finished This Month"} number={completedProjectsThisMonth} />
-
-
-      </Container>
+      <ProjectCardsGrid runningProjectsThisMonth={runningProjectsThisMonth} projects={projects} completedProjectsThisMonth={completedProjectsThisMonth} pendingProjectsThisMonth={pendingProjectsThisMonth} />
 
       <Container className="bg-white p-4 rounded-lg">
-        <div className="flex items-center max-sm:justify-between gap-4">
+        <div className="flex items-center md:justify-between gap-4">
           <h1 className="text-xl font-medium">Your Projects</h1>
-
+          <div className="flex items-center gap-2">
+            <Link href={'/projects/completed'}><Button>See Completed Projects</Button></Link>
+            <Link href={'/projects/archived'}><Button>See Archived Projects</Button></Link>
+            {user?.role === 'superadmin' && <Link href={'/projects/all'}><Button>See All Projects</Button></Link>}
+            <Link href={'/expenditure'}><Button>See {user?.role === 'superadmin' ? 'Generated Revenue' : 'Monthly Expenditure'}</Button></Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">
@@ -82,7 +103,7 @@ const HomePage = async () => {
 
           {projects?.length === 0 && (
             <div className="p-6">
-              {user?.role !== 'manager' && <span>Add your first project to get started!</span>}
+              {user?.role !== 'manager' && <span>No Projects For Now!</span>}
               {user?.role === 'manager' && <span>Wait for your first project to be assigned!</span>}
             </div>
           )}
@@ -102,8 +123,6 @@ const HomePage = async () => {
       </Container>
 
       {latestNotification && <HomePageDialog title={latestNotification?.title} description={latestNotification?.description} />}
-
-      {/* {firstLogin && <NewLoginDialog userId={user?._id} firstLogin={firstLogin} />} */}
     </>
   )
 }

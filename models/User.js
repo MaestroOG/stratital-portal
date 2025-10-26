@@ -111,6 +111,10 @@ const UserSchema = new Schema({
     serviceManager: {
         type: [String],
         trim: true
+    },
+    credit: {
+        type: Number,
+        default: 250
     }
 }, { timestamps: true })
 

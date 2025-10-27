@@ -140,7 +140,6 @@ export const generateProjectStatusUpdateEmail = (projectTitle, newStatus, name, 
 
 export const generateInactiveProjectsAlertEmail = (projectCount) => {
   return `
-  <!-- Save this as inactive-projects-email.html or paste into your sendMail html field -->
 <!doctype html>
 <html lang="en">
   <head>

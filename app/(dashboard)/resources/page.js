@@ -17,8 +17,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
 import DeleteCategoryForm from "@/components/delete-category-form";
 
 const ResourcesPage = async ({ searchParams }) => {
@@ -26,7 +24,6 @@ const ResourcesPage = async ({ searchParams }) => {
     let resources = await getAllResources();
     const categories = await getResourceCategories();
     const { filter } = await searchParams;
-    const createdCategories = await getAllCreatedCategories();
 
 
     if (filter) {

@@ -45,7 +45,7 @@ const DeleteCategoryForm = ({ categoryId }) => {
                             <DialogClose asChild>
                                 <Button variant="outline">Cancel</Button>
                             </DialogClose>
-                            <Button disabled={isPending} type="submit">Save changes</Button>
+                            <Button disabled={isPending} type="submit">Delete</Button>
                         </DialogFooter>
                         <input type="hidden" name='categoryId' value={categoryId} />
                     </form>
@@ -56,9 +56,9 @@ const DeleteCategoryForm = ({ categoryId }) => {
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>
-                            {state.success ? 'Deleted Category 🚮' : 'Error ⚠️'}
+                            {state?.success ? 'Deleted Category 🚮' : 'Error ⚠️'}
                         </DialogTitle>
-                        <DialogDescription>{state.message}</DialogDescription>
+                        <DialogDescription>{state?.message}</DialogDescription>
                     </DialogHeader>
                     <DialogFooter>
                         <DialogClose asChild>

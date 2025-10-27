@@ -6,7 +6,7 @@ import { Badge } from "../ui/badge"
 
 const MainProjectCard = ({ project }) => {
     return (
-        <Card key={project?._id} className="flex flex-col justify-between max-w-sm border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <Card className="flex flex-col justify-between max-w-sm border-gray-200 shadow-sm dark:bg-gray-800 dark:border-gray-700">
             <CardHeader>
                 <Badge variant="secondary" className="mb-2 w-fit">
                     {camelToNormal(project?.service)}

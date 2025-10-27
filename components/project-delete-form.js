@@ -33,7 +33,7 @@ const ProjectDeleteForm = ({ id }) => {
     }, [state, router]);
     return (
         <>
-            <Button type='button' onClick={handleClick}><Trash /></Button>
+            <Button type='button' aria-label="Delete project" onClick={handleClick}><Trash /></Button>
             <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
                 <DialogContent>
                     <form action={formAction}>

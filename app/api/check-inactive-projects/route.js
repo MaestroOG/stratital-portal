@@ -1,5 +1,6 @@
 import { generateInactiveProjectsAlertEmail } from "@/htmlemailtemplates/projectStatusTemplates";
 import { connectDB } from "@/lib/mongodb";
+import Note from "@/models/Note";
 import Project from "@/models/Project";
 import { createTransporter } from "@/utils/transporterFns";
 import { NextResponse } from "next/server";

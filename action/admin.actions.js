@@ -609,7 +609,7 @@ export async function deleteCategory(prevState, formData) {
             success: true,
             message: 'Category deleted successfully'
         }
-    } catch (category) {
+    } catch (error) {
         console.error(error);
         return {
             success: false,

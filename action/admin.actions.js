@@ -571,3 +571,50 @@ export async function addResourceCategory(prevState, formData) {
         }
     }
 }
+
+export async function deleteCategory(prevState, formData) {
+    const categoryId = formData.get('categoryId');
+
+    if (!categoryId) {
+        return {
+            success: false,
+            message: 'No valid id received'
+        }
+    }
+
+    try {
+        await connectDB();
+
+        const resources = await Resource.find({ category: categoryId });
+
+        if (resources.length > 0) {
+            return {
+                success: false,
+                message: 'Cannot delete category with associated resources. Please reassign or delete those resources first.'
+            }
+        }
+
+        const category = await Category.findByIdAndDelete(categoryId);
+
+        if (!category) {
+            return {
+                success: false,
+                message: 'Category not found'
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: 'Category deleted successfully'
+        }
+    } catch (category) {
+        console.error(error);
+        return {
+            success: false,
+            message: 'Something went wrong'
+        }
+    }
+
+}

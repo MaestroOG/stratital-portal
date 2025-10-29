@@ -216,7 +216,7 @@ export async function ApproveProject(projectId, prevState, formData) {
     const project = await Project.findById(projectId).populate('createdBy');
 
 
-    const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'in-progress', user?.name, project?.updatedAt);
+    const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'in-progress', project?.createdBy.name, project?.updatedAt);
 
     const transporter = createTransporter();
 
@@ -240,7 +240,7 @@ export async function RejectProject(projectId, prevState, formData) {
         await Project.findByIdAndUpdate(projectId, { status: 'rejected' });
         revalidatePath('/', "layout");
 
-        const project = await Project.findById(projectId);
+        const project = await Project.findById(projectId).populate('createdBy');
 
         const amount = Number(project?.packageSelected.replace(/[^0-9.]/g, '').replace(/,/g, ''));
 
@@ -256,7 +256,7 @@ export async function RejectProject(projectId, prevState, formData) {
         }
 
 
-        const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'cancelled', user?.name, project?.updatedAt);
+        const html = generateProjectStatusUpdateEmail(project?.projectTitle, 'cancelled', project?.createdBy.name, project?.updatedAt);
 
         const transporter = createTransporter();
 
@@ -288,9 +288,9 @@ export async function changeProjectStatus(projectId, prevState, formData) {
     await Project.findByIdAndUpdate(projectId, { status: status });
     revalidatePath('/', "layout");
 
-    const project = await Project.findById(projectId);
+    const project = await Project.findById(projectId).populate('createdBy');
 
-    const html = generateProjectStatusUpdateEmail(project?.projectTitle, status, user?.name, project?.updatedAt);
+    const html = generateProjectStatusUpdateEmail(project?.projectTitle, status, project?.createdBy.name, project?.updatedAt);
 
     const transporter = createTransporter();
 

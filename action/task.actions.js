@@ -6,7 +6,6 @@ import Task from "@/models/Task";
 import TaskComment from "@/models/TaskComment";
 import User from "@/models/User";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 export async function createTask(selectedUsers, prevState, formData) {
     const title = formData.get('title')?.trim();
@@ -14,6 +13,28 @@ export async function createTask(selectedUsers, prevState, formData) {
     const dueDate = formData.get('dueDate');
     const status = formData.get('status');
     const assignees = selectedUsers;
+
+    const validStatuses = ['pending', 'in-progress', 'completed']; // adjust as needed
+    if (!status || !validStatuses.includes(status)) {
+        return {
+            success: false,
+            message: "Valid status is required"
+        }
+    }
+
+    if (!title || !description) {
+        return {
+            success: false,
+            message: "Title and description are required"
+        }
+    }
+
+    if (!dueDate || isNaN(Date.parse(dueDate))) {
+        return {
+            success: false,
+            message: "Valid due date is required"
+        }
+    }
 
     const user = await getUser();
 
@@ -59,15 +80,22 @@ export async function createTask(selectedUsers, prevState, formData) {
 }
 
 export async function createTaskComment(prevState, formData) {
-    const commentText = formData.get('commentText');
+    const commentText = formData.get('commentText')?.trim();
     const taskId = formData.get('taskId')
+
+    if (!taskId) {
+        return {
+            success: false,
+            message: "Task ID is required"
+        }
+    }
 
     const user = await getUser();
 
     if (!user) {
         return {
             success: false,
-            message: "You should be authencticated to make a comment"
+            message: "You should be authenticated to make a comment"
         }
     }
 
@@ -113,7 +141,6 @@ export async function deleteTask(prevState, formData) {
     const taskId = formData.get('taskId');
     const user = await getUser();
 
-    console.log(taskId)
     if (!user) {
         return {
             success: false,
@@ -124,14 +151,14 @@ export async function deleteTask(prevState, formData) {
     if (user?.role !== 'superadmin') {
         return {
             success: false,
-            message: "You need admin priveleges to perform this action"
+            message: "You need admin privileges to perform this action"
         }
     }
 
     if (!taskId) {
         return {
             success: false,
-            message: "Task does not exist"
+            message: "Task ID is required"
         }
     }
 

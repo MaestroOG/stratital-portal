@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
 import DeleteTaskForm from "../delete-task-form"
 
-export default function TaskListItem({ task, onEdit, onDelete }) {
+export default function TaskListItem({ task }) {
   const { _id, title, assignees, status, dueDate } = task
 
   return (
@@ -13,7 +13,7 @@ export default function TaskListItem({ task, onEdit, onDelete }) {
       <div className="flex flex-col gap-1">
         <p className="font-medium">{title}</p>
         <p className="text-sm text-muted-foreground">
-          {assignees.length > 0 ? assignees.length + ' assignee(s)' : "No assignees"} • Due {new Date(dueDate).toLocaleDateString()}
+          {assignees?.length > 0 ? assignees.length + ' assignee(s)' : "No assignees"} • Due {new Date(dueDate).toLocaleDateString()}
         </p>
       </div>
 

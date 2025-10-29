@@ -40,6 +40,12 @@ const CreateTaskForm = ({ users }) => {
     useEffect(() => {
         if (state?.success || state?.message) {
             setDialogOpen(true);
+            if (state?.success) {
+                // Reset form fields after successful submission
+                setDate(undefined);
+                setSelectedUsers([]);
+                setStatus("");
+            }
         }
     }, [state])
 
@@ -115,7 +121,9 @@ const CreateTaskForm = ({ users }) => {
 
 
                 <p className="text-sm text-muted-foreground mt-2">
-                    Selected: {selectedUsers.length ? selectedUsers.join(", ") : "None"}
+                    Selected: {selectedUsers.length
+                        ? users.filter(u => selectedUsers.includes(u?._id)).map(u => u?.name).join(", ")
+                        : "None"}
                 </p>
 
                 <input type="hidden" name="dueDate" value={date} />

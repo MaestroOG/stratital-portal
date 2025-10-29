@@ -11,7 +11,7 @@ const CreateTaskPage = async () => {
             </div>
 
             <div className='mt-6'>
-                <CreateTaskForm users={allManagingUsers} />
+                <CreateTaskForm users={allManagingUsers || []} />
             </div>
         </Container>
     )

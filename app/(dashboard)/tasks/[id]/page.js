@@ -7,6 +7,7 @@ import { getTaskById, getTaskCommentByTaskId } from '@/lib/task';
 import { formatTo12HourTime, timeAgo } from '@/utils/formUtils';
 import parse from 'html-react-parser';
 import Image from 'next/image';
+import DOMPurify from 'isomorphic-dompurify';
 
 const TaskDetailPage = async ({ params }) => {
 
@@ -49,7 +50,7 @@ const TaskDetailPage = async ({ params }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                     <div>
                         <Label>Due Date</Label>
-                        <p>{new Date(task?.dueDate).toLocaleDateString()}</p>
+                        <p>{task?.dueDate ? new Date(task.dueDate).toLocaleDateString() : "No due date"}</p>
                     </div>
                     <div>
                         <Label>Created By</Label>
@@ -90,7 +91,7 @@ const TaskDetailPage = async ({ params }) => {
                     <ul>
                         {taskComments.length === 0 && <p className="text-gray-500">No comments yet.</p>}
                         {taskComments && taskComments.length > 0 && taskComments.map((taskComment, index) => (
-                            <li key={index} className="mb-5 transition-all duration-300">
+                            <li key={taskComment?._id} className="mb-5 transition-all duration-300">
                                 <div className="flex items-center gap-2">
                                     <Image
                                         src={taskComment?.createdBy?.profilePictureUrl || "/placeholder-avatar.svg"}
@@ -112,7 +113,7 @@ const TaskDetailPage = async ({ params }) => {
                                 </div>
 
                                 <div className="max-w-5xl text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
-                                    {parse(taskComment?.commentText)}
+                                    {parse(DOMPurify.sanitize(taskComment?.commentText || ''))}
                                 </div>
                             </li>
                         ))}

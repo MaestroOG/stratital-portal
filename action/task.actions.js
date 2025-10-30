@@ -79,54 +79,57 @@ export async function createTask(selectedUsers, prevState, formData) {
     }
 }
 
-export async function createTaskComment(prevState, formData) {
-    const commentText = formData.get('commentText')?.trim();
-    const taskId = formData.get('taskId')
-
-    if (!taskId) {
-        return {
-            success: false,
-            message: "Task ID is required"
-        }
-    }
+export async function editTask(prevState, formData) {
+    const title = formData.get('title')?.trim();
+    const description = formData.get('description')?.trim();
+    const dueDate = formData.get('dueDate');
+    const status = formData.get('status');
+    const taskId = formData.get('taskId');
 
     const user = await getUser();
 
-    if (!user) {
+    if (!user || user?.role !== 'superadmin') {
         return {
             success: false,
-            message: "You should be authenticated to make a comment"
-        }
-    }
-
-    if (!commentText) {
-        return {
-            success: false,
-            message: "Comment cannot be empty"
+            message: "You need admin privileges to perform this action"
         }
     }
 
     try {
         await connectDB();
 
-        const taskComment = await TaskComment.create({
-            commentText,
-            createdBy: user?._id,
-            taskId
-        })
+        const updates = {};
 
-        if (!taskComment) {
+        if (title) {
+            updates.title = title;
+        }
+
+        if (description) {
+            updates.description = description;
+        }
+
+        if (dueDate) {
+            updates.dueDate = dueDate;
+        }
+
+        if (status) {
+            updates.status = status;
+        }
+
+        const updatedTask = await Task.findByIdAndUpdate(taskId, { $set: updates }, { new: true });
+
+        if (!updatedTask) {
             return {
                 success: false,
-                message: "Cannot create comment"
+                message: "Could not update task"
             }
         }
 
-        revalidatePath('/', 'layout')
+        revalidatePath('/', 'layout');
 
         return {
             success: true,
-            message: "Comment created successfully"
+            message: "Task edited successfully"
         }
     } catch (error) {
         console.error(error);
@@ -188,4 +191,62 @@ export async function deleteTask(prevState, formData) {
         }
     }
 
+}
+
+export async function createTaskComment(prevState, formData) {
+    const commentText = formData.get('commentText')?.trim();
+    const taskId = formData.get('taskId')
+
+    if (!taskId) {
+        return {
+            success: false,
+            message: "Task ID is required"
+        }
+    }
+
+    const user = await getUser();
+
+    if (!user) {
+        return {
+            success: false,
+            message: "You should be authenticated to make a comment"
+        }
+    }
+
+    if (!commentText) {
+        return {
+            success: false,
+            message: "Comment cannot be empty"
+        }
+    }
+
+    try {
+        await connectDB();
+
+        const taskComment = await TaskComment.create({
+            commentText,
+            createdBy: user?._id,
+            taskId
+        })
+
+        if (!taskComment) {
+            return {
+                success: false,
+                message: "Cannot create comment"
+            }
+        }
+
+        revalidatePath('/', 'layout')
+
+        return {
+            success: true,
+            message: "Comment created successfully"
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            success: false,
+            message: "Something went wrong"
+        }
+    }
 }

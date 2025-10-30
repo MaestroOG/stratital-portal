@@ -172,7 +172,7 @@ export async function addNote(id, prevState, formData) {
 
         const transporter = createTransporter();
 
-        const html = generateNoteCreatedEmailUserTemplate('https://portal.stratital.com', user?.name, project?.projectTitle);
+        const html = generateNoteCreatedEmailUserTemplate(`https://portal.stratital.com/projects/${project?._id}`, user?.name, project?.projectTitle);
 
         if (user?.role === 'user') {
             await transporter.sendMail({

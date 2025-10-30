@@ -42,7 +42,7 @@ const DeleteTaskForm = ({ id }) => {
                                 All the changes made will be irreversible.
                             </DialogDescription>
                         </DialogHeader>
-                        <DialogFooter>
+                        <DialogFooter className={'mt-4'}>
                             <DialogClose asChild>
                                 <Button variant="outline">Cancel</Button>
                             </DialogClose>

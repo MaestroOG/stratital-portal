@@ -1,11 +1,17 @@
 import Container from "@/components/dashboardComponents/Container"
 import TaskListItem from "@/components/dashboardComponents/TaskListItem"
 import { Button } from "@/components/ui/button"
-import { getTasks } from "@/lib/task"
+import { getTasks, getUserAssignedTasks } from "@/lib/task"
+import { getUser } from "@/lib/user"
 import Link from "next/link"
 
 const TasksPage = async () => {
-    const tasks = await getTasks()
+    const user = await getUser();
+    let tasks = await getTasks();
+
+    if (user?.role === 'manager') {
+        tasks = await getUserAssignedTasks(user?._id)
+    }
 
     const today = tasks.filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString())
     const upcoming = tasks.filter(t => new Date(t.dueDate) > new Date())

@@ -8,6 +8,7 @@ import { formatTo12HourTime, timeAgo } from '@/utils/formUtils';
 import parse from 'html-react-parser';
 import Image from 'next/image';
 import DOMPurify from 'isomorphic-dompurify';
+import EditTaskForm from '@/components/edit-task-form';
 
 const TaskDetailPage = async ({ params }) => {
 
@@ -72,11 +73,7 @@ const TaskDetailPage = async ({ params }) => {
 
                 {/* Actions */}
                 <div className="flex gap-2 mt-6">
-                    <Button
-                        size="sm"
-                    >
-                        Edit
-                    </Button>
+                    <EditTaskForm task={task} />
                 </div>
             </div>
 

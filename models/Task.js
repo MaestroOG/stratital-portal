@@ -33,6 +33,10 @@ const taskSchema = new Schema({
         ],
         default: [],
     },
+    isOverdueNotified: {
+        type: Boolean,
+        default: false,
+    }
 }, { timestamps: true });
 
 const Task = models.Task || model("Task", taskSchema);

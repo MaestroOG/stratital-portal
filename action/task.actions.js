@@ -14,6 +14,15 @@ export async function createTask(selectedUsers, prevState, formData) {
     const status = formData.get('status');
     const assignees = selectedUsers;
 
+    const user = await getUser();
+
+    if (!user || user?.role !== 'superadmin') {
+        return {
+            success: false,
+            message: "Failed to create task. Please Authorize yourself."
+        }
+    }
+
     const validStatuses = ['pending', 'in-progress', 'completed']; // adjust as needed
     if (!status || !validStatuses.includes(status)) {
         return {
@@ -33,15 +42,6 @@ export async function createTask(selectedUsers, prevState, formData) {
         return {
             success: false,
             message: "Valid due date is required"
-        }
-    }
-
-    const user = await getUser();
-
-    if (!user || user?.role !== 'superadmin') {
-        return {
-            success: false,
-            message: "Failed to create task. Please Authorize yourself."
         }
     }
 
@@ -222,6 +222,14 @@ export async function createTaskComment(prevState, formData) {
 
     try {
         await connectDB();
+
+        const taskExists = await Task.findById(taskId);
+        if (!taskExists) {
+            return {
+                success: false,
+                message: "Task not found"
+            }
+        }
 
         const taskComment = await TaskComment.create({
             commentText,

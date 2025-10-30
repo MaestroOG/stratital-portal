@@ -4,8 +4,14 @@ import { createTransporter } from "@/utils/transporterFns";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    await connectDB();
-
+    try {
+        await connectDB();
+    } catch (error) {
+        return NextResponse.json(
+            { error: "Database connection failed" },
+            { status: 500 }
+        );
+    }
     const now = new Date();
 
     const overdueTasks = await Task.find({
@@ -17,8 +23,15 @@ export async function GET() {
     if (overdueTasks.length === 0)
         return NextResponse.json({ message: "No overdue tasks found" });
 
+    const transporter = createTransporter();
     for (const task of overdueTasks) {
-        const transporter = createTransporter();
+        if (!task.createdBy?.email) {
+            console.error(`Task ${task._id} has no valid creator email`);
+            continue;
+        }
+
+        task.isOverdueNotified = true;
+        await task.save();
 
         await transporter.sendMail({
             from: '"Stratital" <admin@stratital.com>',
@@ -32,8 +45,7 @@ export async function GET() {
       `,
         })
 
-        task.isOverdueNotified = true;
-        await task.save();
+
     }
 
     return NextResponse.json({ message: "Overdue notifications sent" });

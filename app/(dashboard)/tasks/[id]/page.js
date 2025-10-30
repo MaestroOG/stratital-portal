@@ -51,7 +51,7 @@ const TaskDetailPage = async ({ params }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                     <div>
                         <Label>Due Date</Label>
-                        <p>{task?.dueDate ? new Date(task.dueDate).toLocaleDateString() : "No due date"}</p>
+                        <p>{task?.dueDate ? (new Date(task.dueDate).toString() !== 'Invalid Date' ? new Date(task.dueDate).toLocaleDateString() : "Invalid date") : "No due date"}</p>
                     </div>
                     <div>
                         <Label>Created By</Label>

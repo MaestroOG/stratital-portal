@@ -14,7 +14,10 @@ const TasksPage = async () => {
     }
 
     const today = tasks.filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString())
-    const upcoming = tasks.filter(t => new Date(t.dueDate) > new Date())
+    const upcoming = tasks.filter(t => {
+        const dueDate = new Date(t.dueDate);
+        return dueDate > new Date() && dueDate.toDateString() !== new Date().toDateString();
+    })
     const now = new Date();
     now.setHours(0, 0, 0, 0);
 

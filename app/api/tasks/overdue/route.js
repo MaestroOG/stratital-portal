@@ -1,3 +1,4 @@
+import { generateTaskOverdueEmail } from "@/htmlemailtemplates/taskEmailTemplates";
 import { connectDB } from "@/lib/mongodb";
 import Task from "@/models/Task";
 import { createTransporter } from "@/utils/transporterFns";
@@ -33,16 +34,13 @@ export async function GET() {
         task.isOverdueNotified = true;
         await task.save();
 
+        const html = generateTaskOverdueEmail(task)
+
         await transporter.sendMail({
             from: '"Stratital" <admin@stratital.com>',
             to: ['admin@stratital.com', 'portal@stratital.com'],
             subject: "Task Overdue Alert",
-            html: `
-        <p>The task with the title <strong>${task.title}</strong> is overdue.</p>
-        <p>Due Date: ${task.dueDate.toDateString()}</p>
-        <p>Created By: ${task.createdBy.email}</p>
-        <p>Description: ${task.description || "No description"}</p>
-      `,
+            html,
         })
 
 

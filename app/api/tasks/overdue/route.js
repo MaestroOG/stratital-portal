@@ -30,19 +30,22 @@ export async function GET() {
             console.error(`Task ${task._id} has no valid creator email`);
             continue;
         }
-
-        task.isOverdueNotified = true;
-        await task.save();
-
         const html = generateTaskOverdueEmail(task)
 
-        await transporter.sendMail({
-            from: '"Stratital" <admin@stratital.com>',
-            to: ['admin@stratital.com', 'portal@stratital.com'],
-            subject: "Task Overdue Alert",
-            html,
-        })
+        try {
+            task.isOverdueNotified = true;
+            await task.save();
 
+
+            await transporter.sendMail({
+                from: '"Stratital" <admin@stratital.com>',
+                to: ['admin@stratital.com', 'portal@stratital.com'],
+                subject: "Task Overdue Alert",
+                html,
+            })
+        } catch (error) {
+            console.error(error)
+        }
 
     }
 

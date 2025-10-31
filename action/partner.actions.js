@@ -18,7 +18,7 @@ export async function deletePartner(prevState, formData) {
     await connectDB();
 
     const user = await getUserById(userId);
-    if (!user) return { err: "User not found" };
+    if (!user) return { success: false, message: "User not found" };
 
     const { _id, ...userData } = user;
 

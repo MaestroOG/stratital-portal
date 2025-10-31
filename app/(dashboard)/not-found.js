@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function RootNotFoundPage() {
+export default function DashboardNotFoundPage() {
     return (
         <main className="flex h-screen flex-col items-center justify-center text-center px-4">
             <h1 className="text-6xl font-bold mb-2">404</h1>

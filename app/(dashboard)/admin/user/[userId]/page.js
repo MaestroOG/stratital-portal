@@ -4,10 +4,15 @@ import { getUserById } from '@/lib/admin';
 
 import { Mail, Phone, Globe, MapPin, Link as LinkIcon } from "lucide-react";
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 const AgencyDetailsPage = async ({ params }) => {
     const { userId } = await params;
     const userDetail = await getUserById(userId);
+
+    if (!userDetail) {
+        notFound();
+    }
 
     return (
         <>

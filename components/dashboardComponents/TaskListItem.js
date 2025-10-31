@@ -21,7 +21,8 @@ export default function TaskListItem({ task }) {
         <Badge variant={
           status === "completed" ? "success" :
             status === "in-progress" ? "secondary" :
-              "outline"
+              status === 'to-do' ? 'todo' :
+                "outline"
         }>
           {status}
         </Badge>

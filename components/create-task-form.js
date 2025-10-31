@@ -10,7 +10,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Checkbox } from "./ui/checkbox";
 import {
     Select,
@@ -21,6 +21,11 @@ import {
 } from "@/components/ui/select"
 import { createTask } from "@/action/task.actions";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './ui/dialog'
+import dynamic from "next/dynamic";
+
+const JoditEditor = dynamic(() => import("jodit-react"), {
+    ssr: false,
+});
 
 const CreateTaskForm = ({ users }) => {
 
@@ -30,6 +35,8 @@ const CreateTaskForm = ({ users }) => {
     const [status, setStatus] = useState("");
     const [state, formAction, isPending] = useActionState(createTask.bind(null, selectedUsers), {});
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [description, setDescription] = useState("");
+    const contentRef = useRef(null);
 
     const handleToggle = (userId, checked) => {
         setSelectedUsers(prev =>
@@ -45,6 +52,7 @@ const CreateTaskForm = ({ users }) => {
                 setDate(undefined);
                 setSelectedUsers([]);
                 setStatus("");
+                setDescription("")
             }
         }
     }, [state])
@@ -58,11 +66,18 @@ const CreateTaskForm = ({ users }) => {
                 </div>
                 <div className="grid gap-2">
                     <Label htmlFor='description'>Task Description</Label>
-                    <Input type={'text'} name='description' className={'w-2xl max-w-2xl'} />
+                    <JoditEditor
+                        ref={contentRef}
+                        value={description}
+                        tabIndex={1}
+                        onBlur={newContent => setDescription(newContent)}
+                        onChange={newContent => { }}
+                        className="w-2xl max-w-2xl"
+                    />
                 </div>
                 <div className="flex flex-col gap-3">
                     <Label htmlFor="dueDate" className="px-1">
-                        Schedule Task
+                        Due Date
                     </Label>
                     <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
@@ -84,6 +99,7 @@ const CreateTaskForm = ({ users }) => {
                                     setDate(date)
                                     setOpen(false)
                                 }}
+                                disabled={{ before: new Date() }}
                             />
                         </PopoverContent>
                     </Popover>
@@ -97,6 +113,7 @@ const CreateTaskForm = ({ users }) => {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="pending">Pending</SelectItem>
+                            <SelectItem value="to-do">To-Do</SelectItem>
                             <SelectItem value="in-progress">In-Progress</SelectItem>
                             <SelectItem value="completed">Completed</SelectItem>
                         </SelectContent>
@@ -128,6 +145,7 @@ const CreateTaskForm = ({ users }) => {
 
                 <input type="hidden" name="dueDate" value={date} />
                 <input type="hidden" name="status" value={status} />
+                <input type="hidden" name='description' value={description} />
 
                 <Button disabled={isPending} type='submit' className={'w-2xl max-w-2xl'}>Add Task</Button>
             </form>

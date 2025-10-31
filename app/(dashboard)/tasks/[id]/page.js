@@ -34,7 +34,9 @@ const TaskDetailPage = async ({ params }) => {
                                 ? "success"
                                 : task?.status === "in-progress"
                                     ? "secondary"
-                                    : "outline"
+                                    : task?.status === 'to-do'
+                                        ? 'todo'
+                                        : "outline"
                         }
                         className="capitalize"
                     >
@@ -44,7 +46,7 @@ const TaskDetailPage = async ({ params }) => {
 
                 {/* Description */}
                 {task?.description && (
-                    <p className="text-muted-foreground">{task?.description}</p>
+                    <p className="text-muted-foreground">{parse(DOMPurify.sanitize(task?.description || ""))}</p>
                 )}
 
                 {/* Metadata */}

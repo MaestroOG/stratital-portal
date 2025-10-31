@@ -26,8 +26,13 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { editTask } from "@/action/task.actions";
+import dynamic from "next/dynamic";
+
+const JoditEditor = dynamic(() => import("jodit-react"), {
+    ssr: false,
+});
 
 const EditTaskForm = ({ task }) => {
 
@@ -37,6 +42,8 @@ const EditTaskForm = ({ task }) => {
     const [status, setStatus] = useState(task?.status);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [state, formAction, isPending] = useActionState(editTask, {});
+    const [description, setDescription] = useState(task?.description);
+    const contentRef = useRef(null);
 
     const handleClick = () => {
         setEditOpen(true);
@@ -72,7 +79,14 @@ const EditTaskForm = ({ task }) => {
                             </div>
                             <div className="grid gap-3">
                                 <Label htmlFor='description'>Task Description</Label>
-                                <Input type={'text'} name='description' defaultValue={task?.description} />
+                                <JoditEditor
+                                    ref={contentRef}
+                                    value={description}
+                                    tabIndex={1}
+                                    onBlur={newContent => setDescription(newContent)}
+                                    onChange={newContent => { }}
+                                    className="w-2xl max-w-2xl"
+                                />
                             </div>
 
                             <div className="flex flex-col gap-3">
@@ -111,6 +125,7 @@ const EditTaskForm = ({ task }) => {
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="pending">Pending</SelectItem>
+                                        <SelectItem value="to-do">To-Do</SelectItem>
                                         <SelectItem value="in-progress">In-Progress</SelectItem>
                                         <SelectItem value="completed">Completed</SelectItem>
                                     </SelectContent>
@@ -127,6 +142,7 @@ const EditTaskForm = ({ task }) => {
                         <input type="hidden" name="dueDate" value={date} />
                         <input type="hidden" name="status" value={status} />
                         <input type="hidden" name='taskId' value={task?._id} />
+                        <input type="hidden" name='description' value={description} />
                     </form>
                 </DialogContent>
             </Dialog>

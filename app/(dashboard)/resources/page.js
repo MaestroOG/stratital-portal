@@ -2,12 +2,22 @@ import AddResourceForm from "@/components/add-resource-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { getUser } from "@/lib/user"
-import { getAllResources, getResourceCategories } from "@/lib/admin";
+import { getAllCreatedCategories, getAllResources, getResourceCategories } from "@/lib/admin";
 import { formatDateToYMD } from "@/utils/formUtils";
 import ResourceDeletionForm from "@/components/resource-deletion-form";
 import ResourceEditForm from "@/components/resource-edit-form";
 import CreateResourceCategoryForm from "@/components/create-resource-category-form";
 import ResourceFilterSelect from "@/components/resource-filter-select";
+import Container from "@/components/dashboardComponents/Container";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
+import DeleteCategoryForm from "@/components/delete-category-form";
 
 const ResourcesPage = async ({ searchParams }) => {
     const user = await getUser();
@@ -93,8 +103,37 @@ const ResourcesPage = async ({ searchParams }) => {
                     <AddResourceForm categories={categories} />
                 </TabsContent>
 
-                <TabsContent value="category" className="mt-4">
+                <TabsContent value="category" className="grid gap-6 mt-4">
                     <CreateResourceCategoryForm />
+                    <Container className={'bg-white p-2 md:p-4'}>
+                        <h1 className="text-xl font-semibold mb-4">Created Categories</h1>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="w-[100px]">Category Name</TableHead>
+                                    <TableHead className="text-right">Actions</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {(!categories || categories.length === 0) && (
+                                    <TableRow>
+                                        <TableCell colSpan={2} className="text-center">
+                                            No categories created.
+                                        </TableCell>
+                                    </TableRow>
+                                )}
+
+                                {categories && categories.map((category) => (
+                                    <TableRow key={category._id}>
+                                        <TableCell>{category.name}</TableCell>
+                                        <TableCell className="text-right">
+                                            <DeleteCategoryForm categoryId={category?._id} />
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </Container>
                 </TabsContent>
 
             </Tabs>

@@ -1,6 +1,6 @@
 'use client';
 
-import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, Menu, X, Settings, MessageCircleQuestionMark, Users } from "lucide-react";
+import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, Menu, X, Settings, MessageCircleQuestionMark, Users, ClipboardCheck } from "lucide-react";
 import Image from 'next/image'
 import React, { useActionState, useEffect, useState } from 'react'
 import {
@@ -33,9 +33,8 @@ const Header = ({ userFromDB, pfpLink }) => {
 
 
     const [state, formAction, isPending] = useActionState(signOutUser, "")
-    const [user, setUser] = useState(null);
 
-    const { countryCode, countryName, loading, error } = useCountry();
+    const { countryCode, loading, error } = useCountry();
 
     const [count, setCount] = useState(0)
     const getNotifications = async () => {
@@ -53,32 +52,15 @@ const Header = ({ userFromDB, pfpLink }) => {
     }
 
     useEffect(() => {
-        // Get "user" cookie value
-        const cookieValue = document.cookie
-            .split("; ")
-            .find(row => row.startsWith("user="))
-            ?.split("=")[1];
-
-        if (cookieValue) {
-            try {
-                setUser(JSON.parse(decodeURIComponent(cookieValue)));
-                console.log(JSON.parse(decodeURIComponent(cookieValue)))
-            } catch (err) {
-                console.error("Invalid user cookie", err);
-            }
-        }
-    }, []);
-
-    useEffect(() => {
         const fetchUnread = async () => {
             const res = await fetch("/api/notifications/unread");
             const data = await res.json();
             console.log(data)
-            const unreadNotifs = countUnreadNotifications(data.notifications, user?._id);
+            const unreadNotifs = countUnreadNotifications(data.notifications, userFromDB?._id);
             setCount(unreadNotifs);
         };
         fetchUnread();
-    }, [user]);
+    }, [userFromDB]);
 
 
 
@@ -93,7 +75,7 @@ const Header = ({ userFromDB, pfpLink }) => {
             title: "Dashboard",
             href: "/",
         },
-        ...(user?.role !== "manager"
+        ...(userFromDB?.role !== "manager"
             ? [
                 {
                     icon: <FolderCog />,
@@ -128,12 +110,17 @@ const Header = ({ userFromDB, pfpLink }) => {
             href: "/comments"
         },
 
-        ...(user?.role === "superadmin"
+        ...(userFromDB?.role === "superadmin"
             ? [
                 {
                     icon: <Receipt />,
                     title: "Invoices",
                     href: "/invoices",
+                },
+                {
+                    icon: <ClipboardCheck />,
+                    title: "Tasks",
+                    href: "/tasks",
                 },
                 {
                     icon: <Users />,
@@ -199,7 +186,7 @@ const Header = ({ userFromDB, pfpLink }) => {
                     <Popover>
                         <PopoverTrigger>
                             <div className='relative w-10 h-10'>
-                                {user && <Image src={pfpLink || '/placeholder-avatar.svg'} fill className='rounded-full cursor-pointer object-cover' priority alt='avatar' />}
+                                {userFromDB && <Image src={pfpLink || '/placeholder-avatar.svg'} fill className='rounded-full cursor-pointer object-cover' priority alt='avatar' />}
                             </div>
                         </PopoverTrigger>
                         <PopoverContent>
@@ -224,7 +211,7 @@ const Header = ({ userFromDB, pfpLink }) => {
                                     <X className='text-white' />
                                 </DrawerClose>
                                 <div className='mt-8'>
-                                    {user?.role !== 'manager' && <DrawerClose asChild>
+                                    {userFromDB?.role !== 'manager' && <DrawerClose asChild>
                                         <Link href={'/projects/new-project'} className={`bg-white flex items-center gap-2.5 p-2 rounded-full cursor-pointer`}>
                                             <Image src={'/addIcon.png'} width={34} height={34} alt="Add_Icon" />
                                             <p className="font-medium text-sm">Create new project</p>

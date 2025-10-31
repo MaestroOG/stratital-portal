@@ -1,6 +1,5 @@
 import Container from "@/components/dashboardComponents/Container"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import IntroText from "@/components/IntroText"
 import Link from "next/link"
 import { Input } from "@/components/ui/input"
@@ -8,11 +7,11 @@ import { Search } from "lucide-react"
 import { getUser } from "@/lib/user"
 import { getAllCompletedProjects, getAllPendingProjects, getAllRunningProjects, getAllUserFinishedProjects, getAllUserPendingProjects, getAllUserProjects, getAllUserRunningProjects, getCompletedProjectsThisMonth, getEveryProject, getEveryUserProjects, getPendingProjectsThisMonth, getRunningProjectsThisMonth } from "@/lib/projects"
 import { Suspense } from "react"
-import { camelToNormal, capitalizeFirst } from "@/utils/formUtils"
 import HomePageDialog from "@/components/dashboardComponents/HomePageDialog"
 import { getLatestUnreadNotification } from "@/lib/notifications"
 import { getAllCompletedProjectsThisMonth, getAllManagerRelatedProjects, getAllPendingProjectsThisMonth, getAllProjects, getAllRunningProjectsThisMonth } from "@/lib/admin"
 import ProjectCardsGrid from "@/components/dashboardComponents/ProjectCardsGrid"
+import MainProjectCard from "@/components/dashboardComponents/MainProjectCard"
 
 
 
@@ -85,7 +84,7 @@ const HomePage = async ({ searchParams }) => {
 
       <IntroText />
 
-      <ProjectCardsGrid runningProjectsThisMonth={runningProjectsThisMonth} projects={projects} completedProjectsThisMonth={completedProjectsThisMonth} pendingProjectsThisMonth={pendingProjectsThisMonth} />
+      <ProjectCardsGrid filter={filter} runningProjectsThisMonth={runningProjectsThisMonth} projects={projects} completedProjectsThisMonth={completedProjectsThisMonth} pendingProjectsThisMonth={pendingProjectsThisMonth} />
 
       <Container className="bg-white p-4 rounded-lg">
         <div className="flex items-center md:justify-between gap-4">
@@ -94,11 +93,11 @@ const HomePage = async ({ searchParams }) => {
             <Link href={'/projects/completed'}><Button>See Completed Projects</Button></Link>
             <Link href={'/projects/archived'}><Button>See Archived Projects</Button></Link>
             {user?.role === 'superadmin' && <Link href={'/projects/all'}><Button>See All Projects</Button></Link>}
-            <Link href={'/expenditure'}><Button>See {user?.role === 'superadmin' ? 'Generated Revenue' : 'Monthly Expenditure'}</Button></Link>
+            <Link href={'/expenditure'}><Button>See {user?.role === 'superadmin' ? 'Generated Revenue' : 'Monthly Spending'}</Button></Link>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 mt-5 gap-4">
+        <div className="grid grid-cols-1 items-stretch md:grid-cols-4 mt-5 gap-4">
 
 
           {projects?.length === 0 && (
@@ -109,13 +108,7 @@ const HomePage = async ({ searchParams }) => {
           )}
           <Suspense fallback={<p>Loading...</p>}>
             {projects?.map(project => (
-              <div key={project._id} className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                <Badge variant={"secondary"} className={'mb-2'}>{camelToNormal(project.service)}</Badge>
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{project.projectTitle}</h5>
-                <p className="mb-3 font-medium">By: {project?.createdBy?.companyName ?? ''}</p>
-                <p className="mb-3 font-medium text-red animate-pulse">• {capitalizeFirst(project?.status) || ""}</p>
-                <Link href={`/projects/${project?._id}`}><Button variant={"default"}>Project Details</Button></Link>
-              </div>
+              <MainProjectCard key={project?._id} project={project} />
             ))}
           </Suspense>
 

@@ -21,11 +21,10 @@ const ExpenditurePage = async () => {
     }
 
 
-    console.log(totalSpent);
     return (
         <Container className={'bg-white p-4 rounded-lg'}>
             <div className="flex flex-wrap items-center justify-between gap-3">
-                <h1 className="text-2xl font-semibold">Total {user?.role === 'superadmin' ? 'Revenue' : 'Expenditure'}</h1>
+                <h1 className="text-2xl font-semibold">Total {user?.role === 'superadmin' ? 'Revenue' : 'Spending'}</h1>
 
                 <div className="flex items-center gap-2">
 

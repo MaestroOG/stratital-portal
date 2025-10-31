@@ -9,10 +9,7 @@ import { useActionState, useEffect, useState } from 'react';
 import { addResourceCategory } from '@/action/admin.actions';
 import {
     Dialog,
-    DialogClose,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"

@@ -29,6 +29,7 @@
     "date-fns": "^4.1.0",
     "html-react-parser": "^5.2.6",
     "input-otp": "^1.4.2",
+    "isomorphic-dompurify": "^2.30.1",
     "jodit-react": "^5.2.19",
     "jsonwebtoken": "^9.0.2",
     "linkify-react": "^4.3.2",

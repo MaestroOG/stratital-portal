@@ -1,5 +1,5 @@
 export const generateProjectStatusUpdateEmail = (projectTitle, newStatus, name, updatedAt) => {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en" style="margin:0;padding:0;">
 <head>
   <meta charset="UTF-8" />
@@ -134,6 +134,110 @@ export const generateProjectStatusUpdateEmail = (projectTitle, newStatus, name, 
   </table>
   <!-- /Wrapper -->
 </body>
+</html>
+`;
+}
+
+export const generateInactiveProjectsAlertEmail = (projectCount) => {
+  return `
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Inactive Projects Alert</title>
+  </head>
+  <body style="margin:0;padding:0;background-color:#f2f4f8;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;">
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color:#f2f4f8;padding:24px 0;">
+      <tr>
+        <td align="center">
+          <!-- container -->
+          <table role="presentation" cellpadding="0" cellspacing="0" width="680" style="max-width:680px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 6px 24px rgba(16,24,40,0.08);">
+            <!-- header -->
+            <tr>
+              <td style="padding:24px 28px 8px 28px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td style="vertical-align:middle;">
+                      <h1 style="margin:0;font-size:20px;line-height:1.2;color:#0f172a;font-weight:700;">Inactive Projects — Attention Needed</h1>
+                      <p style="margin:6px 0 0 0;font-size:14px;color:#475569;">We noticed no notes were added to the following projects in the last <strong>3 days</strong>.</p>
+                    </td>
+                    <td style="text-align:right;vertical-align:middle;">
+                      <!-- small badge -->
+                      <span style="display:inline-block;background:#F33C38;color:#fff;font-size:12px;padding:6px 10px;border-radius:999px;font-weight:600;">Admin Alert</span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- body -->
+            <tr>
+              <td style="padding:8px 28px 24px 28px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                    <td style="padding:12px;background:#f8fafc;border:1px solid #e6eef6;border-radius:8px;">
+                      <!-- Project list container: inject rows here -->
+                      <!-- Example injected content should be a set of <tr><td>...</td></tr> inside the inner table below -->
+                      <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+                        <!-- START PROJECT ROW (repeat this block for each project) -->
+                        <!--
+                        <tr>
+                          <td style="padding:10px 8px;border-bottom:1px dashed #e6eef6;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+                              <div style="flex:1;">
+                                <div style="font-size:15px;color:#0f172a;font-weight:600;">Project Title</div>
+                                <div style="font-size:13px;color:#6b7280;margin-top:4px;">Service — Last note: Oct 24, 2025 (or None)</div>
+                              </div>
+                              <div style="white-space:nowrap;">
+                                <a href="https://your-app.example.com/projects/PROJECT_ID" style="display:inline-block;padding:8px 12px;border-radius:8px;text-decoration:none;border:1px solid #e2e8f0;font-size:13px;color:#0f172a;background:#ffffff;">View</a>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        -->
+                        <!-- END PROJECT ROW -->
+                        <!-- PLACEHOLDER: your server should replace this comment with generated rows -->
+                        ${projectCount}
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- CTA -->
+                  <tr>
+                    <td style="padding-top:18px;text-align:center;">
+                      <a href="https://your-app.example.com/admin/projects" target="_blank" style="display:inline-block;padding:12px 20px;border-radius:10px;background:#F33C38;color:#ffffff;text-decoration:none;font-weight:600;font-size:14px;">Open Admin Dashboard</a>
+                    </td>
+                  </tr>
+
+                  <!-- explanatory note -->
+                  <tr>
+                    <td style="padding-top:14px;color:#6b7280;font-size:13px;">
+                      <p style="margin:0;">Tip: Click <strong>View</strong> on a project to add a note or reassign to the responsible person. If these projects are intentionally idle, you can ignore this message.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- footer -->
+            <tr>
+              <td style="padding:16px 28px 24px 28px;background:#fbfdff;border-top:1px solid #eef2ff;">
+                <table role="presentation" width="100%">
+                  <tr>
+                    <td style="font-size:13px;color:#94a3b8;">Sent by <strong>Admin Team at Stratital</strong></td>
+                    <td style="text-align:right;font-size:13px;color:#94a3b8;">Need help? <a href="mailto:support@stratital.com" style="color:#2563eb;text-decoration:none;">support@stratital.com</a></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+          </table>
+          <!-- end container -->
+        </td>
+      </tr>
+    </table>
+  </body>
 </html>
 `;
 }

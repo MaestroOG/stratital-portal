@@ -99,7 +99,7 @@ const CreateTaskForm = ({ users }) => {
                                     setDate(date)
                                     setOpen(false)
                                 }}
-                                disabled={{ before: new Date() }}
+                                disabled={{ before: new Date().setHours(0, 0, 0, 0) }}
                             />
                         </PopoverContent>
                     </Popover>

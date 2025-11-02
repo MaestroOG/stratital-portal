@@ -22,7 +22,7 @@ const CommentFilterForm = () => {
 
     return (
         <>
-            <Select onValueChange={handleFilter}>
+            <Select value={searchParams.get('filter') || 'all'} onValueChange={handleFilter}>
                 <SelectTrigger className={'border border-red w-[180px]'}>
                     <SelectValue placeholder="Select filter" />
                 </SelectTrigger>

@@ -26,7 +26,6 @@ const AuditPage = async ({ searchParams }) => {
     }
 
 
-    console.log(formattedService)
 
     return (
         <>

@@ -33,8 +33,7 @@ const CommentsPage = async ({ searchParams }) => {
         }
     }
 
-    const notes = filter === 'unread' || user.role !== 'superadmin' ? data : data.notes;
-
+    const notes = filter === 'unread' || user.role !== 'superadmin' ? data : data?.notes || [];
     return (
         <Container className={'bg-white p-2 md:p-4'}>
             <div className="flex items-center justify-between">

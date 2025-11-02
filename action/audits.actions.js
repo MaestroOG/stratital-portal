@@ -13,6 +13,13 @@ export default async function createAudit(prevState, formData) {
     const auditTitle = formData.get("auditTitle");
     const partnerId = formData.get("partnerId");
 
+    if (!user) {
+        return {
+            success: false,
+            message: "Unauthorized. Please log in."
+        };
+    }
+
     // Turn formData into a plain object, excluding service
     const entries = {};
     formData.forEach((value, key) => {
@@ -21,6 +28,12 @@ export default async function createAudit(prevState, formData) {
         }
     });
 
+    if (!service || !auditTitle) {
+        return {
+            success: false,
+            message: "Missing required fields: service and auditTitle."
+        };
+    }
     // Clean and validate entries
     const cleanedEntries = cleanFormEntries(entries);
 
@@ -43,6 +56,12 @@ export default async function createAudit(prevState, formData) {
         };
 
         if (user?.role === 'user') {
+            if (!user.email) {
+                return {
+                    success: false,
+                    message: "User email is missing."
+                };
+            }
             const html = generateAuditEmail(emailData);
 
             await transporter.sendMail({
@@ -54,8 +73,22 @@ export default async function createAudit(prevState, formData) {
         }
 
         if (user?.role === 'superadmin') {
+            if (!partnerId) {
+                return {
+                    success: false,
+                    message: "partnerId is required for superadmin audit requests."
+                };
+            }
+
             await connectDB();
             const auditForUser = await User.findById(partnerId);
+
+            if (!auditForUser || !auditForUser.email) {
+                return {
+                    success: false,
+                    message: "Partner user not found or missing email."
+                };
+            }
 
             const html = generateAuditEmail({
                 ...emailData,

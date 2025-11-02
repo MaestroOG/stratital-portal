@@ -109,7 +109,7 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                 <div className='flex items-end justify-between'>
                     <h1 className='text-4xl font-bold'>Comments</h1>
                 </div>
-                <NoteBox id={id} />
+                <NoteBox id={id} user={user} />
                 <div className="mt-6">
                     <ul>
                         {notes?.length > 0 ? (

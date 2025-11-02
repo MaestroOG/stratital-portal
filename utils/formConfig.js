@@ -123,6 +123,119 @@ export const formConfig = {
 
 }
 
+export const auditFormConfig = {
+    localSeoAudit: [
+        { label: "Business Name", name: "businessName", type: "text", required: true },
+        { label: "Website URL (Add https:// in front of the url)", name: "websiteUrl", type: "url", required: true },
+        { label: "Current Local Rankings Keywords", name: "currentKeywords", type: "textarea" },
+        { label: "Target Locations (Cities/States)", name: "targetLocations", type: "textarea" },
+        { label: "Google Business Profile Link (Add https:// in front of the url)", name: "googleBusinessProfile", type: "url" },
+        { label: "Competitor Websites", name: "competitorWebsites", type: "textarea" },
+        { label: "NAP Consistency Issues Noted", name: "napIssues", type: "textarea" },
+        { label: "Local Citations Audit Needed?", name: "citationsAudit", type: "checkbox" }
+    ],
+
+    nationalSeoAudit: [
+        { label: "Business Name", name: "businessName", type: "text", required: true },
+        { label: "Website URL (Add https:// in front of the url)", name: "websiteUrl", type: "url", required: true },
+        { label: "Current Top Performing Keywords", name: "topKeywords", type: "textarea" },
+        { label: "Target Geographic Areas", name: "targetRegions", type: "textarea" },
+        { label: "Competitor Domains", name: "competitorDomains", type: "textarea" },
+        { label: "Backlink Profile Check Needed?", name: "backlinkAudit", type: "checkbox" },
+        { label: "Content Audit Needed?", name: "contentAudit", type: "checkbox" }
+    ],
+
+    linkBuildingAudit: [
+        { label: "Website URL (Add https:// in front of the url)", name: "websiteUrl", type: "url", required: true },
+        { label: "Current Backlinks (if any)", name: "currentBacklinks", type: "textarea" },
+        { label: "Target Pages for Link Building", name: "targetPages", type: "textarea" },
+        { label: "Preferred Link Sources / Niches", name: "preferredSources", type: "textarea" },
+        { label: "Toxic Link Review Needed?", name: "toxicLinkCheck", type: "checkbox" }
+    ],
+
+    googleAdvertisingAudit: [
+        { label: "Business Name", name: "businessName", type: "text", required: true },
+        { label: "Website URL (Add https:// in front of the url)", name: "websiteUrl", type: "url", required: true },
+        { label: "Google Ads Account ID", name: "accountId", type: "text" },
+        { label: "Target Audience / Demographics", name: "targetAudience", type: "textarea" },
+        { label: "Ad Budget (monthly)", name: "adBudget", type: "number" },
+        { label: "Conversion Tracking Set Up?", name: "conversionTracking", type: "checkbox" },
+        { label: "Landing Page Review Needed?", name: "landingPageAudit", type: "checkbox" }
+    ],
+
+    socialMediaManagementAudit: [
+        { label: "Business Name", name: "businessName", type: "text", required: true },
+        { label: "Social Handles / Pages", name: "socialHandles", type: "textarea", required: true },
+        { label: "Current Posting Frequency", name: "postingFrequency", type: "text" },
+        { label: "Content Quality Audit Needed?", name: "contentAudit", type: "checkbox" },
+        { label: "Follower Demographics Review Needed?", name: "demographicsAudit", type: "checkbox" }
+    ],
+
+    socialMediaAdvertisingAudit: [
+        { label: "Business Name", name: "businessName", type: "text", required: true },
+        { label: "Website URL (Add https:// in front of the url)", name: "websiteUrl", type: "url" },
+        { label: "Current Ad Accounts / Campaigns", name: "adAccounts", type: "textarea" },
+        { label: "Target Platforms", name: "platforms", type: "text" },
+        { label: "Monthly Ad Spend", name: "adBudget", type: "number" },
+        { label: "Conversion Pixel Installed?", name: "pixelInstalled", type: "checkbox" },
+        { label: "Creative & Copy Performance Review?", name: "creativeReview", type: "checkbox" }
+    ],
+
+    webDesignAndDevelopmentAudit: [
+        { label: "Business Name", name: "businessName", type: "text", required: true },
+        { label: "Current Website URL (Add https:// in front of the url)", name: "currentWebsite", type: "url" },
+        { label: "Website Type (E-commerce, Portfolio, Blog, etc.)", name: "websiteType", type: "text" },
+        { label: "Number of Pages", name: "numberOfPages", type: "number" },
+        { label: "Core Issues Noted (optional)", name: "currentIssues", type: "textarea" },
+        { label: "Performance Audit Needed?", name: "performanceAudit", type: "checkbox" },
+        { label: "Mobile Responsiveness Check?", name: "mobileAudit", type: "checkbox" },
+        { label: "SEO Technical Audit Needed?", name: "seoAudit", type: "checkbox" }
+    ],
+
+    emailMarketingAudit: [
+        { label: "Business Name", name: "businessName", type: "text", required: true },
+        { label: "Email Platform Used", name: "emailPlatform", type: "text" },
+        { label: "Current Email List Size", name: "listSize", type: "number" },
+        { label: "Campaign Type (Newsletter, Promotions, etc.)", name: "campaignType", type: "text" },
+        { label: "Deliverability Issues Noted?", name: "deliverabilityAudit", type: "checkbox" },
+        { label: "Template & Design Audit Needed?", name: "designAudit", type: "checkbox" }
+    ],
+
+    virtualAssistanceResourcesAudit: [
+        { label: "Business Name", name: "businessName", type: "text", required: true },
+        { label: "Current VA Tasks / Workflow", name: "currentTasks", type: "textarea" },
+        { label: "Tools Used (e.g., Slack, Trello, Asana)", name: "toolsUsed", type: "text" },
+        { label: "Process Efficiency Audit Needed?", name: "processAudit", type: "checkbox" },
+        { label: "Training / Skills Assessment Needed?", name: "trainingAudit", type: "checkbox" }
+    ],
+
+    'leadGeneration-ColdCallingAudit': [
+        { label: "Business Name", name: "businessName", type: "text", required: true },
+        { label: "Target Market / Industry", name: "targetIndustry", type: "text", required: true },
+        { label: "Current Call Scripts", name: "callScripts", type: "textarea" },
+        { label: "Process Efficiency Review Needed?", name: "processAudit", type: "checkbox" }
+    ],
+
+    managedWebSupportAudit: [
+        { label: "Website URL (Add https:// in front of the url)", name: "websiteUrl", type: "url", required: true },
+        { label: "Hosting Provider", name: "hostingProvider", type: "text" },
+        { label: "Areas of Concern (Performance, Security, Backups, etc.)", name: "concerns", type: "textarea" },
+        { label: "Update & Maintenance History", name: "maintenanceHistory", type: "textarea" },
+        { label: "Security Audit Needed?", name: "securityAudit", type: "checkbox" },
+        { label: "Performance & Speed Audit Needed?", name: "performanceAudit", type: "checkbox" }
+    ],
+
+    adhocSupportAudit: [
+        { label: "Website URL (Add https:// in front of the url)", name: "websiteUrl", type: "url", required: true },
+        { label: "Type of Issue / Task", name: "issueType", type: "text", required: true },
+        { label: "Detailed Description", name: "details", type: "textarea", required: true },
+        { label: "Priority Level (Low, Medium, High, Urgent)", name: "priorityLevel", type: "select", options: ["Low", "Medium", "High", "Urgent"] },
+        { label: "Access Details (if applicable)", name: "accessDetails", type: "textarea" },
+        { label: "Additional Notes", name: "additionalNotes", type: "textarea" }
+    ]
+};
+
+
 
 export const pricingConfig = {
     localSeo: {

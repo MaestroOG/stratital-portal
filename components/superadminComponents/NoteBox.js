@@ -1,7 +1,7 @@
 'use client';
 
 
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { addNote } from "@/action/project.actions";
@@ -11,25 +11,34 @@ const JoditEditor = dynamic(() => import("jodit-react"), {
     ssr: false,
 });
 
-const NoteBox = ({ id }) => {
+const NoteBox = ({ user, id }) => {
     const [state, formAction, isPending] = useActionState(addNote.bind(null, id), {});
     const [value, setValue] = useState("");
     const contentRef = useRef(null);
 
-    const handleSubmit = (e) => {
-        setValue("");
-    };
-
+    useEffect(() => {
+        if (state?.success) {
+            const newNote = {
+                _id: Math.random().toString(36).slice(2),
+                note: value,
+                createdBy: user,
+                createdAt: new Date().toISOString(),
+                readBy: [user?._id],
+            };
+            window.dispatchEvent(new CustomEvent("note-added", { detail: newNote }));
+            setValue("");
+        }
+    }, [state]);
     return (
         <>
-            <form action={formAction} onSubmit={handleSubmit} className='mt-6 grid gap-3 max-w-3xl'>
+            <form action={formAction} className='mt-6 grid gap-3 max-w-3xl'>
                 <Label className='text-heading' htmlFor="note">Add a Comment</Label>
                 <JoditEditor
                     ref={contentRef}
                     value={value}
                     tabIndex={1}
                     onBlur={newContent => setValue(newContent)}
-                    onChange={newContent => { }}
+                    onChange={(newContent) => setValue(newContent)}
                 />
                 <input type="hidden" name="commentText" value={value} />
                 <Button disabled={isPending} type="submit">Send</Button>

@@ -41,7 +41,7 @@ const HomePage = async ({ searchParams }) => {
     } else if (filter === 'pending') {
       projects = await getAllUserPendingProjects(user?._id);
     } else if (filter === 'archived') {
-      projects = await getAllArchivedUserProjects();
+      projects = await getAllArchivedUserProjects(user?._id);
     } else {
       projects = await getAllUserProjects(user?._id);
     }
@@ -75,13 +75,6 @@ const HomePage = async ({ searchParams }) => {
     archivedProjects = await getAllArchivedProjectsCount();
   }
   const latestNotification = await getLatestUnreadNotification();
-
-  console.log({
-    completedProjectsThisMonth,
-    pendingProjectsThisMonth,
-    runningProjectsThisMonth,
-    archivedProjects
-  })
 
 
   return (

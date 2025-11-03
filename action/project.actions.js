@@ -336,6 +336,7 @@ export async function archiveProject(prevState, formData) {
 }
 
 export async function deleteComment(prevState, formData) {
+    const user = await getUser();
     const commentId = formData.get('commentId');
 
     if (!commentId) {
@@ -347,6 +348,22 @@ export async function deleteComment(prevState, formData) {
 
     try {
         await connectDB();
+
+        const comment = await Note.findById(commentId);
+
+        if (!comment) {
+            return {
+                success: false,
+                message: "Comment not found"
+            }
+        }
+
+        if (comment.createdBy.toString() !== user?._id?.toString() && user?.role !== 'superadmin') {
+            return {
+                success: false,
+                message: "Unauthorized to delete this comment"
+            }
+        }
 
         const deletedComment = await Note.findByIdAndDelete(commentId);
 

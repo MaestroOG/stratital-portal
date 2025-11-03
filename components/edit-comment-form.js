@@ -47,7 +47,7 @@ const EditCommentForm = ({ id, note }) => {
                         </DialogHeader>
                         <div className="grid gap-4 mt-4">
                             <div className="grid gap-3">
-                                <Label htmlFor="name-1">Comment</Label>
+                                <Label>Comment</Label>
                                 <JoditEditor
                                     ref={contentRef}
                                     value={value}

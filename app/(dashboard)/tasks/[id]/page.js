@@ -5,10 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { getTaskById, getTaskCommentByTaskId } from '@/lib/task';
 import { formatTo12HourTime, timeAgo } from '@/utils/formUtils';
-import parse from 'html-react-parser';
 import Image from 'next/image';
-import DOMPurify from 'isomorphic-dompurify';
 import EditTaskForm from '@/components/edit-task-form';
+import { TaskDetailComments, TaskDetailDescription } from '@/components/dashboardComponents/TaskDetailParts';
 
 const TaskDetailPage = async ({ params }) => {
 
@@ -46,11 +45,7 @@ const TaskDetailPage = async ({ params }) => {
 
                 {/* Description */}
                 {task?.description && (
-                    <div className="text-muted-foreground"
-                        dangerouslySetInnerHTML={{
-                            __html: DOMPurify.sanitize(task?.description || "")
-                        }}
-                    />
+                    <TaskDetailDescription description={task?.description} />
                 )}
 
                 {/* Metadata */}
@@ -115,11 +110,7 @@ const TaskDetailPage = async ({ params }) => {
                                     </div>
                                 </div>
 
-                                <div className="max-w-5xl text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content"
-                                    dangerouslySetInnerHTML={{
-                                        __html: DOMPurify.sanitize(taskComment?.commentText || "")
-                                    }}
-                                />
+                                <TaskDetailComments commentText={taskComment?.commentText} />
                             </li>
                         ))}
                     </ul>

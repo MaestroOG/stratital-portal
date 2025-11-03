@@ -66,7 +66,7 @@ const NoteItem = ({ note, isUnread, onMarkAsRead, user }) => {
                         </span>
                     </div>
                 </div>
-                <Popover>
+                {user?.role === 'superadmin' && <Popover>
                     <PopoverTrigger>
                         <EllipsisVertical className='cursor-pointer' />
                     </PopoverTrigger>
@@ -74,7 +74,7 @@ const NoteItem = ({ note, isUnread, onMarkAsRead, user }) => {
                         <EditCommentForm note={note?.note} id={note?._id} />
                         <DeleteCommentForm id={note?._id} />
                     </PopoverContent>
-                </Popover>
+                </Popover>}
             </div>
 
             <div className="w-5xl max-w-5xl text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">

@@ -46,7 +46,13 @@ const TaskDetailPage = async ({ params }) => {
 
                 {/* Description */}
                 {task?.description && (
-                    <p className="text-muted-foreground">{parse(DOMPurify.sanitize(task?.description || ""))}</p>
+                    <div
+                        className='text-muted-foreground'
+                        dangerouslySetInnerHTML={{
+                            __html: DOMPurify.sanitize(task?.description || "")
+                        }}
+                    />
+
                 )}
 
                 {/* Metadata */}
@@ -111,9 +117,11 @@ const TaskDetailPage = async ({ params }) => {
                                     </div>
                                 </div>
 
-                                <div className="max-w-5xl text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
-                                    {parse(DOMPurify.sanitize(taskComment?.commentText || ''))}
-                                </div>
+                                <div className="max-w-5xl text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content"
+                                    dangerouslySetInnerHTML={{
+                                        __html: DOMPurify.sanitize(taskComment?.commentText || "")
+                                    }}
+                                />
                             </li>
                         ))}
                     </ul>

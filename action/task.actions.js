@@ -23,7 +23,7 @@ export async function createTask(selectedUsers, prevState, formData) {
         }
     }
 
-    const validStatuses = ['pending', 'in-progress', 'completed']; // adjust as needed
+    const validStatuses = ['pending', 'in-progress', 'completed', 'to-do']; // adjust as needed
     if (!status || !validStatuses.includes(status)) {
         return {
             success: false,

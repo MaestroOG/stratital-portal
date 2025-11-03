@@ -5,7 +5,7 @@ import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
 import { getUser } from "@/lib/user"
-import { getAllCompletedProjects, getAllPendingProjects, getAllRunningProjects, getAllUserFinishedProjects, getAllUserPendingProjects, getAllUserProjects, getAllUserRunningProjects, getCompletedProjectsThisMonth, getEveryProject, getEveryUserProjects, getPendingProjectsThisMonth, getRunningProjectsThisMonth } from "@/lib/projects"
+import { getAllArchivedProjects, getAllArchivedProjectsCount, getAllCompletedProjects, getAllPendingProjects, getAllRunningProjects, getAllUserFinishedProjects, getAllUserPendingProjects, getAllUserProjects, getAllUserRunningProjects, getArchivedProjectsCount, getCompletedProjectsThisMonth, getEveryProject, getEveryUserProjects, getPendingProjectsThisMonth, getRunningProjectsThisMonth } from "@/lib/projects"
 import { Suspense } from "react"
 import HomePageDialog from "@/components/dashboardComponents/HomePageDialog"
 import { getLatestUnreadNotification } from "@/lib/notifications"
@@ -29,6 +29,7 @@ const HomePage = async ({ searchParams }) => {
   let completedProjectsThisMonth;
   let pendingProjectsThisMonth;
   let runningProjectsThisMonth;
+  let archivedProjects;
 
   if (user?.role === 'user') {
     if (filter === 'all') {
@@ -39,17 +40,21 @@ const HomePage = async ({ searchParams }) => {
       projects = await getAllUserRunningProjects(user?._id);
     } else if (filter === 'pending') {
       projects = await getAllUserPendingProjects(user?._id);
+    } else if (filter === 'archived') {
+      projects = await getAllArchivedUserProjects();
     } else {
       projects = await getAllUserProjects(user?._id);
     }
     completedProjectsThisMonth = await getCompletedProjectsThisMonth();
     pendingProjectsThisMonth = await getPendingProjectsThisMonth();
     runningProjectsThisMonth = await getRunningProjectsThisMonth();
+    archivedProjects = await getArchivedProjectsCount();
   } else if (user?.role === 'manager') {
     projects = await getAllManagerRelatedProjects();
     completedProjectsThisMonth = await getAllCompletedProjectsThisMonth();
     pendingProjectsThisMonth = await getAllPendingProjectsThisMonth();
     runningProjectsThisMonth = await getAllRunningProjectsThisMonth();
+    archivedProjects = await getAllArchivedProjectsCount();
   } else {
     if (filter === 'finished') {
       projects = await getAllCompletedProjects();
@@ -59,15 +64,24 @@ const HomePage = async ({ searchParams }) => {
       projects = await getEveryProject();
     } else if (filter === 'pending') {
       projects = await getAllPendingProjects();
+    } else if (filter === 'archived') {
+      projects = await getAllArchivedProjects();
     } else {
       projects = await getAllProjects();
     }
     completedProjectsThisMonth = await getAllCompletedProjectsThisMonth();
     pendingProjectsThisMonth = await getAllPendingProjectsThisMonth();
     runningProjectsThisMonth = await getAllRunningProjectsThisMonth();
+    archivedProjects = await getAllArchivedProjectsCount();
   }
   const latestNotification = await getLatestUnreadNotification();
 
+  console.log({
+    completedProjectsThisMonth,
+    pendingProjectsThisMonth,
+    runningProjectsThisMonth,
+    archivedProjects
+  })
 
 
   return (
@@ -84,15 +98,12 @@ const HomePage = async ({ searchParams }) => {
 
       <IntroText />
 
-      <ProjectCardsGrid filter={filter} runningProjectsThisMonth={runningProjectsThisMonth} projects={projects} completedProjectsThisMonth={completedProjectsThisMonth} pendingProjectsThisMonth={pendingProjectsThisMonth} />
+      <ProjectCardsGrid filter={filter} archivedCount={archivedProjects} runningProjectsThisMonth={runningProjectsThisMonth} projects={projects} completedProjectsThisMonth={completedProjectsThisMonth} pendingProjectsThisMonth={pendingProjectsThisMonth} />
 
       <Container className="bg-white p-4 rounded-lg">
         <div className="flex items-center md:justify-between gap-4">
           <h1 className="text-xl font-medium">Your Projects</h1>
           <div className="flex items-center gap-2">
-            <Link href={'/projects/completed'}><Button>See Completed Projects</Button></Link>
-            <Link href={'/projects/archived'}><Button>See Archived Projects</Button></Link>
-            {user?.role === 'superadmin' && <Link href={'/projects/all'}><Button>See All Projects</Button></Link>}
             <Link href={'/expenditure'}><Button>See {user?.role === 'superadmin' ? 'Generated Revenue' : 'Monthly Spending'}</Button></Link>
           </div>
         </div>

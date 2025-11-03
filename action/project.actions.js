@@ -334,3 +334,76 @@ export async function archiveProject(prevState, formData) {
         }
     }
 }
+
+export async function deleteComment(prevState, formData) {
+    const commentId = formData.get('commentId');
+
+    if (!commentId) {
+        return {
+            success: false,
+            message: "Comment needs to exist"
+        }
+    }
+
+    try {
+        await connectDB();
+
+        const deletedComment = await Note.findByIdAndDelete(commentId);
+
+        if (!deletedComment) {
+            return {
+                success: false,
+                message: "Could not delete comment"
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: "Comment deleted successfully"
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: "Something went wrong"
+        }
+    }
+}
+
+export async function editComment(prevState, formData) {
+    const note = formData.get('commentText');
+    const noteId = formData.get('commentId');
+
+    try {
+        await connectDB();
+
+        const updates = {};
+
+        if (note) {
+            updates.note = note;
+        }
+
+        const updatedNote = await Note.findByIdAndUpdate(noteId, { $set: updates }, { new: true });
+
+        if (!updatedNote) {
+            return {
+                success: false,
+                message: "Could not update comment"
+            }
+        }
+
+        revalidatePath('/', 'layout');
+
+        return {
+            success: true,
+            message: "Update successfully"
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            message: "Something went wrong"
+        }
+    }
+}

@@ -7,8 +7,7 @@ import Link from "next/link"
 
 const TasksPage = async () => {
     const user = await getUser();
-    let tasks = await getTasks();
-
+    let tasks = await getUserAssignedTasks(user?._id);
     if (user?.role === 'manager') {
         tasks = await getUserAssignedTasks(user?._id)
     }

@@ -1,6 +1,6 @@
 'use client';
 
-import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, Menu, X, Settings, MessageCircleQuestionMark, Users, ClipboardCheck } from "lucide-react";
+import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, Menu, X, Settings, MessageCircleQuestionMark, Users, ClipboardCheck, SearchCheck } from "lucide-react";
 import Image from 'next/image'
 import React, { useActionState, useEffect, useState } from 'react'
 import {
@@ -109,7 +109,11 @@ const Header = ({ userFromDB, pfpLink }) => {
             title: "Comments",
             href: "/comments"
         },
-
+        {
+            icon: <SearchCheck />,
+            title: "Audits",
+            href: "/audits"
+        },
         ...(userFromDB?.role === "superadmin"
             ? [
                 {

@@ -3,13 +3,15 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getUser } from "@/lib/user"
-import { getAllComments, getAllCommentsOnUserProjects } from "@/lib/admin"
-import { formatDateToYMD, formatTo12HourTime } from "@/utils/formUtils";
-import CommentsList from "@/components/superadminComponents/CommentList"
+import { getAllComments, getAllCommentsOnUserProjects, getAllUnreadComments } from "@/lib/admin"
+import { formatDateToYMD, formatReadableDate, formatTo12HourTime } from "@/utils/formUtils";
+import CommentFilterForm from "@/components/comment-filter-form";
 
-const CommentsPage = async () => {
+const CommentsPage = async ({ searchParams }) => {
 
     const user = await getUser();
+
+    const { filter } = await searchParams
     if (!user) {
         return (
             <Container className="bg-white p-2 md:p-4">
@@ -23,36 +25,52 @@ const CommentsPage = async () => {
     if (user.role !== 'superadmin') {
         data = await getAllCommentsOnUserProjects(user._id);
     } else {
-        data = await getAllComments(1, 10);
+        if (filter === 'unread') {
+            data = await getAllUnreadComments(user._id); // returns array of unread notes
+        } else {
+            data = await getAllComments(1, 10); // returns paginated notes object
+        }
     }
 
+    const notes = filter === 'unread' || user.role !== 'superadmin' ? data : data?.notes || [];
     return (
         <Container className={'bg-white p-2 md:p-4'}>
-            <h1 className="text-2xl md:text-4xl font-bold">Project Comments</h1>
+            <div className="flex items-center justify-between">
+                <h1 className="text-2xl md:text-4xl font-bold">Project Comments</h1>
+                {user?.role === 'superadmin' && <CommentFilterForm />}
+            </div>
             <div className="flex flex-col gap-4 mt-4">
                 {user?.role === 'user' && data?.map((note, index) => (
-                    <Alert key={index} variant="default">
-                        <AlertTitle className={'font-semibold text-lg'}>{note?.createdBy?.name} - {formatDateToYMD(note?.createdAt)} - {formatTo12HourTime(note?.createdAt)}</AlertTitle>
-                        <AlertDescription>
-                            A comment was created by <span className="italic">{note.createdBy?.name}</span> on the project <span className="font-bold">{note.projectId?.projectTitle}</span>{" "}
-                            <Link
-                                href={`/projects/${note.projectId?._id}`}
-                            >
-                                <Button variant={'link'} className={'pl-0'}>
-                                    View Comment
-                                </Button>
-                            </Link>
-                        </AlertDescription>
-                    </Alert>
+                    <Link key={note?._id || index} href={`/projects/${note?.projectId?._id}`}>
+                        <Alert variant="default">
+                            <AlertTitle className="font-semibold text-lg">
+                                {note?.createdBy?.name} - {formatReadableDate(note?.createdAt)} - {formatTo12HourTime(note?.createdAt)}
+                            </AlertTitle>
+                            <AlertDescription>
+                                <span className="font-bold">on {note.projectId?.projectTitle}</span>
+                            </AlertDescription>
+                        </Alert>
+                    </Link>
                 ))}
-                {user?.role === 'superadmin' && (
-                    data.length === 0 ? (
+
+                <div className="flex flex-col gap-4 mt-4">
+                    {notes?.length === 0 ? (
                         <p className="text-gray-500 text-center p-6">No comments found.</p>
                     ) : (
-                        <CommentsList initialNotes={data.notes} />
-                    )
-                )}
-
+                        notes.map((note, index) => (
+                            <Link key={note._id || index} href={`/projects/${note.projectId?._id}`}>
+                                <Alert variant="default">
+                                    <AlertTitle className="font-semibold text-lg">
+                                        {note?.createdBy?.name} - {formatReadableDate(note?.createdAt)} - {formatTo12HourTime(note?.createdAt)}
+                                    </AlertTitle>
+                                    <AlertDescription>
+                                        <span className="font-bold">on {note.projectId?.projectTitle}</span>
+                                    </AlertDescription>
+                                </Alert>
+                            </Link>
+                        ))
+                    )}
+                </div>
             </div>
         </Container>
     )

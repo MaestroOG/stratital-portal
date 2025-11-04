@@ -33,6 +33,28 @@ export function formatDateToYMD(isoDateString) {
     return `${year}-${month}-${day}`;
 }
 
+export function formatReadableDate(dateInput) {
+    const date = new Date(dateInput);
+    if (isNaN(date)) return ""; // handle invalid dates
+
+    const day = date.getDate();
+    const month = date.toLocaleString("default", { month: "long" });
+    const year = date.getFullYear();
+
+    // add suffix: st, nd, rd, th
+    const suffix =
+        day % 10 === 1 && day !== 11
+            ? "st"
+            : day % 10 === 2 && day !== 12
+                ? "nd"
+                : day % 10 === 3 && day !== 13
+                    ? "rd"
+                    : "th";
+
+    return `${day}${suffix} ${month} ${year}`;
+}
+
+
 
 export function timeAgo(isoDateString) {
     const inputDate = new Date(isoDateString);

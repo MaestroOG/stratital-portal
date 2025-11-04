@@ -1,6 +1,6 @@
 "use client";
 
-import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, MessageCircleQuestionMark, Users, ClipboardCheck } from "lucide-react";
+import { CircleDollarSign, FolderCog, House, Shield, Video, MessageCircle, Receipt, Files, MessageCircleQuestionMark, Users, ClipboardCheck, SearchCheck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -68,6 +68,11 @@ const Sidebar = () => {
             icon: <MessageCircle />,
             title: "Comments",
             href: "/comments"
+        },
+        {
+            icon: <SearchCheck />,
+            title: "Audits",
+            href: "/audits"
         },
         ...(user?.role === "superadmin"
             ? [

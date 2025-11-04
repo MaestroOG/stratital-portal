@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link";
 import { LoginUser } from "@/action/user";
-import { useActionState } from "react";
+import { useActionState, useId, useState } from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -21,7 +22,11 @@ export function LoginForm({
   ...props
 }) {
 
-  const [message, formAction, isPending] = useActionState(LoginUser, { err: "" })
+  const id = useId()
+  const [isVisible, setIsVisible] = useState(false)
+  const [message, formAction, isPending] = useActionState(LoginUser, { err: "" });
+
+  const toggleVisibility = () => setIsVisible((prevState) => !prevState)
   return (
     <>
       <form action={formAction} className={cn("flex flex-col gap-6", className)} {...props}>
@@ -34,7 +39,7 @@ export function LoginForm({
         <div className="grid gap-6">
           <div className="grid gap-3">
             <Label htmlFor="email" className={'text-heading'}>Email</Label>
-            <Input id="email" type="email" name="email" placeholder="m@example.com" required className={'border border-gray-300'} />
+            <Input id="email" type="email" name="email" placeholder="Enter your email" required className={'border border-gray-300'} />
           </div>
           <div className="grid gap-3">
             <div className="flex items-center">
@@ -43,7 +48,31 @@ export function LoginForm({
                 Forgot your password?
               </Link>
             </div>
-            <Input id="password" name="password" type="password" required className={'border border-gray-300'} />
+            <div className="relative">
+              <Input
+                id={id}
+                className="pe-9"
+                placeholder="Password"
+                name="password"
+                type={isVisible ? "text" : "password"}
+                required
+              />
+              <button
+                className="absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md text-muted-foreground/80 transition-[color,box-shadow] outline-none hover:text-foreground focus:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+                type="button"
+                onClick={toggleVisibility}
+                aria-label={isVisible ? "Hide password" : "Show password"}
+                aria-pressed={isVisible}
+                aria-controls="password"
+              >
+                {isVisible ? (
+                  <EyeOffIcon size={16} aria-hidden="true" />
+                ) : (
+                  <EyeIcon size={16} aria-hidden="true" />
+                )}
+              </button>
+            </div>
+            {/* <Input id="password" name="password" type="password" required className={'border border-gray-300'} /> */}
           </div>
           <Button disabled={isPending} type="submit" className="flex items-center justify-center gap-2 w-full bg-dark-blue cursor-pointer hover:bg-dark-blue">
             {isPending && <Loader size="h-4 w-4" />}

@@ -7,12 +7,10 @@ import Link from "next/link"
 
 const TasksPage = async () => {
     const user = await getUser();
-    let tasks = await getTasks();
-
-    if (user?.role === 'manager') {
-        tasks = await getUserAssignedTasks(user?._id)
-    }
-
+    let tasks = await getUserAssignedTasks(user?._id);
+    // if (user?.role === 'manager') {
+    //     tasks = await getTasks();
+    // }
     const today = tasks.filter(t => new Date(t.dueDate).toDateString() === new Date().toDateString())
     const upcoming = tasks.filter(t => {
         const dueDate = new Date(t.dueDate);

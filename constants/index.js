@@ -278,3 +278,67 @@ export const faqs = {
         }
     ]
 };
+
+
+export const audits = [
+    {
+        id: Math.random(),
+        projectTitle: "Local SEO Audit",
+        desc: "Comprehensive review of your website’s local search performance, Google My Business profile, citations, and local keyword rankings."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "National SEO Audit",
+        desc: "Evaluation of website performance for national search, including keyword strategy, backlink profile, site structure, and content optimization."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Link Building Audit",
+        desc: "Assessment of your website’s backlink profile to identify toxic links, growth opportunities, and link quality improvements."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Google Advertising Audit",
+        desc: "In-depth review of your Google Ads campaigns, keyword targeting, ad quality, bidding strategy, and ROI performance."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Social Media Management Audit",
+        desc: "Analysis of social media accounts, content strategy, engagement metrics, posting frequency, and audience growth opportunities."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Social Media Advertising Audit",
+        desc: "Evaluation of paid social campaigns, audience targeting, ad creatives, copy effectiveness, and conversion performance."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Web Design and Development Audit",
+        desc: "Full website review covering UX/UI, responsiveness, page speed, accessibility, SEO best practices, and technical health."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Email Marketing Audit",
+        desc: "Assessment of email campaigns, template design, deliverability, segmentation, open rates, click-through rates, and conversion performance."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Virtual Assistance Resources Audit",
+        desc: "Evaluation of virtual assistant workflows, efficiency, task management, communication, and alignment with business goals."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Lead Generation - Cold Calling Audit",
+        desc: "Review of cold calling scripts, call metrics, lead quality, conversion rates, and overall process effectiveness."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Managed Web Support Audit",
+        desc: "Analysis of website maintenance practices, uptime monitoring, security, backups, and technical support efficiency."
+    },
+    {
+        id: Math.random(),
+        projectTitle: "Adhoc Support Audit",
+        desc: "Evaluation of on-demand technical support tasks, response times, resolution quality, and recurring issue identification."
+    }
+];

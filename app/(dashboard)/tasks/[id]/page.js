@@ -110,6 +110,7 @@ const TaskDetailPage = async ({ params }) => {
                                     </div>
                                 </div>
 
+
                                 <TaskDetailComments commentText={taskComment?.commentText} />
                             </li>
                         ))}

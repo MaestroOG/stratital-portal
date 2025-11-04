@@ -1,5 +1,5 @@
 export const generatePartnerShipEndEmail = (email, name, companyName, endDate, supportEmail) => {
-    return `
+  return `
     <!DOCTYPE html>
 <html lang="en" style="margin:0;padding:0;">
 <head>
@@ -158,4 +158,98 @@ export const generatePartnerShipEndEmail = (email, name, companyName, endDate, s
 </body>
 </html>
     `;
+}
+
+export function generateAuditEmail({ companyName, auditTitle, service, fields }) {
+  // Build dynamic table rows for all fields
+  let fieldsHtml = "";
+  for (const [key, value] of Object.entries(fields)) {
+    // Convert camelCase key to readable label
+    const label = key
+      .replace(/([A-Z])/g, " $1")
+      .replace(/^./, (str) => str.toUpperCase());
+
+    // Format boolean values as Yes/No
+    const formattedValue =
+      typeof value === "boolean" ? (value ? "Yes" : "No") : value || "-";
+
+    fieldsHtml += `
+      <tr>
+        <td width="180" style="font-weight:bold; padding:8px 0;">${label}:</td>
+        <td style="padding:8px 0; color:#374151;">${formattedValue}</td>
+      </tr>
+    `;
+  }
+
+  // Format service name nicely
+  const formattedService = service
+    .replace(/([a-z])([A-Z][a-z])/g, "$1 $2")
+    .replace(/([a-z])([A-Z]+$)/g, "$1 $2")
+    .replace(/^./, (s) => s.toUpperCase())
+    .trim();
+
+  // Return full HTML email
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Audit Created</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f9fafb; font-family:Arial, Helvetica, sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f9fafb; padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+          
+          <!-- Header -->
+          <tr>
+            <td align="center" style="padding:30px; background:#F33C38; border-top-left-radius:12px; border-top-right-radius:12px; color:#ffffff;">
+              <h1 style="margin:0; font-size:24px;">New Audit Created</h1>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:30px; color:#111827;">
+              <p style="margin:0 0 20px; font-size:16px; line-height:1.6;">
+                A new audit has been successfully created with the following details:
+              </p>
+
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:20px; font-size:15px;">
+                <tr>
+                  <td width="180" style="font-weight:bold; padding:8px 0;">Company Name:</td>
+                  <td style="padding:8px 0; color:#374151;">${companyName}</td>
+                </tr>
+                <tr>
+                  <td width="180" style="font-weight:bold; padding:8px 0;">Audit Title:</td>
+                  <td style="padding:8px 0; color:#374151;">${auditTitle}</td>
+                </tr>
+                <tr>
+                  <td width="180" style="font-weight:bold; padding:8px 0;">Service:</td>
+                  <td style="padding:8px 0; color:#374151;">${formattedService}</td>
+                </tr>
+
+                <!-- Dynamic Fields -->
+                ${fieldsHtml}
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td align="center" style="padding:20px; background:#f3f4f6; border-bottom-left-radius:12px; border-bottom-right-radius:12px; font-size:13px; color:#6b7280;">
+              © 2025 Stratital. All rights reserved.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
+  `;
 }

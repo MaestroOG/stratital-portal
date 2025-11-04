@@ -50,7 +50,7 @@ const ExpenditurePage = async () => {
 
                 <Card>
                     <CardContent className="p-4">
-                        <p className="text-sm text-muted-foreground">Running Projects This Month</p>
+                        <p className="text-sm text-muted-foreground">Total Running Projects</p>
                         <p className="text-2xl font-semibold">{runningProjectsThisMonth}</p>
                     </CardContent>
                 </Card>

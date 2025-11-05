@@ -40,7 +40,7 @@ const CommentsPage = async ({ searchParams }) => {
                 {user?.role === 'superadmin' && <CommentFilterForm />}
             </div>
             <div className="flex flex-col gap-4 mt-4">
-                {user?.role === 'user' && data?.map((note, index) => (
+                {/* {user?.role === 'user' && data?.map((note, index) => (
                     <Link key={note?._id || index} href={`/projects/${note?.projectId?._id}`}>
                         <Alert variant="default">
                             <AlertTitle className="font-semibold text-lg">
@@ -51,24 +51,30 @@ const CommentsPage = async ({ searchParams }) => {
                             </AlertDescription>
                         </Alert>
                     </Link>
-                ))}
+                ))} */}
 
                 <div className="flex flex-col gap-4 mt-4">
                     {notes?.length === 0 ? (
                         <p className="text-gray-500 text-center p-6">No comments found.</p>
                     ) : (
-                        notes.map((note, index) => (
-                            <Link key={note._id || index} href={`/projects/${note.projectId?._id}`}>
-                                <Alert variant="default">
-                                    <AlertTitle className="font-semibold text-lg">
-                                        {note?.createdBy?.name} - {formatReadableDate(note?.createdAt)} - {formatTo12HourTime(note?.createdAt)}
-                                    </AlertTitle>
-                                    <AlertDescription>
-                                        <span className="font-bold">on {note.projectId?.projectTitle}</span>
-                                    </AlertDescription>
-                                </Alert>
-                            </Link>
-                        ))
+                        notes.map((note, index) => {
+                            const isUnread = !(note?.readBy ?? []).includes(user?._id);
+                            return (
+                                <Link key={note._id || index} href={`/projects/${note.projectId?._id}`}>
+                                    <Alert variant="default">
+                                        {isUnread && (
+                                            <span className="absolute top-5 right-5 ml-2 h-3 w-3 rounded-full bg-red"></span>
+                                        )}
+                                        <AlertTitle className="font-semibold text-lg">
+                                            {note?.createdBy?.name} - {formatReadableDate(note?.createdAt)} - {formatTo12HourTime(note?.createdAt)}
+                                        </AlertTitle>
+                                        <AlertDescription>
+                                            <span className="font-bold">on {note.projectId?.projectTitle}</span>
+                                        </AlertDescription>
+                                    </Alert>
+                                </Link>
+                            )
+                        })
                     )}
                 </div>
             </div>

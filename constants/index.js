@@ -46,11 +46,6 @@ export const yourProjects = [
     },
     {
         id: Math.random(),
-        projectTitle: "Lead Generation - Cold Calling",
-        desc: "Outbound calling to generate leads, book appointments, or qualify prospects."
-    },
-    {
-        id: Math.random(),
         projectTitle: "Managed Web Support",
         desc: "Ongoing website maintenance and technical support to ensure your site remains updated, secure, and high-performing."
     },
@@ -224,24 +219,6 @@ export const faqs = {
         }
     ],
 
-    "lead-generation-cold-calling": [
-        {
-            question: "What is Lead Generation through Cold Calling?",
-            answer:
-                "It involves making outbound calls to prospects to generate leads, set appointments, or qualify potential clients."
-        },
-        {
-            question: "Do you provide call scripts?",
-            answer:
-                "Yes, we create and optimize professional scripts tailored to your business and target audience."
-        },
-        {
-            question: "Can you track call performance?",
-            answer:
-                "We provide regular reports on leads generated, conversion rates, and call outcomes."
-        }
-    ],
-
     "managed-web-support": [
         {
             question: "What does Managed Web Support include?",
@@ -325,11 +302,6 @@ export const audits = [
         id: Math.random(),
         projectTitle: "Virtual Assistance Resources Audit",
         desc: "Evaluation of virtual assistant workflows, efficiency, task management, communication, and alignment with business goals."
-    },
-    {
-        id: Math.random(),
-        projectTitle: "Lead Generation - Cold Calling Audit",
-        desc: "Review of cold calling scripts, call metrics, lead quality, conversion rates, and overall process effectiveness."
     },
     {
         id: Math.random(),

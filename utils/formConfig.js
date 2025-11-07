@@ -90,16 +90,16 @@ export const formConfig = {
         { label: "Communication Tools (e.g., Slack, Email, WhatsApp)", name: "communicationTools", type: "text" }
     ],
 
-    'leadGeneration-ColdCalling': [
-        { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Business Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url" },
-        { label: "Target Industry / Market", name: "targetIndustry", type: "text", required: true },
-        { label: "Target Audience (e.g., CEOs, Marketing Managers, Small Businesses)", name: "targetAudience", type: "text", required: true },
-        { label: "Geographic Location for Calls", name: "targetLocation", type: "text" },
-        { label: "Call Script (Provide if available)", name: "callScript", type: "textarea" },
-        { label: "Goal of Calls (e.g., Appointments, Sales, Market Research)", name: "callGoal", type: "text", required: true },
-        { label: "CRM or Tools Used (if any)", name: "crmTools", type: "text" }
-    ],
+    // 'leadGeneration-ColdCalling': [
+    //     { label: "Business Name", name: "businessName", type: "text", required: true },
+    //     { label: "Business Website URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url" },
+    //     { label: "Target Industry / Market", name: "targetIndustry", type: "text", required: true },
+    //     { label: "Target Audience (e.g., CEOs, Marketing Managers, Small Businesses)", name: "targetAudience", type: "text", required: true },
+    //     { label: "Geographic Location for Calls", name: "targetLocation", type: "text" },
+    //     { label: "Call Script (Provide if available)", name: "callScript", type: "textarea" },
+    //     { label: "Goal of Calls (e.g., Appointments, Sales, Market Research)", name: "callGoal", type: "text", required: true },
+    //     { label: "CRM or Tools Used (if any)", name: "crmTools", type: "text" }
+    // ],
     managedWebSupport: [
         { label: "Website Name or URL (Add https:// in front of the URL)", name: "websiteUrl", type: "url", required: true },
         { label: "Current Hosting Provider (e.g., Hostinger, GoDaddy, AWS)", name: "hostingProvider", type: "text" },
@@ -209,12 +209,12 @@ export const auditFormConfig = {
         { label: "Training / Skills Assessment Needed?", name: "trainingAudit", type: "checkbox" }
     ],
 
-    'leadGeneration-ColdCallingAudit': [
-        { label: "Business Name", name: "businessName", type: "text", required: true },
-        { label: "Target Market / Industry", name: "targetIndustry", type: "text", required: true },
-        { label: "Current Call Scripts", name: "callScripts", type: "textarea" },
-        { label: "Process Efficiency Review Needed?", name: "processAudit", type: "checkbox" }
-    ],
+    // 'leadGeneration-ColdCallingAudit': [
+    //     { label: "Business Name", name: "businessName", type: "text", required: true },
+    //     { label: "Target Market / Industry", name: "targetIndustry", type: "text", required: true },
+    //     { label: "Current Call Scripts", name: "callScripts", type: "textarea" },
+    //     { label: "Process Efficiency Review Needed?", name: "processAudit", type: "checkbox" }
+    // ],
 
     managedWebSupportAudit: [
         { label: "Website URL (Add https:// in front of the url)", name: "websiteUrl", type: "url", required: true },
@@ -390,24 +390,24 @@ export const pricingConfig = {
         ]
     },
 
-    leadGeneration: {
-        pricing: [
-            {
-                id: "lead-gen-single",
-                label: "Lead Generation - Single Service",
-                price: "$1500",
-                period: "/month",
-                description: "Comprehensive lead generation"
-            },
-            {
-                id: "custom-bundle",
-                label: "Custom Quote",
-                price: "custom",
-                period: "",
-                description: ""
-            },
-        ]
-    },
+    // leadGeneration: {
+    //     pricing: [
+    //         {
+    //             id: "lead-gen-single",
+    //             label: "Lead Generation - Single Service",
+    //             price: "$1500",
+    //             period: "/month",
+    //             description: "Comprehensive lead generation"
+    //         },
+    //         {
+    //             id: "custom-bundle",
+    //             label: "Custom Quote",
+    //             price: "custom",
+    //             period: "",
+    //             description: ""
+    //         },
+    //     ]
+    // },
 
     webDesignAndDevelopment: {
         pricing: [
@@ -494,24 +494,24 @@ export const pricingConfig = {
         ]
     },
 
-    'leadGeneration-ColdCalling': {
-        pricing: [
-            {
-                id: "cold-call-20h-single",
-                label: "Single Resource",
-                price: "$1500",
-                period: "/month",
-                description: "Part-time cold calling service"
-            },
-            {
-                id: "custom-bundle",
-                label: "Custom Quote",
-                price: "custom",
-                period: "",
-                description: ""
-            },
-        ]
-    }
+    // 'leadGeneration-ColdCalling': {
+    //     pricing: [
+    //         {
+    //             id: "cold-call-20h-single",
+    //             label: "Single Resource",
+    //             price: "$1500",
+    //             period: "/month",
+    //             description: "Part-time cold calling service"
+    //         },
+    //         {
+    //             id: "custom-bundle",
+    //             label: "Custom Quote",
+    //             price: "custom",
+    //             period: "",
+    //             description: ""
+    //         },
+    //     ]
+    // }
 }
 
 
@@ -667,24 +667,24 @@ export const saPricingConfig = {
         ]
     },
 
-    leadGeneration: {
-        pricing: [
-            {
-                id: "lead-gen-single",
-                label: "Lead Generation - Single Service",
-                price: "R1500",
-                period: "/month",
-                description: "Comprehensive lead generation"
-            },
-            {
-                id: "custom-bundle",
-                label: "Custom Quote",
-                price: "custom",
-                period: "",
-                description: ""
-            },
-        ]
-    },
+    // leadGeneration: {
+    //     pricing: [
+    //         {
+    //             id: "lead-gen-single",
+    //             label: "Lead Generation - Single Service",
+    //             price: "R1500",
+    //             period: "/month",
+    //             description: "Comprehensive lead generation"
+    //         },
+    //         {
+    //             id: "custom-bundle",
+    //             label: "Custom Quote",
+    //             price: "custom",
+    //             period: "",
+    //             description: ""
+    //         },
+    //     ]
+    // },
 
     webDesignAndDevelopment: {
         pricing: [
@@ -771,22 +771,22 @@ export const saPricingConfig = {
         ]
     },
 
-    'leadGeneration-ColdCalling': {
-        pricing: [
-            {
-                id: "cold-call-20h-single",
-                label: "Single Resource",
-                price: "R17039",
-                period: "/month",
-                description: "Part-time cold calling service"
-            },
-            {
-                id: "custom-bundle",
-                label: "Custom Quote",
-                price: "custom",
-                period: "",
-                description: ""
-            },
-        ]
-    }
+    // 'leadGeneration-ColdCalling': {
+    //     pricing: [
+    //         {
+    //             id: "cold-call-20h-single",
+    //             label: "Single Resource",
+    //             price: "R17039",
+    //             period: "/month",
+    //             description: "Part-time cold calling service"
+    //         },
+    //         {
+    //             id: "custom-bundle",
+    //             label: "Custom Quote",
+    //             price: "custom",
+    //             period: "",
+    //             description: ""
+    //         },
+    //     ]
+    // }
 };

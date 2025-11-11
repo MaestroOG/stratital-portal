@@ -1,10 +1,12 @@
 'use server';
 
+import { generateTaskCommentNotification, generateTaskNotification } from "@/htmlemailtemplates/taskEmailTemplates";
 import { connectDB } from "@/lib/mongodb";
 import { getUser } from "@/lib/user";
 import Task from "@/models/Task";
 import TaskComment from "@/models/TaskComment";
 import User from "@/models/User";
+import { createTransporter } from "@/utils/transporterFns";
 import { revalidatePath } from "next/cache";
 
 export async function createTask(selectedUsers, prevState, formData) {
@@ -56,6 +58,20 @@ export async function createTask(selectedUsers, prevState, formData) {
             createdBy: user?._id,
             assignees
         })
+
+        const transporter = createTransporter();
+
+        const html = generateTaskNotification(title, "", dueDate, `https://www.portal.stratital.com/tasks/${task?._id}`);
+
+        for (const selectedUser of selectedUsers) {
+            const assigneeUser = await User.findById(selectedUser);
+            await transporter.sendMail({
+                from: '"Stratital" <admin@stratital.com>',
+                to: ['portal@stratital.com', assigneeUser?.email],
+                subject: "New Task Assigned",
+                html,
+            })
+        }
 
         if (!task) {
             return {
@@ -224,6 +240,7 @@ export async function createTaskComment(prevState, formData) {
         await connectDB();
 
         const taskExists = await Task.findById(taskId);
+
         if (!taskExists) {
             return {
                 success: false,
@@ -242,6 +259,18 @@ export async function createTaskComment(prevState, formData) {
                 success: false,
                 message: "Cannot create comment"
             }
+        }
+        const transporter = createTransporter();
+
+        for (const assignedUsers of taskExists?.assignees) {
+            const assigneetoSendEmail = await User.findById(assignedUsers);
+            const html = generateTaskCommentNotification(assigneetoSendEmail?.name, taskExists?.title, `https://www.portal.stratital.com/${taskExists?._id}`, taskComment?.createdAt)
+            await transporter.sendMail({
+                from: '"Stratital" <admin@stratital.com>',
+                to: ['portal@stratital.com', assigneetoSendEmail?.email],
+                subject: "New Comment On Task",
+                html,
+            })
         }
 
         revalidatePath('/', 'layout')

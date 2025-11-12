@@ -1,10 +1,9 @@
 import Container from "@/components/dashboardComponents/Container"
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getUser } from "@/lib/user"
 import { getAllComments, getAllCommentsOnUserProjects, getAllUnreadComments } from "@/lib/admin"
-import { formatDateToYMD, formatReadableDate, formatTo12HourTime } from "@/utils/formUtils";
+import { formatReadableDate, timeAgo } from "@/utils/formUtils";
 import CommentFilterForm from "@/components/comment-filter-form";
 
 const CommentsPage = async ({ searchParams }) => {
@@ -66,7 +65,7 @@ const CommentsPage = async ({ searchParams }) => {
                                             <span className="absolute top-5 right-5 ml-2 h-3 w-3 rounded-full bg-red"></span>
                                         )}
                                         <AlertTitle className="font-semibold text-lg">
-                                            {note?.createdBy?.name} - {formatReadableDate(note?.createdAt)} - {formatTo12HourTime(note?.createdAt)}
+                                            {note?.createdBy?.name} - {formatReadableDate(note?.createdAt)} - {timeAgo(note?.createdAt)}
                                         </AlertTitle>
                                         <AlertDescription>
                                             <span className="font-bold">on {note.projectId?.projectTitle}</span>

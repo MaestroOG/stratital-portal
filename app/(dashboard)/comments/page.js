@@ -65,7 +65,7 @@ const CommentsPage = async ({ searchParams }) => {
                                             {note?.createdBy?.name} –{" "}
                                             {formatReadableDate(note?.createdAt)} –{" "}
                                             {timeAgo(note?.createdAt)} at{" "}
-                                            {isoDateToLocal12HourTime(note?.createdAt)}
+                                            {formatTo12HourTime(note?.createdAt)}
                                         </AlertTitle>
                                         <AlertDescription className="mt-1 break-words">
                                             <span className="font-bold">

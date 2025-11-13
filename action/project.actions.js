@@ -56,18 +56,18 @@ export async function createProject(prevState, formData) {
 
             const expenditure = await addExpenditure(partnerId, amount);
 
-            const updatedUser = await User.findByIdAndUpdate(
-                partnerId,
-                { $set: { credit: userBalance - amount } },
-                { new: true } // ✅ returns the updated user
-            );
+            // const updatedUser = await User.findByIdAndUpdate(
+            //     partnerId,
+            //     { $set: { credit: userBalance - amount } },
+            //     { new: true } // ✅ returns the updated user
+            // );
 
-            if (!updatedUser) {
-                return {
-                    success: false,
-                    message: "Failed to deduct credit from user.",
-                }
-            }
+            // if (!updatedUser) {
+            //     return {
+            //         success: false,
+            //         message: "Failed to deduct credit from user.",
+            //     }
+            // }
 
             const project = await Project.create({
                 projectTitle,
@@ -106,18 +106,18 @@ export async function createProject(prevState, formData) {
 
             const expenditure = await addExpenditure(partnerId, amount);
 
-            const updatedUser = await User.findByIdAndUpdate(
-                partnerId,
-                { $set: { credit: userBalance - amount } },
-                { new: true } // ✅ returns the updated user
-            );
+            // const updatedUser = await User.findByIdAndUpdate(
+            //     partnerId,
+            //     { $set: { credit: userBalance - amount } },
+            //     { new: true } // ✅ returns the updated user
+            // );
 
-            if (!updatedUser) {
-                return {
-                    success: false,
-                    message: "Failed to deduct credit from user.",
-                }
-            }
+            // if (!updatedUser) {
+            //     return {
+            //         success: false,
+            //         message: "Failed to deduct credit from user.",
+            //     }
+            // }
 
             const project = await Project.create({
                 projectTitle,

@@ -97,12 +97,12 @@ export async function createProject(prevState, formData) {
 
             const userBalance = userFromDB?.credit || 0;
 
-            if (userBalance < amount) {
-                return {
-                    success: false,
-                    message: "Insufficient credit balance. Please top up your account.",
-                }
-            }
+            // if (userBalance < amount) {
+            //     return {
+            //         success: false,
+            //         message: "Insufficient credit balance. Please top up your account.",
+            //     }
+            // }
 
             const expenditure = await addExpenditure(partnerId, amount);
 

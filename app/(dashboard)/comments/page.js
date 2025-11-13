@@ -3,7 +3,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
 import { getUser } from "@/lib/user"
 import { getAllComments, getAllCommentsOnUserProjects, getAllUnreadComments } from "@/lib/admin"
-import { formatReadableDate, timeAgo } from "@/utils/formUtils";
+import { formatReadableDate, formatTo12HourTime, timeAgo } from "@/utils/formUtils";
 import CommentFilterForm from "@/components/comment-filter-form";
 
 const CommentsPage = async ({ searchParams }) => {
@@ -33,51 +33,54 @@ const CommentsPage = async ({ searchParams }) => {
 
     const notes = filter === 'unread' || user.role !== 'superadmin' ? data : data?.notes || [];
     return (
-        <Container className={'bg-white p-2 md:p-4'}>
-            <div className="flex items-center justify-between">
+        <Container className="bg-white p-2 md:p-4">
+            {/* Header */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
                 <h1 className="text-2xl md:text-4xl font-bold">Project Comments</h1>
-                {user?.role === 'superadmin' && <CommentFilterForm />}
+                {user?.role === "superadmin" && <CommentFilterForm />}
             </div>
-            <div className="flex flex-col gap-4 mt-4">
-                {/* {user?.role === 'user' && data?.map((note, index) => (
-                    <Link key={note?._id || index} href={`/projects/${note?.projectId?._id}`}>
-                        <Alert variant="default">
-                            <AlertTitle className="font-semibold text-lg">
-                                {note?.createdBy?.name} - {formatReadableDate(note?.createdAt)} - {formatTo12HourTime(note?.createdAt)}
-                            </AlertTitle>
-                            <AlertDescription>
-                                <span className="font-bold">on {note.projectId?.projectTitle}</span>
-                            </AlertDescription>
-                        </Alert>
-                    </Link>
-                ))} */}
 
-                <div className="flex flex-col gap-4 mt-4">
-                    {notes?.length === 0 ? (
-                        <p className="text-gray-500 text-center p-6">No comments found.</p>
-                    ) : (
-                        notes.map((note, index) => {
+            {/* Comments Section */}
+            <div className="flex flex-col gap-4 mt-4 w-full">
+                {notes?.length === 0 ? (
+                    <p className="text-gray-500 text-center p-6">No comments found.</p>
+                ) : (
+                    <div className="flex flex-col gap-4 w-full">
+                        {notes.map((note, index) => {
                             const isUnread = !(note?.readBy ?? []).includes(user?._id);
                             return (
-                                <Link key={note._id || index} href={`/projects/${note.projectId?._id}`}>
-                                    <Alert variant="default">
+                                <Link
+                                    key={note._id || index}
+                                    href={`/projects/${note.projectId?._id}`}
+                                    className="block w-full"
+                                >
+                                    <Alert
+                                        variant="default"
+                                        className="relative w-full rounded-xl border border-border hover:shadow-md transition-all duration-200"
+                                    >
                                         {isUnread && (
-                                            <span className="absolute top-5 right-5 ml-2 h-3 w-3 rounded-full bg-red"></span>
+                                            <span className="absolute top-4 right-4 h-3 w-3 rounded-full bg-red" />
                                         )}
-                                        <AlertTitle className="font-semibold text-lg">
-                                            {note?.createdBy?.name} - {formatReadableDate(note?.createdAt)} - {timeAgo(note?.createdAt)}
+                                        <AlertTitle className="font-semibold text-base md:text-lg break-words pr-8">
+                                            {note?.createdBy?.name} –{" "}
+                                            {formatReadableDate(note?.createdAt)} –{" "}
+                                            {timeAgo(note?.createdAt)} at{" "}
+                                            {formatTo12HourTime(note?.createdAt)}
                                         </AlertTitle>
-                                        <AlertDescription>
-                                            <span className="font-bold">on {note.projectId?.projectTitle}</span>
+                                        <AlertDescription className="mt-1 break-words">
+                                            <span className="font-bold">
+                                                on {note.projectId?.projectTitle}
+                                            </span>
                                         </AlertDescription>
                                     </Alert>
                                 </Link>
-                            )
-                        })
-                    )}
-                </div>
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </Container>
+
     )
 }
 

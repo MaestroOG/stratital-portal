@@ -147,7 +147,7 @@ const Header = ({ userFromDB, pfpLink }) => {
             <Link href={'/'} className='md:hidden'><Image src='/logo.png' alt="stratital logo" width={135} height={37} priority /></Link>
             <div className='flex items-center gap-4'>
                 <div className="flex items-center gap-4">
-                    {userFromDB?.credit > 0 && <div className="flex items-center gap-2 p-2 border border-red">
+                    {userFromDB?.credit > 0 && <div className="max-sm:hidden flex items-center gap-2 p-2 border border-red">
                         <CircleDollarSign className="text-white" />
                         <p className="text-white">AUD {userFromDB?.credit}.00</p>
                     </div>}

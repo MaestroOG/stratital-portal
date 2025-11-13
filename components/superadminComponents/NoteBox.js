@@ -31,7 +31,7 @@ const NoteBox = ({ user, id }) => {
     }, [state]);
     return (
         <>
-            <form action={formAction} className='mt-6 grid gap-3 max-w-3xl'>
+            <form action={formAction} className='mt-6 grid gap-3 max-w-3xl max-sm:max-w-[435px]'>
                 <Label className='text-heading' htmlFor="note">Add a Comment</Label>
                 <JoditEditor
                     ref={contentRef}

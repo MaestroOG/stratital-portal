@@ -31,15 +31,27 @@ const AddResourceForm = ({ categories }) => {
     }, [state])
     return (
         <>
-            <form action={formAction} className="bg-white p-2 rounded-lg grid gap-4">
+            <form
+                action={formAction}
+                className="bg-white p-4 rounded-lg grid gap-4 w-full max-w-2xl mx-auto mt-2"
+            >
+                {/* Title */}
                 <div className="grid gap-2">
                     <Label htmlFor="title">Resource Title (optional)</Label>
-                    <Input className="max-w-2xl w-full" type='text' name='title' />
+                    <Input
+                        className="w-full"
+                        type="text"
+                        name="title"
+                        id="title"
+                        placeholder="Enter title"
+                    />
                 </div>
+
+                {/* Category */}
                 <div className="grid gap-2">
                     <Label htmlFor="category">Assign Category</Label>
                     <Select value={value} onValueChange={setValue} name="category">
-                        <SelectTrigger className="max-w-2xl w-2xl">
+                        <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select category" />
                         </SelectTrigger>
                         <SelectContent>
@@ -51,23 +63,46 @@ const AddResourceForm = ({ categories }) => {
                         </SelectContent>
                     </Select>
                 </div>
+
+                {/* File Upload */}
                 <div className="grid gap-2">
                     <Label htmlFor="file">Upload File</Label>
                     <input
-                        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 p-4"
+                        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none p-3"
                         type="file"
                         accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                         id="file"
                         name="file"
                     />
                 </div>
-                <p>OR</p>
+
+                {/* OR Divider */}
+                <div className="flex items-center justify-center">
+                    <span className="text-sm text-muted-foreground">OR</span>
+                </div>
+
+                {/* Resource Link */}
                 <div className="grid gap-2">
                     <Label htmlFor="resourceLink">Resource Link</Label>
-                    <Input className="max-w-2xl w-2xl" type='url' name='resourceLink' />
+                    <Input
+                        className="w-full"
+                        type="url"
+                        name="resourceLink"
+                        id="resourceLink"
+                        placeholder="https://example.com/resource"
+                    />
                 </div>
-                <Button type='submit' disabled={isPending} className={'mt-2'}>Submit</Button>
+
+                {/* Submit */}
+                <Button
+                    type="submit"
+                    disabled={isPending}
+                    className="mt-2 w-full md:w-auto md:self-end"
+                >
+                    Submit
+                </Button>
             </form>
+
 
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent>

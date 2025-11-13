@@ -8,15 +8,22 @@ const AssignCreditPage = async () => {
     const users = await getAllUsers();
     return (
         <>
-            <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3 flex items-center gap-2'}>
-                <Link href={'/admin/assign-credit/edit-credit'}><Button variant={'link'}>Edit Credit</Button></Link>
+            <Container className="bg-white px-2 md:px-4 py-3 flex flex-wrap items-center gap-2">
+                <Link href="/admin/assign-credit/edit-credit">
+                    <Button variant="link">Edit Credit</Button>
+                </Link>
             </Container>
-            <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3'}>
-                <h1 className="font-bold text-2xl md:text-4xl">Assign credit</h1>
-                <div className='mt-6'>
+
+            <Container className="bg-white px-2 md:px-4 py-3 rounded-lg shadow-sm">
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                    <h1 className="font-bold text-2xl md:text-4xl">Assign Credit</h1>
+                </div>
+
+                <div className="mt-6 overflow-x-auto">
                     <AssignCreditForm users={users} />
                 </div>
             </Container>
+
         </>
     )
 }

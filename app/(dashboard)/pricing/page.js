@@ -4,25 +4,35 @@ import { ArrowDown } from 'lucide-react';
 
 const PricingPage = () => {
     return (
-        <Container className={'bg-white p-4 mt-6 h-[80vh]'}>
-            <a className="mb-2 float-right" href={"/stratital-pricelist.pdf"} download="Stratital Pricelist" target='_blank' rel="noopener noreferrer">
-                <button
-                    className="bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group cursor-pointer"
-                    type="button"
+        <Container className="bg-white p-4 mt-6 min-h-[80vh] overflow-hidden md:overflow-auto">
+            {/* Download Button */}
+            <div className="flex justify-end mb-4">
+                <a
+                    href="/stratital-pricelist.pdf"
+                    download="Stratital Pricelist"
+                    target="_blank"
+                    rel="noopener noreferrer"
                 >
-                    <div
-                        className="bg-red rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500"
+                    <button
+                        type="button"
+                        className="relative w-40 sm:w-48 h-12 sm:h-14 rounded-2xl bg-white text-black text-base sm:text-lg font-semibold group border border-gray-300"
                     >
-                        <ArrowDown color="#ffffff" />
-                    </div>
-                    <p className="translate-x-2 text-sm">Download</p>
-                </button>
+                        <div
+                            className="bg-red rounded-xl h-10 sm:h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[90%] z-10 duration-500"
+                        >
+                            <ArrowDown color="#ffffff" />
+                        </div>
+                        <p className="translate-x-2 text-sm sm:text-base">Download</p>
+                    </button>
+                </a>
+            </div>
 
-            </a>
-            <div className="w-full h-full">
+            {/* PDF Section */}
+            <div className="w-full h-auto md:h-[70vh] overflow-hidden md:overflow-auto rounded-lg border border-gray-200">
                 <PricingPDF />
             </div>
         </Container>
+
     )
 }
 

@@ -22,7 +22,7 @@ const DiscussionPage = async () => {
     return (
         <Container className={'bg-white p-4 rounded-lg'}>
             <div className="flex items-center justify-between">
-                <h1 className="text-xl font-semibold">Topics and Discussions</h1>
+                <h1 className="text-xl max-sm:text-lg font-semibold">Topics and Discussions</h1>
                 <Link href={'/discussions/create-discussion'}>
                     <Button>
                         Create New Discussion

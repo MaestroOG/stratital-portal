@@ -16,7 +16,7 @@ const InvoiceDetail = async ({ params }) => {
         <div className="p-4">
             <Card className="rounded-2xl shadow-md">
                 <CardHeader className={'flex items-center justify-between'}>
-                    <CardTitle className="text-xl font-bold">INV-{invoice?._id}</CardTitle>
+                    <CardTitle className="text-xl font-bold">INV-{id.slice(0, 6)}...</CardTitle>
                     <div className="flex items-center gap-2">
                         <InvoiceDeleteForm invoiceId={id} />
                         <InvoiceEditForm invoice={invoice} />

@@ -23,22 +23,56 @@ const CreateDiscussionForm = () => {
     }, [state])
     return (
         <>
-            <form action={formAction} className='grid gap-4'>
-                <div className='grid gap-2'>
+            <form action={formAction} className="grid gap-6">
+                {/* Discussion Topic */}
+                <div className="grid gap-2">
                     <Label htmlFor="topic">Discussion Topic</Label>
-                    <Input id='topic' name='discussionTopic' type="text" placeholder="Enter topic here" className={'w-2xl max-w-2xl'} required />
-                </div>
-                <div className='grid gap-2'>
-                    <Label htmlFor="title">Discussion Title</Label>
-                    <Input type="text" id='title' name='discussionTitle' placeholder="Enter title here" className={'w-2xl max-w-2xl'} required />
-                </div>
-                <div className='grid gap-2'>
-                    <Label htmlFor="subtitle">Discussion Subtitle</Label>
-                    <Input type="text" id='subtitle' name='discussionSubtitle' placeholder="Enter subtitle here" className={'w-2xl max-w-2xl'} required />
+                    <Input
+                        id="topic"
+                        name="discussionTopic"
+                        type="text"
+                        placeholder="Enter topic here"
+                        className="w-full md:max-w-2xl"
+                        required
+                    />
                 </div>
 
-                <Button disabled={isPending} type='submit' className={'w-2xl max-w-2xl'}>Create Discussion</Button>
+                {/* Discussion Title */}
+                <div className="grid gap-2">
+                    <Label htmlFor="title">Discussion Title</Label>
+                    <Input
+                        id="title"
+                        name="discussionTitle"
+                        type="text"
+                        placeholder="Enter title here"
+                        className="w-full md:max-w-2xl"
+                        required
+                    />
+                </div>
+
+                {/* Discussion Subtitle */}
+                <div className="grid gap-2">
+                    <Label htmlFor="subtitle">Discussion Subtitle</Label>
+                    <Input
+                        id="subtitle"
+                        name="discussionSubtitle"
+                        type="text"
+                        placeholder="Enter subtitle here"
+                        className="w-full md:max-w-2xl"
+                        required
+                    />
+                </div>
+
+                {/* Submit Button */}
+                <Button
+                    disabled={isPending}
+                    type="submit"
+                    className="w-full md:max-w-2xl"
+                >
+                    Create Discussion
+                </Button>
             </form>
+
 
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent>

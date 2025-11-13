@@ -59,32 +59,41 @@ const CreateTaskForm = ({ users }) => {
 
     return (
         <>
-            <form action={formAction} className="grid gap-4">
+            <form action={formAction} className="grid gap-6">
+                {/* Title */}
                 <div className="grid gap-2">
-                    <Label htmlFor='title'>Task Title</Label>
-                    <Input type={'text'} name='title' className={'w-2xl max-w-2xl'} required />
+                    <Label htmlFor="title">Task Title</Label>
+                    <Input
+                        type="text"
+                        name="title"
+                        id="title"
+                        className="w-full md:max-w-2xl"
+                        required
+                    />
                 </div>
+
+                {/* Description */}
                 <div className="grid gap-2">
-                    <Label htmlFor='description'>Task Description</Label>
+                    <Label htmlFor="description">Task Description</Label>
                     <JoditEditor
                         ref={contentRef}
                         value={description}
                         tabIndex={1}
-                        onBlur={newContent => setDescription(newContent)}
-                        onChange={newContent => { }}
-                        className="w-2xl max-w-2xl"
+                        onBlur={(newContent) => setDescription(newContent)}
+                        onChange={() => { }}
+                        className="w-full md:max-w-2xl"
                     />
                 </div>
-                <div className="flex flex-col gap-3">
-                    <Label htmlFor="dueDate" className="px-1">
-                        Due Date
-                    </Label>
+
+                {/* Due Date */}
+                <div className="grid gap-2">
+                    <Label htmlFor="dueDate">Due Date</Label>
                     <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
                             <Button
                                 variant="outline"
                                 id="dueDate"
-                                className="w-2xl max-w-2xl justify-between font-normal"
+                                className="w-full md:max-w-2xl justify-between font-normal"
                             >
                                 {date ? date.toLocaleDateString() : "Select date"}
                                 <ChevronDownIcon />
@@ -95,9 +104,9 @@ const CreateTaskForm = ({ users }) => {
                                 mode="single"
                                 selected={date}
                                 captionLayout="dropdown"
-                                onSelect={(date) => {
-                                    setDate(date)
-                                    setOpen(false)
+                                onSelect={(d) => {
+                                    setDate(d);
+                                    setOpen(false);
                                 }}
                                 disabled={{ before: new Date().setHours(0, 0, 0, 0) }}
                             />
@@ -105,10 +114,11 @@ const CreateTaskForm = ({ users }) => {
                     </Popover>
                 </div>
 
+                {/* Status */}
                 <div className="grid gap-2">
-                    <Label htmlFor='status'>Task Status</Label>
+                    <Label htmlFor="status">Task Status</Label>
                     <Select value={status} onValueChange={(val) => setStatus(val)}>
-                        <SelectTrigger className="w-2xl max-w-2xl">
+                        <SelectTrigger className="w-full md:max-w-2xl">
                             <SelectValue placeholder="Select Status" />
                         </SelectTrigger>
                         <SelectContent>
@@ -120,35 +130,51 @@ const CreateTaskForm = ({ users }) => {
                     </Select>
                 </div>
 
-                <div className="grid gap-2">
-                    <Label className={'text-xl mb-2'}>Assign Users</Label>
-                    {users?.map((user, index) => (
-                        <div key={user?._id || index} className="flex items-center gap-2">
-                            <Checkbox
-                                id={user?._id}
-                                checked={selectedUsers.includes(user._id)}
-                                onCheckedChange={(checked) => handleToggle(user._id, !!checked)}
-
-                            />
-                            <Label htmlFor={user?._id}>{user?.name}</Label>
-                        </div>
-                    ))}
+                {/* Assign Users */}
+                <div className="grid gap-3">
+                    <Label className="text-xl">Assign Users</Label>
+                    <div className="flex flex-col gap-2 md:max-w-2xl">
+                        {users?.map((user, index) => (
+                            <div key={user?._id || index} className="flex items-center gap-2">
+                                <Checkbox
+                                    id={user?._id}
+                                    checked={selectedUsers.includes(user._id)}
+                                    onCheckedChange={(checked) =>
+                                        handleToggle(user._id, !!checked)
+                                    }
+                                />
+                                <Label htmlFor={user?._id}>{user?.name}</Label>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
-
-
-                <p className="text-sm text-muted-foreground mt-2">
-                    Selected: {selectedUsers.length
-                        ? users.filter(u => selectedUsers.includes(u?._id)).map(u => u?.name).join(", ")
+                {/* Selected Users Summary */}
+                <p className="text-sm text-muted-foreground mt-2 md:max-w-2xl">
+                    Selected:{" "}
+                    {selectedUsers.length
+                        ? users
+                            .filter((u) => selectedUsers.includes(u?._id))
+                            .map((u) => u?.name)
+                            .join(", ")
                         : "None"}
                 </p>
 
+                {/* Hidden Fields */}
                 <input type="hidden" name="dueDate" value={date} />
                 <input type="hidden" name="status" value={status} />
-                <input type="hidden" name='description' value={description} />
+                <input type="hidden" name="description" value={description} />
 
-                <Button disabled={isPending} type='submit' className={'w-2xl max-w-2xl'}>Add Task</Button>
+                {/* Submit Button */}
+                <Button
+                    disabled={isPending}
+                    type="submit"
+                    className="w-full md:max-w-2xl"
+                >
+                    Add Task
+                </Button>
             </form>
+
 
             <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                 <DialogContent>

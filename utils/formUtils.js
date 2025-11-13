@@ -122,6 +122,21 @@ export function formatTo12HourTime(isoString) {
     return `${hours}:${formattedMinutes} ${ampm}`;
 }
 
+export function isoDateToLocal12HourTime(isoDateString) {
+    // Extract the ISO string from ISODate('...')
+    const match = isoDateString.match(/ISODate\('(.*)'\)/);
+    if (!match) throw new Error("Invalid ISODate format");
+
+    const date = new Date(match[1]);
+
+    return date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+    });
+}
+
+
 
 export function validateEntries(cleanedEntries) {
     // Object.values gives all values of the object

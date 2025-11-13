@@ -3,7 +3,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
 import { getUser } from "@/lib/user"
 import { getAllComments, getAllCommentsOnUserProjects, getAllUnreadComments } from "@/lib/admin"
-import { formatReadableDate, formatTo12HourTime, timeAgo } from "@/utils/formUtils";
+import { formatReadableDate, formatTo12HourTime, isoDateToLocal12HourTime, timeAgo } from "@/utils/formUtils";
 import CommentFilterForm from "@/components/comment-filter-form";
 
 const CommentsPage = async ({ searchParams }) => {
@@ -65,7 +65,7 @@ const CommentsPage = async ({ searchParams }) => {
                                             {note?.createdBy?.name} –{" "}
                                             {formatReadableDate(note?.createdAt)} –{" "}
                                             {timeAgo(note?.createdAt)} at{" "}
-                                            {formatTo12HourTime(note?.createdAt)}
+                                            {isoDateToLocal12HourTime(note?.createdAt)}
                                         </AlertTitle>
                                         <AlertDescription className="mt-1 break-words">
                                             <span className="font-bold">

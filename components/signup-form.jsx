@@ -316,7 +316,14 @@ export function SignUpForm({
 
                             <div className="flex gap-3">
                                 <Checkbox id="master-service-agreement" value={formValues["master-service-agreement"]} onChange={handleChange} name="master-service-agreement" />
-                                <Label htmlFor="master-service-agreement" className={'text-heading'}>I agree to the Stratital<Link href={'https://stratital.com/stratital-master-services-agreement/'} target="_blank" className="text-red underline">Master Services Agreement</Link></Label>
+                                <Label htmlFor="master-service-agreement" className={'text-heading'}>
+                                    I agree to the Stratital
+                                    <span>
+                                        <Link href={'https://stratital.com/stratital-master-services-agreement/'} target="_blank" className="text-red underline">
+                                            Master Services Agreement
+                                        </Link>
+                                    </span>
+                                </Label>
                             </div>
                         </>
                     )}
@@ -325,7 +332,7 @@ export function SignUpForm({
 
 
                     {/* Navigation buttons */}
-                    <div className="mt-6 flex justify-between">
+                    <div className="mt-6 flex justify-between max-sm:flex-col max-sm:gap-2">
                         {step > 30 && (
                             <Button
                                 type="button"

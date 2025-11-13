@@ -20,21 +20,44 @@ const SuperAdminPage = async () => {
 
     return (
         <main className='h-[100vh]'>
-            <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3 flex items-center gap-2'}>
-                <Link href={'/admin/projects'}><Button variant={'link'}>See All Projects</Button></Link>
-                <Link href={'/admin/create-notification'}><Button variant={'link'}>Create a notification</Button></Link>
-                <Link href={'/admin/create-manager'}><Button variant={'link'}>Assign a manager</Button></Link>
-                <Link href={'/admin/assign-credit'}><Button variant={'link'}>Assign credit</Button></Link>
-                {user?.name === 'Muneeb Ur Rehman' && <Link href={'/admin/create-superadmin'}><Button variant={'link'}>Assign a superadmin</Button></Link>}
+            <Container className="bg-white px-2 md:px-4 py-3 flex flex-wrap items-center gap-2">
+                <Link href="/admin/projects">
+                    <Button variant="link">See All Projects</Button>
+                </Link>
 
+                <Link href="/admin/create-notification">
+                    <Button variant="link">Create a Notification</Button>
+                </Link>
+
+                <Link href="/admin/create-manager">
+                    <Button variant="link">Assign a Manager</Button>
+                </Link>
+
+                <Link href="/admin/assign-credit">
+                    <Button variant="link">Assign Credit</Button>
+                </Link>
+
+                {user?.name === "Muneeb Ur Rehman" && (
+                    <Link href="/admin/create-superadmin">
+                        <Button variant="link">Assign a Superadmin</Button>
+                    </Link>
+                )}
             </Container>
-            <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3'}>
+
+            <Container className="bg-white px-2 md:px-4 py-3 rounded-lg shadow-sm overflow-hidden">
                 <h1 className="font-bold text-2xl md:text-4xl">Pending User Requests</h1>
-                <div className='mt-6'>
-                    {pendingUsers?.length === 0 && <div className='text-center p-6'>No Pending Users</div>}
-                    {pendingUsers?.length > 0 && <PendingUserTable pendingUsers={pendingUsers} />}
+
+                <div className="mt-6">
+                    {pendingUsers?.length === 0 ? (
+                        <div className="text-center p-6 text-gray-500">No Pending Users</div>
+                    ) : (
+                        <div className="overflow-x-auto">
+                            <PendingUserTable pendingUsers={pendingUsers} />
+                        </div>
+                    )}
                 </div>
             </Container>
+
 
             <Container className={'bg-white px-2 pr-4 md:pr-0 md:px-4 py-3'}>
                 <h1 className="font-bold text-2xl md:text-4xl">All Agencies</h1>

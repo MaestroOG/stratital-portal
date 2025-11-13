@@ -39,21 +39,25 @@ const EditCreditForm = ({ users }) => {
     }, [state])
     return (
         <>
-            <form action={formAction} className="grid gap-4">
+            <form action={formAction} className="grid gap-4 w-full max-w-2xl mx-auto">
+                {/* Partner Selection */}
                 <div className="grid gap-2">
                     <Label htmlFor="partner">Select Partner</Label>
                     <Select value={selectedUserId} onValueChange={handleUserSelect}>
-                        <SelectTrigger id='partner' className={'w-2xl max-w-2xl'}>
+                        <SelectTrigger id="partner" className="w-full">
                             <SelectValue placeholder="Select Partner" />
                         </SelectTrigger>
                         <SelectContent>
-                            {users?.map(user => (
-                                <SelectItem key={user?._id} value={user?._id}>{user?.companyName}</SelectItem>
+                            {users?.map((user) => (
+                                <SelectItem key={user?._id} value={user?._id}>
+                                    {user?.companyName}
+                                </SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
                 </div>
 
+                {/* Credit Field */}
                 {selectedUser && (
                     <>
                         <div className="grid gap-2">
@@ -63,17 +67,29 @@ const EditCreditForm = ({ users }) => {
                                 type="number"
                                 defaultValue={credit}
                                 onChange={(e) => setCredit(e.target.value)}
-                                className={'max-w-2xl'}
+                                className="w-full"
+                                min="0.01"
+                                step="0.01"
+                                placeholder="Enter credit amount"
+                                required
                             />
                         </div>
 
-                        <Button disabled={isPending} type="submit" className='max-w-2xl'>Update Credit</Button>
+                        <Button
+                            disabled={isPending}
+                            type="submit"
+                            className="w-full sm:w-auto"
+                        >
+                            Update Credit
+                        </Button>
                     </>
                 )}
 
+                {/* Hidden fields */}
                 <input type="hidden" name="credit" value={credit} />
                 <input type="hidden" name="partnerId" value={selectedUserId} />
             </form>
+
 
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent>

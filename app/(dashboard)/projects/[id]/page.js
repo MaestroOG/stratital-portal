@@ -39,7 +39,7 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
 
     return (
         <>
-            <Container className={'bg-white p-4 overflow-x-hidden'}>
+            <Container className={'bg-white max-sm:max-w-[430px] p-4 overflow-x-hidden'}>
                 <div className='flex md:flex-row flex-col items-start md:items-end justify-between'>
                     <div>
                         <div className='flex items-center gap-2'>
@@ -49,19 +49,20 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                         <h3 className='mt-2'>{service} by {projectDetails?.createdBy?.companyName ?? ""}</h3>
                         {projectDetails?.byAdmin ? <p className='text-sm mt-2'>Created By Admin</p> : ''}
                         {user?.role === 'superadmin' &&
-                            <div className='flex items-center gap-2 mt-2'>
+                            <div className='flex items-center gap-2 mt-2 max-sm:mb-2'>
                                 <ProjectDeleteForm id={id} />
                                 <Link href={`/projects/${id}/edit-package`}><Button>Edit Package</Button></Link>
                             </div>
                         }
                     </div>
-                    <div className='flex items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
+                    <div className='flex flex-wrap items-start md:items-center md:flex-row flex-col gap-2 md:gap-4'>
                         <p className='text-red font-medium animate-pulse whitespace-nowrap'>• {status}</p>
                         {user?.role === 'superadmin' && <ProjectStatusForms status={status} projectId={id} />}
                         {user?.role === 'superadmin' && <ArchiveProjectForm projectId={id} />}
                     </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-6 w-full">
                     {/* Render all fields except selectedPackage */}
                     {fields.map(([key, value]) => {
                         const displayValue =
@@ -105,7 +106,7 @@ const ProjectDetailPage = async ({ params, searchParams }) => {
                 </div>
             </Container>
 
-            <Container className={'bg-white p-4 mt-6'}>
+            <Container className={'bg-white p-4 mt-6 max-sm:max-w-[430px] overflox-x-hidden'}>
                 <div className='flex items-end justify-between'>
                     <h1 className='text-4xl font-bold'>Comments</h1>
                 </div>

@@ -18,11 +18,8 @@ const TaskDetailPage = async ({ params }) => {
 
     return (
         <Container className={'bg-white p-4 rounded-lg'}>
-            <div className="flex items-center justify-between gap-4">
-                <h1 className="text-2xl font-medium">Task-{id}</h1>
-            </div>
 
-            <div className="mt-6 p-6 space-y-6 bg-white rounded-2xl shadow-md">
+            <div className="p-6 space-y-6 bg-white rounded-2xl shadow-md">
 
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">

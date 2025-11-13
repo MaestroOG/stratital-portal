@@ -32,32 +32,54 @@ const AssignCreditForm = ({ users }) => {
     }, [state])
     return (
         <>
-            <form action={formAction} className="grid gap-4">
+            <form action={formAction} className="grid gap-4 w-full max-w-2xl mx-auto">
+                {/* Partner Select */}
                 <div className="grid gap-2">
                     <Label htmlFor="partner">Select Partner</Label>
                     <Select value={value} onValueChange={setValue}>
-                        <SelectTrigger id='partner' className={'w-2xl max-w-2xl'}>
+                        <SelectTrigger id="partner" className="w-full">
                             <SelectValue placeholder="Select Partner" />
                         </SelectTrigger>
                         <SelectContent>
-                            {users?.map(user => (
-                                <SelectItem key={user?._id} value={user?._id}>{user?.companyName}</SelectItem>
+                            {users?.map((user) => (
+                                <SelectItem key={user?._id} value={user?._id}>
+                                    {user?.companyName}
+                                </SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
                 </div>
 
-                {value && <>
-                    <div className="grid gap-2">
-                        <Label htmlFor="creditValue">Credit Amount</Label>
-                        <Input type="number" id='creditValue' name='creditValue' className='max-w-2xl' min="0.01" step="0.01" required placeholder="Enter credit amount" />
-                    </div>
-                    <input type="hidden" name="partnerId" value={value} />
-                    <Button disabled={isPending} type="submit" className='max-w-2xl'>Assign Credit</Button>
-                </>
-                }
+                {/* Credit Input (conditional) */}
+                {value && (
+                    <>
+                        <div className="grid gap-2">
+                            <Label htmlFor="creditValue">Credit Amount</Label>
+                            <Input
+                                type="number"
+                                id="creditValue"
+                                name="creditValue"
+                                className="w-full"
+                                min="0.01"
+                                step="0.01"
+                                required
+                                placeholder="Enter credit amount"
+                            />
+                        </div>
 
+                        <input type="hidden" name="partnerId" value={value} />
+
+                        <Button
+                            disabled={isPending}
+                            type="submit"
+                            className="w-full sm:w-auto"
+                        >
+                            Assign Credit
+                        </Button>
+                    </>
+                )}
             </form>
+
 
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent>

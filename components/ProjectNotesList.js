@@ -80,7 +80,7 @@ export default function ProjectNotesList({ user, projectId, initialNotes }) {
     }, []);
 
     return (
-        <ul>
+        <ul className="max-sm:max-w-[435px]">
             {notes?.map((note, index) => {
                 const isUnread = !(note?.readBy?.includes(user._id));
                 return (

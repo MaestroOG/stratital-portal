@@ -77,7 +77,7 @@ const NoteItem = ({ note, isUnread, onMarkAsRead, user }) => {
                 </Popover>}
             </div>
 
-            <div className="w-5xl max-w-5xl text-lg ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content">
+            <div className="max-w-full w-full text-base sm:text-lg ml-0 sm:ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content break-words whitespace-pre-wrap">
                 {parse(note?.note)}
             </div>
         </li>

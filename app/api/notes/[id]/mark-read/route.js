@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb"; // your MongoDB connection file
 import Note from "@/models/Note"; // your Note model
 import { getUser } from "@/lib/user";
+import { revalidatePath } from "next/cache";
 
 // PATCH /api/notes/[id]/mark-read
 export async function POST(req, { params }) {
@@ -41,6 +42,9 @@ export async function POST(req, { params }) {
             { $addToSet: { readBy: userId } },
             { new: true }
         );
+
+        revalidatePath('/', 'layout');
+
         return NextResponse.json({ success: true, note });
     } catch (error) {
         // error handling…

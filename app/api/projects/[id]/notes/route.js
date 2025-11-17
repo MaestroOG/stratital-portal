@@ -8,10 +8,5 @@ export async function GET(req, { params }) {
     const limit = parseInt(searchParams.get("limit") || "10", 10);
 
     const data = await getNotesByProjectId(id, page, limit);
-    if (data.notes.length === 0) {
-        setHasMore(false);
-        setLoading(false);
-        return;
-    }
     return Response.json(data);
 }

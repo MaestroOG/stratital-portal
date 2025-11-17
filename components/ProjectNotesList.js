@@ -42,11 +42,27 @@ export default function ProjectNotesList({ user, projectId, initialNotes }) {
         });
         const data = await res.json();
 
-        setNotes((prev) => {
-            const map = new Map();
+        if (data.notes.length === 0) {
+            setHasMore(false);
+            setLoading(false);
+            return;
+        }
 
-            [...prev, ...data.notes].forEach((note) => {
-                map.set(note._id, note);
+        // 🔥 DEDUPE FIX
+        setNotes((prev) => {
+            const map = new Map(prev.map(note => [note._id, note]));
+
+            data.notes.forEach((fetchedNote) => {
+                const existingNote = map.get(fetchedNote._id);
+                if (existingNote) {
+                    // Preserve local readBy updates
+                    map.set(fetchedNote._id, {
+                        ...fetchedNote,
+                        readBy: existingNote.readBy
+                    });
+                } else {
+                    map.set(fetchedNote._id, fetchedNote);
+                }
             });
 
             return Array.from(map.values());

@@ -42,7 +42,15 @@ export default function ProjectNotesList({ user, projectId, initialNotes }) {
         });
         const data = await res.json();
 
-        setNotes((prev) => [...prev, ...data.notes]);
+        setNotes((prev) => {
+            const map = new Map();
+
+            [...prev, ...data.notes].forEach((note) => {
+                map.set(note._id, note);
+            });
+
+            return Array.from(map.values());
+        });
         setHasMore(data.hasMore);
         setLoading(false);
     }, [page, hasMore, loading, projectId]);

@@ -8,6 +8,15 @@ body {
   font-family: "Montserrat", sans-serif !important;
 }
 
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+.prose a {
+  word-break: break-all;
+}
+
+
 .jodit-wysiwyg a {
   color: #1d4ed8;
   /* Tailwind's blue-700 */

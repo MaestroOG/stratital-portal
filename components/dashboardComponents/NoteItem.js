@@ -57,9 +57,9 @@ const NoteItem = ({ note, isUnread, onMarkAsRead, user }) => {
                                 {note?.createdBy === null ? "Stratital Team" : note?.createdBy?.name}
                             </span>{" "}
                             - {timeAgo(note?.createdAt)} at {formatTo12HourTime(note?.createdAt)}
-                            {isUnread && (
+                            {/* {isUnread && (
                                 <span className="text-red-500 text-xl ml-2 leading-none">•</span>
-                            )}
+                            )} */}
                         </p>
                         <span className="text-detail text-xs">
                             {note?.createdBy?.companyName}
@@ -77,7 +77,8 @@ const NoteItem = ({ note, isUnread, onMarkAsRead, user }) => {
                 </Popover>}
             </div>
 
-            <div className="max-w-full w-full text-base sm:text-lg ml-0 sm:ml-11 font-medium prose prose-a:text-blue-500 prose-a:underline text-content break-words whitespace-pre-wrap">
+            <div className="font-montserrat md:max-w-5xl w-full text-base sm:text-lg ml-0 sm:ml-11 font-medium text-content break-words whitespace-pre-wrapoverflow-hidden"
+            >
                 {parse(note?.note)}
             </div>
         </li>
